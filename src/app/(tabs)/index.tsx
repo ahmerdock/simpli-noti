@@ -5,7 +5,7 @@ import {
   useUnistyles,
 } from "react-native-unistyles";
 
-export default function Index() {
+const Home = () => {
   const { rt } = useUnistyles();
 
   const toggleTheme = () => {
@@ -25,7 +25,9 @@ export default function Index() {
       </Pressable>
     </View>
   );
-}
+};
+
+export default Home;
 
 const styles = StyleSheet.create((theme) => ({
   container: {
