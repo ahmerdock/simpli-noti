@@ -1,11 +1,12 @@
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import ScreenTitle from "@/components/screen-title";
+import { ScrollView } from "react-native";
 
 const Settings = () => {
   return (
-    <SafeAreaView edges={["top", "right", "bottom", "left"]}>
-      <Text>Settings</Text>
-    </SafeAreaView>
+    <>
+      <ScreenTitle title="Settings" />
+      <ScrollView></ScrollView>
+    </>
   );
 };
 

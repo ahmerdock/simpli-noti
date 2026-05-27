@@ -1,18 +1,36 @@
 import { StyleSheet } from "react-native-unistyles";
 
+const typography = {
+  primary: {
+    regular: "InterRegular",
+    medium: "InterMedium",
+  },
+  secondary: {
+    bold: "DMSansBold",
+  },
+};
+
 const lightTheme = {
   colors: {
+    primary: "#c9f31d",
     background: "#ffffff",
-    text: "#000000",
+    backgroundSecondary: "#f1f1f1",
+    text: "#100E0E",
+    textSecondary: "#888888",
   },
+  typography,
   gap: (v: number) => v * 8,
 };
 
 const darkTheme = {
   colors: {
-    background: "#000000",
+    primary: "#c9f31d",
+    background: "#0F0E0E",
+    backgroundSecondary: "#1f1f1f",
     text: "#ffffff",
+    textSecondary: "#b1b1b1",
   },
+  typography,
   gap: (v: number) => v * 8,
 };
 
