@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
+import { View, ScrollView } from "react-native";
 import { parentStyles } from "./parent.styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IParentLayoutProps } from "./parent.interface";
+import ScreenTitle from "@/components/screen-title";
 
 const ParentLayout = (props: IParentLayoutProps) => {
-  const { children } = props;
+  const { children, titleProps } = props;
 
   return (
     <View style={parentStyles.container}>
@@ -12,7 +13,9 @@ const ParentLayout = (props: IParentLayoutProps) => {
         edges={["top", "right", "bottom", "left"]}
         style={{ flex: 1 }}
       >
-        {children}
+        <ScreenTitle {...titleProps} />
+
+        <ScrollView>{children}</ScrollView>
       </SafeAreaView>
     </View>
   );

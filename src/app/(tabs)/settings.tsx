@@ -1,12 +1,7 @@
 import Settings from "@/features/settings";
-import { ParentLayout } from "@/layouts";
 
 const SettingsScreen = () => {
-  return (
-    <ParentLayout>
-      <Settings />
-    </ParentLayout>
-  );
+  return <Settings />;
 };
 
 export default SettingsScreen;

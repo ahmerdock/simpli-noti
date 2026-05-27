@@ -4,6 +4,6 @@ export const parentStyles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    paddingHorizontal: theme.gap(2),
+    padding: theme.gap(2),
   },
 }));
