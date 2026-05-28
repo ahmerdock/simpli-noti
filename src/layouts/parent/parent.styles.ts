@@ -6,6 +6,9 @@ export const parentStyles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.background,
     padding: theme.gap(2),
   },
+  contentContainer: {
+    paddingTop: theme.gap(3),
+  },
   viewBox: {
     position: "absolute",
     left: 0,

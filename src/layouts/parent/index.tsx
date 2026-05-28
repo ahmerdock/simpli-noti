@@ -20,6 +20,7 @@ const ParentLayout = (props: IParentLayoutProps) => {
 
         <ScrollView
           contentContainerStyle={{
+            ...parentStyles.contentContainer,
             paddingBottom: tabBarHeight + 12,
           }}
           showsVerticalScrollIndicator={false}
