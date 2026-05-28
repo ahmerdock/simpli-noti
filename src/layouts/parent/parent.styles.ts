@@ -6,14 +6,16 @@ export const parentStyles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.background,
     padding: theme.gap(2),
   },
-  contentContainer: {
+  contentContainer: (tabBarHeight: number) => ({
     paddingTop: theme.gap(3),
-  },
-  viewBox: {
+    paddingBottom: tabBarHeight + 12,
+  }),
+  viewBox: (tabBarHeight: number) => ({
     position: "absolute",
     left: 0,
     right: 0,
     bottom: 0,
     backgroundColor: theme.colors.background,
-  },
+    height: tabBarHeight + 30,
+  }),
 }));

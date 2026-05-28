@@ -19,21 +19,12 @@ const ParentLayout = (props: IParentLayoutProps) => {
         <ScreenTitle {...titleProps} />
 
         <ScrollView
-          contentContainerStyle={{
-            ...parentStyles.contentContainer,
-            paddingBottom: tabBarHeight + 12,
-          }}
+          contentContainerStyle={parentStyles.contentContainer(tabBarHeight)}
           showsVerticalScrollIndicator={false}
         >
           {children}
         </ScrollView>
-        <View
-          pointerEvents="none"
-          style={{
-            ...parentStyles.viewBox,
-            height: tabBarHeight + 30,
-          }}
-        />
+        <View pointerEvents="none" style={parentStyles.viewBox(tabBarHeight)} />
       </SafeAreaView>
     </View>
   );
