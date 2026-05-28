@@ -1,9 +1,6 @@
 import { View, ScrollView } from "react-native";
 import { parentStyles } from "./parent.styles";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { IParentLayoutProps } from "./parent.interface";
 import ScreenTitle from "@/components/screen-title";
 import { useBottomTabBarHeight } from "expo-router/build/react-navigation/bottom-tabs";
@@ -12,7 +9,6 @@ const ParentLayout = (props: IParentLayoutProps) => {
   const { children, titleProps } = props;
 
   const tabBarHeight = useBottomTabBarHeight();
-  const insets = useSafeAreaInsets();
 
   return (
     <View style={parentStyles.container}>
@@ -30,6 +26,13 @@ const ParentLayout = (props: IParentLayoutProps) => {
         >
           {children}
         </ScrollView>
+        <View
+          pointerEvents="none"
+          style={{
+            ...parentStyles.viewBox,
+            height: tabBarHeight + 30,
+          }}
+        />
       </SafeAreaView>
     </View>
   );

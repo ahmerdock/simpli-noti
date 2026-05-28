@@ -35,7 +35,8 @@ const TabsLayout = () => {
           height: 52,
           position: "absolute",
           overflow: "hidden",
-          boxShadow: `inset 0 0 0 1px ${theme.colors.primary}`,
+          borderWidth: 1,
+          borderColor: theme.colors.background,
         },
       }}
     >

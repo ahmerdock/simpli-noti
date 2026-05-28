@@ -1,11 +1,11 @@
+import { ParentLayout } from "@/layouts";
 import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const HelpMe = () => {
   return (
-    <SafeAreaView edges={["top", "right", "bottom", "left"]}>
+    <ParentLayout titleProps={{ title: "Help Me" }}>
       <Text>Help Me</Text>
-    </SafeAreaView>
+    </ParentLayout>
   );
 };
 
