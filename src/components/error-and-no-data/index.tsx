@@ -1,59 +1,21 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageSourcePropType,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image } from "react-native";
 import { IErrorAndNoDataStateProps } from "./error-and-no-data.interface";
-import { BellOffIcon, ErrorIcon } from "@/assets/icons";
+import { BellOffIcon } from "@/assets/icons";
 import { errorAndNoDataStyles } from "./error-and-no-data.styles";
 
 const ErrorAndNoData = (props: IErrorAndNoDataStateProps) => {
-  const {
-    type = "noData",
-    height,
-    message,
-    children,
-    src,
-    description,
-    buttonVisibility = false,
-    buttonText,
-    buttonClick,
-    noIcon = false,
-  } = props;
-
-  const defaultIcon = type === "error" ? ErrorIcon : BellOffIcon;
-
-  const icon = src || defaultIcon;
+  const { message, description } = props;
 
   return (
-    <View style={errorAndNoDataStyles.container(height)}>
-      <View style={errorAndNoDataStyles.content}>
-        {!noIcon && <Image source={icon} style={errorAndNoDataStyles.image} />}
+    <View style={errorAndNoDataStyles.container}>
+      <Image source={BellOffIcon} style={errorAndNoDataStyles.image} />
 
-        {message && (
-          <Text style={errorAndNoDataStyles.messageText}>{message}</Text>
-        )}
+      {message && (
+        <Text style={errorAndNoDataStyles.messageText}>{message}</Text>
+      )}
 
-        {description && (
-          <Text style={errorAndNoDataStyles.descriptionText}>
-            {description}
-          </Text>
-        )}
-
-        {buttonVisibility && buttonText && buttonClick && (
-          <TouchableOpacity
-            onPress={buttonClick}
-            style={errorAndNoDataStyles.button}
-          >
-            {buttonText}
-          </TouchableOpacity>
-        )}
-      </View>
-
-      {children && (
-        <View style={errorAndNoDataStyles.childrenContainer}>{children}</View>
+      {description && (
+        <Text style={errorAndNoDataStyles.descriptionText}>{description}</Text>
       )}
     </View>
   );
