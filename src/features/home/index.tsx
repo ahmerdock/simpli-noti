@@ -1,10 +1,13 @@
+import ErrorAndNoData from "@/components/error-and-no-data";
 import { ParentLayout } from "@/layouts";
-import { Text } from "react-native";
 
 const Home = () => {
   return (
     <ParentLayout titleProps={{ title: "Home" }}>
-      <Text>Home</Text>
+      <ErrorAndNoData
+        message="No notifications yet"
+        description="Tap + to add your first one"
+      />
     </ParentLayout>
   );
 };
