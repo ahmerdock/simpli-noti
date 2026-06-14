@@ -4,14 +4,12 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
-import { useUnistyles } from "react-native-unistyles";
 import { ITEM_HEIGHT, VELOCITY_THRESHOLD } from "./wheel-column.data";
 import { IWheelColumnProps } from "./wheel-column.interface";
 
 const useWheelColumn = (props: IWheelColumnProps) => {
   const { data, selected, onSelect } = props;
 
-  const { theme } = useUnistyles();
   const scrollRef = useRef<ScrollView>(null);
   const lastSnappedIndexRef = useRef(data.indexOf(selected));
   const selectedIndex = data.indexOf(selected);
@@ -62,7 +60,7 @@ const useWheelColumn = (props: IWheelColumnProps) => {
     [snapToNearest],
   );
 
-  return { theme, scrollRef, handleScrollEndDrag, handleMomentumScrollEnd };
+  return { scrollRef, handleScrollEndDrag, handleMomentumScrollEnd };
 };
 
 export default useWheelColumn;

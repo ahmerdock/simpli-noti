@@ -126,7 +126,7 @@ export const upsertNotificationsStyles = StyleSheet.create((theme) => ({
     justifyContent: "flex-end",
   },
   modalBackdrop: {
-    ...RNStyleSheet.absoluteFillObject,
+    ...RNStyleSheet.absoluteFill,
   },
   modalSheet: {
     backgroundColor: theme.colors.backgroundSecondary,

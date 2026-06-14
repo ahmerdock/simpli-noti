@@ -178,7 +178,7 @@ const UpsertNotifications = () => {
                       !value && { color: theme.colors.textSecondary },
                     ]}
                   >
-                    {value || "HH:MM"}
+                    {value || "HH:MM AM"}
                   </Text>
                   <Image
                     source={ClockIcon}

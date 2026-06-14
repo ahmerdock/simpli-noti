@@ -1,37 +1,20 @@
 import { View, Text } from "react-native";
-import { useUnistyles } from "react-native-unistyles";
 import { HOURS, MINUTES, PERIODS } from "./time-picker.data";
 import { ITimePickerProps } from "./time-picker.interface";
 import { WheelColumn } from "./components";
+import { timePickerStyles } from "./time-picker.styles";
 
-const TimePicker = ({ hour, minute, period, onChange }: ITimePickerProps) => {
-  const { theme } = useUnistyles();
+const TimePicker = (props: ITimePickerProps) => {
+  const { hour, minute, period, onChange } = props;
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        backgroundColor: theme.colors.backgroundSecondary,
-        borderRadius: 16,
-        paddingHorizontal: 8,
-        overflow: "hidden",
-      }}
-    >
+    <View style={timePickerStyles.container}>
       <WheelColumn
         data={HOURS}
         selected={hour}
         onSelect={(h) => onChange(h, minute, period)}
       />
-      <Text
-        style={{
-          fontSize: 20,
-          color: theme.colors.textSecondary,
-          paddingBottom: 2,
-        }}
-      >
-        :
-      </Text>
+      <Text style={timePickerStyles.separator}>:</Text>
       <WheelColumn
         data={MINUTES}
         selected={minute}
