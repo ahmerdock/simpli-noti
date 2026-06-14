@@ -1,10 +1,12 @@
 import "@/theme/unistyles";
+import "react-native-gesture-handler";
 
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { ROUTE_NAMES } from "@/constants/routes";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,12 +28,17 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name={ROUTE_NAMES.TABS} options={{ headerShown: false }} />
-      <Stack.Screen
-        name={ROUTE_NAMES.UPSERT_NOTIFICATIONS}
-        options={{ headerShown: false }}
-      />
-    </Stack>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack>
+        <Stack.Screen
+          name={ROUTE_NAMES.TABS}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={ROUTE_NAMES.UPSERT_NOTIFICATIONS}
+          options={{ headerShown: false }}
+        />
+      </Stack>
+    </GestureHandlerRootView>
   );
 }
