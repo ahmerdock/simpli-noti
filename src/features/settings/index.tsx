@@ -5,6 +5,7 @@ import Card from "@/components/card";
 import { useUnistyles, UnistylesRuntime } from "react-native-unistyles";
 import { MoonIcon, SunIcon } from "@/assets/icons";
 import CustomSwitch from "@/components/custom-switch";
+import { PAGE_TITLES } from "@/constants/routes";
 
 const Settings = () => {
   const { rt } = useUnistyles();
@@ -15,7 +16,7 @@ const Settings = () => {
   const isDark = rt.themeName === "dark";
 
   return (
-    <ParentLayout titleProps={{ title: "Settings" }}>
+    <ParentLayout titleProps={{ title: PAGE_TITLES.SETTINGS }}>
       <Text style={settingsStyles.appearance}>APPEARANCE</Text>
 
       <Card>

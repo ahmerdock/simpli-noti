@@ -2,6 +2,7 @@ import "@/theme/unistyles";
 
 import CustomTabBar from "@/components/custom-tab-bar";
 import { Tabs } from "expo-router";
+import { ROUTE_NAMES } from "@/constants/routes";
 
 const TabsLayout = () => {
   return (
@@ -11,9 +12,9 @@ const TabsLayout = () => {
         headerShown: false,
       }}
     >
-      <Tabs.Screen name="index" />
-      <Tabs.Screen name="help-me" />
-      <Tabs.Screen name="settings" />
+      <Tabs.Screen name={ROUTE_NAMES.HOME} />
+      <Tabs.Screen name={ROUTE_NAMES.HELP_ME} />
+      <Tabs.Screen name={ROUTE_NAMES.SETTINGS} />
     </Tabs>
   );
 };

@@ -10,6 +10,10 @@ export const parentStyles = StyleSheet.create((theme) => ({
     paddingTop: theme.gap(3),
     paddingBottom: tabBarHeight + 12,
   }),
+  contentContainerWithoutTabBar: {
+    paddingTop: theme.gap(3),
+    paddingBottom: theme.gap(2),
+  },
   viewBox: (tabBarHeight: number) => ({
     position: "absolute",
     left: 0,

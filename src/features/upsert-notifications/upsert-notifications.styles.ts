@@ -1,27 +1,6 @@
 import { StyleSheet } from "react-native-unistyles";
 
 export const upsertNotificationsStyles = StyleSheet.create((theme) => ({
-  backdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "flex-end",
-  },
-  backdropPressable: {
-    flex: 1,
-  },
-  card: {
-    backgroundColor: theme.colors.background,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: theme.gap(2),
-    paddingBottom: theme.gap(4),
-    gap: theme.gap(2),
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: theme.typography.secondary.bold,
-    color: theme.colors.text,
-  },
   actions: {
     flexDirection: "row",
     gap: theme.gap(1.5),

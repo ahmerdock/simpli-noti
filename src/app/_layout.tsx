@@ -4,6 +4,7 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { ROUTE_NAMES } from "@/constants/routes";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,7 +27,11 @@ export default function RootLayout() {
 
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name={ROUTE_NAMES.TABS} options={{ headerShown: false }} />
+      <Stack.Screen
+        name={ROUTE_NAMES.UPSERT_NOTIFICATIONS}
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 }
