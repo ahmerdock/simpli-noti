@@ -12,12 +12,14 @@ import { useNotificationStore } from "@/store";
 
 const useUpsertNotifications = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
+
   const notificationId = typeof id === "string" ? id : undefined;
   const isEditing = Boolean(notificationId);
 
   const notifications = useNotificationStore((s) => s.notifications);
   const addNotification = useNotificationStore((s) => s.addNotification);
   const editNotification = useNotificationStore((s) => s.editNotification);
+  const deleteNotification = useNotificationStore((s) => s.deleteNotification);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(upsertNotificationsSchema),
@@ -42,6 +44,12 @@ const useUpsertNotifications = () => {
   }, [notificationId, notifications, form]);
 
   const handleCancel = () => router.back();
+
+  const handleDelete = () => {
+    if (notificationId) {
+      deleteNotification(notificationId);
+    }
+  };
 
   const onSubmit = (data: FormValues) => {
     if (isEditing && notificationId) {
@@ -68,6 +76,7 @@ const useUpsertNotifications = () => {
     form,
     handleSubmit,
     handleCancel,
+    handleDelete,
     onSubmit,
     isEditing,
   };

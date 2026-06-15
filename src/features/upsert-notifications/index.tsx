@@ -20,8 +20,14 @@ import {
 
 const UpsertNotifications = () => {
   const styles = upsertNotificationsStyles;
-  const { form, handleSubmit, handleCancel, onSubmit, isEditing } =
-    useUpsertNotifications();
+  const {
+    form,
+    handleSubmit,
+    handleCancel,
+    handleDelete,
+    onSubmit,
+    isEditing,
+  } = useUpsertNotifications();
 
   return (
     <ParentLayout
@@ -89,6 +95,17 @@ const UpsertNotifications = () => {
               onPress={handleSubmit(onSubmit)}
             />
           </View>
+          {isEditing && (
+            <View style={styles.actions}>
+              <Button variant="disable" label="Disable" style={{ flex: 1 }} />
+              <Button
+                variant="delete"
+                label="Delete"
+                style={{ flex: 1 }}
+                onPress={handleDelete}
+              />
+            </View>
+          )}
         </View>
       </RHFForm>
     </ParentLayout>
