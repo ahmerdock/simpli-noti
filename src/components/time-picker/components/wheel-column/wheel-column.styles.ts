@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native-unistyles";
-import { ITEM_HEIGHT, PICKER_HEIGHT } from "./wheel-column.data";
+import { ITEM_HEIGHT, PICKER_HEIGHT } from "./wheel-column.utils";
 
 export const wheelColumnStyles = StyleSheet.create((theme) => ({
   container: {

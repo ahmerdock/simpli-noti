@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
-import { ITEM_HEIGHT } from "./wheel-column.data";
+import { ITEM_HEIGHT } from "./wheel-column.utils";
 import { IWheelColumnProps } from "./wheel-column.interface";
 import useWheelColumn from "./use-wheel-column";
 import { wheelColumnStyles } from "./wheel-column.styles";

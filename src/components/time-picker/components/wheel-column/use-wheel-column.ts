@@ -4,7 +4,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
-import { ITEM_HEIGHT, VELOCITY_THRESHOLD } from "./wheel-column.data";
+import { ITEM_HEIGHT, VELOCITY_THRESHOLD } from "./wheel-column.utils";
 import { IWheelColumnProps } from "./wheel-column.interface";
 
 const useWheelColumn = (props: IWheelColumnProps) => {

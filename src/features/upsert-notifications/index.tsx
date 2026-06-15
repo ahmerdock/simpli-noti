@@ -3,17 +3,16 @@ import { ParentLayout } from "@/layouts";
 import { Pressable, Text, View, Modal, FlatList, Image } from "react-native";
 import { upsertNotificationsStyles } from "./upsert-notifications.styles";
 import { PAGE_TITLES } from "@/constants/routes";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
-import { useUnistyles } from "react-native-unistyles";
-import { ClockIcon, ChevronDownIcon } from "@/assets/icons";
-import TimePicker from "@/components/time-picker";
+import { ChevronDownIcon } from "@/assets/icons";
 import {
   RHFForm,
   RHFTextField,
   RHFDatePicker,
+  RHFTimePicker,
 } from "@/components/react-hook-form";
 
 const DESCRIPTION_MAX = 160;
@@ -39,15 +38,9 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const UpsertNotifications = () => {
-  const { theme } = useUnistyles();
   const styles = upsertNotificationsStyles;
 
-  const [showTimePicker, setShowTimePicker] = useState(false);
   const [showRepeatPicker, setShowRepeatPicker] = useState(false);
-
-  const [timeHour, setTimeHour] = useState("12");
-  const [timeMinute, setTimeMinute] = useState("00");
-  const [timePeriod, setTimePeriod] = useState("AM");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -60,13 +53,7 @@ const UpsertNotifications = () => {
     },
   });
 
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = form;
+  const { handleSubmit, setValue, watch } = form;
 
   const repeatValue = watch("repeat");
 
@@ -79,19 +66,6 @@ const UpsertNotifications = () => {
 
   const repeatLabel =
     REPEAT_OPTIONS.find((o) => o.value === repeatValue)?.label ?? "No Repeat";
-
-  const handleTimeChange = (h: string, m: string, p: string) => {
-    setTimeHour(h);
-    setTimeMinute(m);
-    setTimePeriod(p);
-  };
-
-  const confirmTime = () => {
-    setValue("time", `${timeHour}:${timeMinute} ${timePeriod}`, {
-      shouldValidate: true,
-    });
-    setShowTimePicker(false);
-  };
 
   return (
     <ParentLayout
@@ -107,7 +81,6 @@ const UpsertNotifications = () => {
             required
           />
 
-          {/* Date & Time row */}
           <View style={styles.dateTimeRow}>
             <RHFDatePicker<FormValues>
               name="date"
@@ -117,39 +90,15 @@ const UpsertNotifications = () => {
               containerStyle={styles.dateTimeField}
             />
 
-            {/* Time */}
-            <View style={[styles.fieldWrapper, styles.dateTimeField]}>
-              <Text style={styles.fieldLabel}>Time</Text>
-              <Controller
-                control={control}
-                name="time"
-                render={({ field: { value } }) => (
-                  <Pressable
-                    style={styles.dateTimeTrigger}
-                    onPress={() => setShowTimePicker(true)}
-                  >
-                    <Text
-                      style={[
-                        styles.dateTimeTriggerText,
-                        !value && { color: theme.colors.textSecondary },
-                      ]}
-                    >
-                      {value || "HH:MM AM"}
-                    </Text>
-                    <Image
-                      source={ClockIcon}
-                      style={styles.dateTimeTriggerIcon}
-                    />
-                  </Pressable>
-                )}
-              />
-              {errors.time && (
-                <Text style={styles.fieldError}>{errors.time.message}</Text>
-              )}
-            </View>
+            <RHFTimePicker<FormValues>
+              name="time"
+              label="Time"
+              placeholder="HH:MM AM"
+              required
+              containerStyle={styles.dateTimeField}
+            />
           </View>
 
-          {/* Repeat */}
           <View style={styles.fieldWrapper}>
             <Text style={styles.fieldLabel}>Repeat</Text>
             <Pressable
@@ -171,7 +120,6 @@ const UpsertNotifications = () => {
             showCharCount
           />
 
-          {/* Actions */}
           <View style={styles.actions}>
             <Pressable style={styles.cancelButton} onPress={handleCancel}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
@@ -186,35 +134,6 @@ const UpsertNotifications = () => {
         </View>
       </RHFForm>
 
-      {/* Time Picker Modal */}
-      <Modal
-        visible={showTimePicker}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowTimePicker(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <Pressable
-            style={styles.modalBackdrop}
-            onPress={() => setShowTimePicker(false)}
-          />
-          <View style={styles.modalSheet}>
-            <View style={styles.modalHandle} />
-            <Text style={styles.modalTitle}>Select Time</Text>
-            <TimePicker
-              hour={timeHour}
-              minute={timeMinute}
-              period={timePeriod}
-              onChange={handleTimeChange}
-            />
-            <Pressable style={styles.modalConfirmBtn} onPress={confirmTime}>
-              <Text style={styles.modalConfirmText}>Confirm</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-
-      {/* Repeat Picker Modal */}
       <Modal
         visible={showRepeatPicker}
         transparent

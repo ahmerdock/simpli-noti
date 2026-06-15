@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { HOURS, MINUTES, PERIODS } from "./time-picker.data";
+import { HOURS, MINUTES, PERIODS } from "./time-picker.utils";
 import { ITimePickerProps } from "./time-picker.interface";
 import { WheelColumn } from "./components";
 import { timePickerStyles } from "./time-picker.styles";

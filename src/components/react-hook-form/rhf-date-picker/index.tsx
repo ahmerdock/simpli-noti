@@ -12,7 +12,7 @@ import {
   DEFAULT_DATE_FORMAT,
   DEFAULT_MODAL_TITLE,
   DEFAULT_PLACEHOLDER,
-} from "./rhf-date-picker.data";
+} from "./rhf-date-picker.utils";
 
 const RHFDatePicker = <T extends FieldValues>(
   props: IRHFDatePickerProps<T>,

@@ -59,25 +59,6 @@ export const upsertNotificationsStyles = StyleSheet.create((theme) => ({
   dateTimeField: {
     flex: 1,
   },
-  dateTimeTrigger: {
-    backgroundColor: theme.colors.backgroundSecondary,
-    borderRadius: 12,
-    paddingHorizontal: theme.gap(1.5),
-    paddingVertical: theme.gap(1.25),
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  dateTimeTriggerText: {
-    fontSize: 15,
-    fontFamily: theme.typography.primary.regular,
-    color: theme.colors.text,
-  },
-  dateTimeTriggerIcon: {
-    width: 16,
-    height: 16,
-    tintColor: theme.colors.textSecondary,
-  },
   dropdownTrigger: {
     backgroundColor: theme.colors.backgroundSecondary,
     borderRadius: 12,
