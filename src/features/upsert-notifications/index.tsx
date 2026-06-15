@@ -1,5 +1,6 @@
 import { ParentLayout } from "@/layouts";
-import { Pressable, Text, View } from "react-native";
+import { View } from "react-native";
+import Button from "@/components/button";
 import { upsertNotificationsStyles } from "./upsert-notifications.styles";
 import { PAGE_TITLES } from "@/constants/routes";
 import {
@@ -71,15 +72,18 @@ const UpsertNotifications = () => {
           />
 
           <View style={styles.actions}>
-            <Pressable style={styles.cancelButton} onPress={handleCancel}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </Pressable>
-            <Pressable
-              style={styles.saveButton}
+            <Button
+              variant="cancel"
+              label="Cancel"
+              style={{ flex: 1 }}
+              onPress={handleCancel}
+            />
+            <Button
+              variant="submit"
+              label="Save"
+              style={{ flex: 1 }}
               onPress={handleSubmit(onSubmit)}
-            >
-              <Text style={styles.saveButtonText}>Save</Text>
-            </Pressable>
+            />
           </View>
         </View>
       </RHFForm>
