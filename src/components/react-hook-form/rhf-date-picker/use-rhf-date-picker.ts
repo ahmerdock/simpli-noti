@@ -3,6 +3,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
 import { useDefaultStyles } from "react-native-ui-datepicker";
+import { parseDateValue } from "./rhf-date-picker.utils";
 
 const getCalendarStyles = (
   theme: ReturnType<typeof useUnistyles>["theme"],
@@ -61,8 +62,7 @@ export const useRHFDatePicker = <T extends FieldValues>() => {
   );
 
   const openPicker = (currentValue: string, dateFormat: string) => {
-    const parsed = currentValue ? dayjs(currentValue, dateFormat) : dayjs();
-    setSelectedDate(parsed.isValid() ? parsed : dayjs());
+    setSelectedDate(parseDateValue(currentValue, dateFormat));
     setVisible(true);
   };
 

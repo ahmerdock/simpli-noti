@@ -19,7 +19,8 @@ import {
 
 const UpsertNotifications = () => {
   const styles = upsertNotificationsStyles;
-  const { form, handleSubmit, handleCancel, onSubmit } = useUpsertNotifications();
+  const { form, handleSubmit, handleCancel, onSubmit } =
+    useUpsertNotifications();
 
   return (
     <ParentLayout

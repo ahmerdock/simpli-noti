@@ -87,6 +87,7 @@ const RHFDatePicker = <T extends FieldValues>(
                 <View style={styles.modalHandle} />
                 <Text style={styles.modalTitle}>{modalTitle}</Text>
                 <DateTimePicker
+                  key={selectedDate.format("YYYY-MM-DD")}
                   mode="single"
                   date={selectedDate}
                   onChange={({ date }) => {
