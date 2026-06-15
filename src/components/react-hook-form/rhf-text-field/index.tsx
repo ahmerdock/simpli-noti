@@ -28,10 +28,10 @@ const RHFTextField = <T extends FieldValues>(props: IRHFTextFieldProps<T>) => {
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <View style={[styles.fieldWrapper, containerStyle]}>
-          <Text style={styles.fieldLabel}>
-            {label}
-            {required && <Text style={styles.requiredMark}> *</Text>}
-          </Text>
+          <View style={styles.labelRow}>
+            <Text style={styles.fieldLabel}>{label}</Text>
+            {required && <Text style={styles.requiredMark}>*</Text>}
+          </View>
 
           <TextInput
             style={[styles.textInput, multiline && styles.textInputMultiline]}
