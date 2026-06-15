@@ -7,12 +7,14 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
 import { useUnistyles } from "react-native-unistyles";
-import { CalendarIcon, ClockIcon, ChevronDownIcon } from "@/assets/icons";
+import { ClockIcon, ChevronDownIcon } from "@/assets/icons";
 import TimePicker from "@/components/time-picker";
-import { RHFForm, RHFTextField } from "@/components/react-hook-form";
-import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
+import {
+  RHFForm,
+  RHFTextField,
+  RHFDatePicker,
+} from "@/components/react-hook-form";
 
 const DESCRIPTION_MAX = 160;
 
@@ -40,13 +42,9 @@ const UpsertNotifications = () => {
   const { theme } = useUnistyles();
   const styles = upsertNotificationsStyles;
 
-  const defaultStyles = useDefaultStyles();
-
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showRepeatPicker, setShowRepeatPicker] = useState(false);
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [timeHour, setTimeHour] = useState("12");
   const [timeMinute, setTimeMinute] = useState("00");
   const [timePeriod, setTimePeriod] = useState("AM");
@@ -111,36 +109,13 @@ const UpsertNotifications = () => {
 
           {/* Date & Time row */}
           <View style={styles.dateTimeRow}>
-            {/* Date */}
-            <View style={[styles.fieldWrapper, styles.dateTimeField]}>
-              <Text style={styles.fieldLabel}>Date</Text>
-              <Controller
-                control={control}
-                name="date"
-                render={({ field: { value } }) => (
-                  <Pressable
-                    style={styles.dateTimeTrigger}
-                    onPress={() => setShowDatePicker(true)}
-                  >
-                    <Text
-                      style={[
-                        styles.dateTimeTriggerText,
-                        !value && { color: theme.colors.textSecondary },
-                      ]}
-                    >
-                      {value || "DD/MM/YY"}
-                    </Text>
-                    <Image
-                      source={CalendarIcon}
-                      style={styles.dateTimeTriggerIcon}
-                    />
-                  </Pressable>
-                )}
-              />
-              {errors.date && (
-                <Text style={styles.fieldError}>{errors.date.message}</Text>
-              )}
-            </View>
+            <RHFDatePicker<FormValues>
+              name="date"
+              label="Date"
+              placeholder="DD/MM/YY"
+              required
+              containerStyle={styles.dateTimeField}
+            />
 
             {/* Time */}
             <View style={[styles.fieldWrapper, styles.dateTimeField]}>
@@ -210,79 +185,6 @@ const UpsertNotifications = () => {
           </View>
         </View>
       </RHFForm>
-
-      {/* Date Picker Modal */}
-      <Modal
-        visible={showDatePicker}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowDatePicker(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <Pressable
-            style={styles.modalBackdrop}
-            onPress={() => setShowDatePicker(false)}
-          />
-          <View style={styles.modalSheet}>
-            <View style={styles.modalHandle} />
-            <Text style={styles.modalTitle}>Select Date</Text>
-            <DateTimePicker
-              mode="single"
-              date={selectedDate}
-              onChange={({ date }) => {
-                if (date) setSelectedDate(dayjs(date));
-              }}
-              styles={{
-                ...defaultStyles,
-                today: {
-                  borderColor: theme.colors.primary,
-                  borderWidth: 1,
-                },
-                selected: {
-                  backgroundColor: theme.colors.primary,
-                },
-                selected_label: {
-                  color: theme.colors.background,
-                },
-                day_label: {
-                  color: theme.colors.text,
-                },
-                weekday_label: {
-                  color: theme.colors.textSecondary,
-                },
-                header: {
-                  backgroundColor: theme.colors.backgroundSecondary,
-                },
-                month_selector_label: {
-                  color: theme.colors.text,
-                  fontFamily: theme.typography.primary.medium,
-                },
-                year_selector_label: {
-                  color: theme.colors.text,
-                  fontFamily: theme.typography.primary.medium,
-                },
-                button_prev: {
-                  tintColor: theme.colors.primary,
-                },
-                button_next: {
-                  tintColor: theme.colors.primary,
-                },
-              }}
-            />
-            <Pressable
-              style={styles.modalConfirmBtn}
-              onPress={() => {
-                setValue("date", selectedDate.format("DD / MM / YYYY"), {
-                  shouldValidate: true,
-                });
-                setShowDatePicker(false);
-              }}
-            >
-              <Text style={styles.modalConfirmText}>Confirm</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
 
       {/* Time Picker Modal */}
       <Modal

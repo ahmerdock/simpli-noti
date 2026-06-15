@@ -1,6 +1,7 @@
 import { View, Text, TextInput } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
+import { rhfFieldStyles } from "../react-hook-form.styles";
 import { rhfTextFieldStyles } from "./rhf-text-field.styles";
 import { IRHFTextFieldProps } from "./rhf-text-field.interface";
 
@@ -20,21 +21,25 @@ const RHFTextField = <T extends FieldValues>(props: IRHFTextFieldProps<T>) => {
 
   const { control } = useFormContext<T>();
   const { theme } = useUnistyles();
-  const styles = rhfTextFieldStyles;
+  const fieldStyles = rhfFieldStyles;
+  const inputStyles = rhfTextFieldStyles;
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <View style={[styles.fieldWrapper, containerStyle]}>
-          <View style={styles.labelRow}>
-            <Text style={styles.fieldLabel}>{label}</Text>
-            {required && <Text style={styles.requiredMark}>*</Text>}
+        <View style={[fieldStyles.fieldWrapper, containerStyle]}>
+          <View style={fieldStyles.labelRow}>
+            <Text style={fieldStyles.fieldLabel}>{label}</Text>
+            {required && <Text style={fieldStyles.requiredMark}>*</Text>}
           </View>
 
           <TextInput
-            style={[styles.textInput, multiline && styles.textInputMultiline]}
+            style={[
+              inputStyles.textInput,
+              multiline && inputStyles.textInputMultiline,
+            ]}
             placeholder={placeholder}
             placeholderTextColor={theme.colors.textSecondary}
             accessibilityLabel={required ? `${label}, required` : label}
@@ -49,10 +54,10 @@ const RHFTextField = <T extends FieldValues>(props: IRHFTextFieldProps<T>) => {
             {...textInputProps}
           />
 
-          {error && <Text style={styles.fieldError}>{error.message}</Text>}
+          {error && <Text style={fieldStyles.fieldError}>{error.message}</Text>}
 
           {showCharCount && maxLength != null && (
-            <Text style={styles.charCount}>
+            <Text style={inputStyles.charCount}>
               {(value ?? "").length} / {maxLength}
             </Text>
           )}
