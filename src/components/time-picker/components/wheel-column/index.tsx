@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { ITEM_HEIGHT } from "./wheel-column.utils";
 import { IWheelColumnProps } from "./wheel-column.interface";
 import useWheelColumn from "./use-wheel-column";
@@ -7,8 +7,12 @@ import { wheelColumnStyles } from "./wheel-column.styles";
 const WheelColumn = (props: IWheelColumnProps) => {
   const { data, selected } = props;
 
-  const { scrollRef, handleScrollEndDrag, handleMomentumScrollEnd } =
-    useWheelColumn(props);
+  const {
+    scrollRef,
+    handleScrollEndDrag,
+    handleMomentumScrollEnd,
+    selectIndex,
+  } = useWheelColumn(props);
 
   return (
     <View style={wheelColumnStyles.container}>
@@ -25,12 +29,16 @@ const WheelColumn = (props: IWheelColumnProps) => {
         onMomentumScrollEnd={handleMomentumScrollEnd}
         contentContainerStyle={wheelColumnStyles.scrollContent}
       >
-        {data.map((item) => {
+        {data.map((item, index) => {
           const isSelected = item === selected;
           return (
-            <View key={item} style={wheelColumnStyles.item}>
+            <Pressable
+              key={item}
+              style={wheelColumnStyles.item}
+              onPress={() => selectIndex(index)}
+            >
               <Text style={wheelColumnStyles.itemText(isSelected)}>{item}</Text>
-            </View>
+            </Pressable>
           );
         })}
       </ScrollView>

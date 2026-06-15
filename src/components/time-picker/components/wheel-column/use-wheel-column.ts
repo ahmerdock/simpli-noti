@@ -24,6 +24,21 @@ const useWheelColumn = (props: IWheelColumnProps) => {
     }
   }, []);
 
+  const selectIndex = useCallback(
+    (index: number) => {
+      const clamped = Math.max(0, Math.min(index, data.length - 1));
+      const targetY = clamped * ITEM_HEIGHT;
+
+      scrollRef.current?.scrollTo({ y: targetY, animated: true });
+
+      if (lastSnappedIndexRef.current !== clamped) {
+        lastSnappedIndexRef.current = clamped;
+        onSelect(data[clamped]);
+      }
+    },
+    [data, onSelect],
+  );
+
   const snapToNearest = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const y = e.nativeEvent.contentOffset.y;
@@ -60,7 +75,12 @@ const useWheelColumn = (props: IWheelColumnProps) => {
     [snapToNearest],
   );
 
-  return { scrollRef, handleScrollEndDrag, handleMomentumScrollEnd };
+  return {
+    scrollRef,
+    handleScrollEndDrag,
+    handleMomentumScrollEnd,
+    selectIndex,
+  };
 };
 
 export default useWheelColumn;
