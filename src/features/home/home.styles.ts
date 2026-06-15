@@ -48,12 +48,12 @@ export const homeStyles = StyleSheet.create((theme) => ({
     color: theme.colors.background,
   },
   cardDateTime: {
-    fontSize: 12,
-    fontFamily: theme.typography.primary.regular,
+    fontSize: 13,
+    fontFamily: theme.typography.secondary.bold,
     color: theme.colors.textSecondary,
   },
   cardDescription: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: theme.typography.primary.regular,
     color: theme.colors.textSecondary,
   },

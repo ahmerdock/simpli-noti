@@ -6,6 +6,7 @@ import { Image, TouchableOpacity, View, Text } from "react-native";
 import { homeStyles } from "./home.styles";
 import { PAGE_TITLES, ROUTES } from "@/constants/routes";
 import { useNotificationStore } from "@/store";
+import { formatNotificationDateTime } from "@/utils/date-time-display";
 
 const Home = () => {
   const notifications = useNotificationStore((s) => s.notifications);
@@ -53,7 +54,7 @@ const Home = () => {
                 )}
               </View>
               <Text style={homeStyles.cardDateTime}>
-                {item.date} • {item.time}
+                {formatNotificationDateTime(item)}
               </Text>
               {item.description ? (
                 <Text style={homeStyles.cardDescription} numberOfLines={2}>
