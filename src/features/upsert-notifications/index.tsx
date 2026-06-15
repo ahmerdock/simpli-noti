@@ -1,14 +1,6 @@
 import { router } from "expo-router";
 import { ParentLayout } from "@/layouts";
-import {
-  Pressable,
-  Text,
-  View,
-  TextInput,
-  Modal,
-  FlatList,
-  Image,
-} from "react-native";
+import { Pressable, Text, View, Modal, FlatList, Image } from "react-native";
 import { upsertNotificationsStyles } from "./upsert-notifications.styles";
 import { PAGE_TITLES } from "@/constants/routes";
 import { useForm, Controller } from "react-hook-form";
@@ -19,6 +11,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useUnistyles } from "react-native-unistyles";
 import { CalendarIcon, ClockIcon, ChevronDownIcon } from "@/assets/icons";
 import TimePicker from "@/components/time-picker";
+import { RHFForm, RHFTextField } from "@/components/react-hook-form";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 
 const DESCRIPTION_MAX = 160;
@@ -58,13 +51,7 @@ const UpsertNotifications = () => {
   const [timeMinute, setTimeMinute] = useState("00");
   const [timePeriod, setTimePeriod] = useState("AM");
 
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       title: "",
@@ -75,7 +62,14 @@ const UpsertNotifications = () => {
     },
   });
 
-  const descriptionValue = watch("description") ?? "";
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = form;
+
   const repeatValue = watch("repeat");
 
   const handleCancel = () => router.back();
@@ -106,140 +100,116 @@ const UpsertNotifications = () => {
       includeTabBarPadding={false}
       titleProps={{ title: PAGE_TITLES.ADD_NOTIFICATION }}
     >
-      <View style={styles.form}>
-        {/* Title */}
-        <View style={styles.fieldWrapper}>
-          <Text style={styles.fieldLabel}>Title</Text>
-          <Controller
-            control={control}
+      <RHFForm form={form}>
+        <View style={styles.form}>
+          <RHFTextField<FormValues>
             name="title"
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                style={styles.textInput}
-                placeholder="e.g. Team Meeting"
-                placeholderTextColor={theme.colors.textSecondary}
-                value={value}
-                onChangeText={onChange}
-              />
-            )}
+            label="Title"
+            placeholder="e.g. Team Meeting"
+            required
           />
-          {errors.title && (
-            <Text style={styles.fieldError}>{errors.title.message}</Text>
-          )}
-        </View>
 
-        {/* Date & Time row */}
-        <View style={styles.dateTimeRow}>
-          {/* Date */}
-          <View style={[styles.fieldWrapper, styles.dateTimeField]}>
-            <Text style={styles.fieldLabel}>Date</Text>
-            <Controller
-              control={control}
-              name="date"
-              render={({ field: { value } }) => (
-                <Pressable
-                  style={styles.dateTimeTrigger}
-                  onPress={() => setShowDatePicker(true)}
-                >
-                  <Text
-                    style={[
-                      styles.dateTimeTriggerText,
-                      !value && { color: theme.colors.textSecondary },
-                    ]}
+          {/* Date & Time row */}
+          <View style={styles.dateTimeRow}>
+            {/* Date */}
+            <View style={[styles.fieldWrapper, styles.dateTimeField]}>
+              <Text style={styles.fieldLabel}>Date</Text>
+              <Controller
+                control={control}
+                name="date"
+                render={({ field: { value } }) => (
+                  <Pressable
+                    style={styles.dateTimeTrigger}
+                    onPress={() => setShowDatePicker(true)}
                   >
-                    {value || "DD/MM/YY"}
-                  </Text>
-                  <Image
-                    source={CalendarIcon}
-                    style={styles.dateTimeTriggerIcon}
-                  />
-                </Pressable>
+                    <Text
+                      style={[
+                        styles.dateTimeTriggerText,
+                        !value && { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {value || "DD/MM/YY"}
+                    </Text>
+                    <Image
+                      source={CalendarIcon}
+                      style={styles.dateTimeTriggerIcon}
+                    />
+                  </Pressable>
+                )}
+              />
+              {errors.date && (
+                <Text style={styles.fieldError}>{errors.date.message}</Text>
               )}
-            />
-            {errors.date && (
-              <Text style={styles.fieldError}>{errors.date.message}</Text>
-            )}
+            </View>
+
+            {/* Time */}
+            <View style={[styles.fieldWrapper, styles.dateTimeField]}>
+              <Text style={styles.fieldLabel}>Time</Text>
+              <Controller
+                control={control}
+                name="time"
+                render={({ field: { value } }) => (
+                  <Pressable
+                    style={styles.dateTimeTrigger}
+                    onPress={() => setShowTimePicker(true)}
+                  >
+                    <Text
+                      style={[
+                        styles.dateTimeTriggerText,
+                        !value && { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {value || "HH:MM AM"}
+                    </Text>
+                    <Image
+                      source={ClockIcon}
+                      style={styles.dateTimeTriggerIcon}
+                    />
+                  </Pressable>
+                )}
+              />
+              {errors.time && (
+                <Text style={styles.fieldError}>{errors.time.message}</Text>
+              )}
+            </View>
           </View>
 
-          {/* Time */}
-          <View style={[styles.fieldWrapper, styles.dateTimeField]}>
-            <Text style={styles.fieldLabel}>Time</Text>
-            <Controller
-              control={control}
-              name="time"
-              render={({ field: { value } }) => (
-                <Pressable
-                  style={styles.dateTimeTrigger}
-                  onPress={() => setShowTimePicker(true)}
-                >
-                  <Text
-                    style={[
-                      styles.dateTimeTriggerText,
-                      !value && { color: theme.colors.textSecondary },
-                    ]}
-                  >
-                    {value || "HH:MM AM"}
-                  </Text>
-                  <Image
-                    source={ClockIcon}
-                    style={styles.dateTimeTriggerIcon}
-                  />
-                </Pressable>
-              )}
-            />
-            {errors.time && (
-              <Text style={styles.fieldError}>{errors.time.message}</Text>
-            )}
+          {/* Repeat */}
+          <View style={styles.fieldWrapper}>
+            <Text style={styles.fieldLabel}>Repeat</Text>
+            <Pressable
+              style={styles.dropdownTrigger}
+              onPress={() => setShowRepeatPicker(true)}
+            >
+              <Text style={styles.dropdownTriggerText}>{repeatLabel}</Text>
+              <Image source={ChevronDownIcon} style={styles.dropdownIcon} />
+            </Pressable>
           </View>
-        </View>
 
-        {/* Repeat */}
-        <View style={styles.fieldWrapper}>
-          <Text style={styles.fieldLabel}>Repeat</Text>
-          <Pressable
-            style={styles.dropdownTrigger}
-            onPress={() => setShowRepeatPicker(true)}
-          >
-            <Text style={styles.dropdownTriggerText}>{repeatLabel}</Text>
-            <Image source={ChevronDownIcon} style={styles.dropdownIcon} />
-          </Pressable>
-        </View>
-
-        {/* Description */}
-        <View style={styles.fieldWrapper}>
-          <Text style={styles.fieldLabel}>Description</Text>
-          <Controller
-            control={control}
+          <RHFTextField<FormValues>
             name="description"
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                style={[styles.textInput, styles.textInputMultiline]}
-                placeholder="Short note about this notification..."
-                placeholderTextColor={theme.colors.textSecondary}
-                value={value}
-                onChangeText={(t) => {
-                  if (t.length <= DESCRIPTION_MAX) onChange(t);
-                }}
-                multiline
-                numberOfLines={4}
-              />
-            )}
+            label="Description"
+            placeholder="Short note about this notification..."
+            multiline
+            numberOfLines={4}
+            maxLength={DESCRIPTION_MAX}
+            showCharCount
           />
-          <Text style={styles.charCount}>
-            {descriptionValue.length} / {DESCRIPTION_MAX}
-          </Text>
-        </View>
 
-        {/* Actions */}
-        <View style={styles.actions}>
-          <Pressable style={styles.cancelButton} onPress={handleCancel}>
-            <Text style={styles.cancelButtonText}>Cancel</Text>
-          </Pressable>
-          <Pressable style={styles.saveButton} onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.saveButtonText}>Save</Text>
-          </Pressable>
+          {/* Actions */}
+          <View style={styles.actions}>
+            <Pressable style={styles.cancelButton} onPress={handleCancel}>
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </Pressable>
+            <Pressable
+              style={styles.saveButton}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={styles.saveButtonText}>Save</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
+      </RHFForm>
 
       {/* Date Picker Modal */}
       <Modal

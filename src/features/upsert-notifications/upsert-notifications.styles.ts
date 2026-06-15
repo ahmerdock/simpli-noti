@@ -51,27 +51,6 @@ export const upsertNotificationsStyles = StyleSheet.create((theme) => ({
     fontSize: 11,
     fontFamily: theme.typography.primary.regular,
     color: "#ff4d4d",
-    marginTop: theme.gap(0.25),
-  },
-  textInput: {
-    backgroundColor: theme.colors.backgroundSecondary,
-    borderRadius: 12,
-    paddingHorizontal: theme.gap(1.5),
-    paddingVertical: theme.gap(1.25),
-    fontSize: 15,
-    fontFamily: theme.typography.primary.regular,
-    color: theme.colors.text,
-  },
-  textInputMultiline: {
-    minHeight: 90,
-    textAlignVertical: "top",
-  },
-  charCount: {
-    fontSize: 11,
-    fontFamily: theme.typography.primary.regular,
-    color: theme.colors.textSecondary,
-    textAlign: "right",
-    marginTop: theme.gap(0.25),
   },
   dateTimeRow: {
     flexDirection: "row",
