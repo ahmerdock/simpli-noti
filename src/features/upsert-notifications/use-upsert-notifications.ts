@@ -6,6 +6,7 @@ import {
   FormValues,
   upsertNotificationsSchema,
 } from "./upsert-notifications.utils";
+import { useNotificationStore } from "@/store";
 
 const useUpsertNotifications = () => {
   const form = useForm<FormValues>({
@@ -17,9 +18,17 @@ const useUpsertNotifications = () => {
 
   const handleCancel = () => router.back();
 
+  const addNotification = useNotificationStore((s) => s.addNotification);
+
   const onSubmit = (data: FormValues) => {
-    console.log(data);
-    // wire up expo-notifications here
+    addNotification({
+      title: data.title,
+      date: data.date,
+      time: data.time,
+      repeat: data.repeat,
+      description: data.description,
+    });
+    router.back();
   };
 
   return {
