@@ -1,18 +1,17 @@
 import { router } from "expo-router";
 import { ParentLayout } from "@/layouts";
-import { Pressable, Text, View, Modal, FlatList, Image } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { upsertNotificationsStyles } from "./upsert-notifications.styles";
 import { PAGE_TITLES } from "@/constants/routes";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
-import { ChevronDownIcon } from "@/assets/icons";
 import {
   RHFForm,
   RHFTextField,
   RHFDatePicker,
   RHFTimePicker,
+  RHFSelect,
 } from "@/components/react-hook-form";
 
 const DESCRIPTION_MAX = 160;
@@ -40,8 +39,6 @@ type FormValues = z.infer<typeof schema>;
 const UpsertNotifications = () => {
   const styles = upsertNotificationsStyles;
 
-  const [showRepeatPicker, setShowRepeatPicker] = useState(false);
-
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -53,9 +50,7 @@ const UpsertNotifications = () => {
     },
   });
 
-  const { handleSubmit, setValue, watch } = form;
-
-  const repeatValue = watch("repeat");
+  const { handleSubmit } = form;
 
   const handleCancel = () => router.back();
 
@@ -63,9 +58,6 @@ const UpsertNotifications = () => {
     console.log(data);
     // wire up expo-notifications here
   };
-
-  const repeatLabel =
-    REPEAT_OPTIONS.find((o) => o.value === repeatValue)?.label ?? "No Repeat";
 
   return (
     <ParentLayout
@@ -99,16 +91,11 @@ const UpsertNotifications = () => {
             />
           </View>
 
-          <View style={styles.fieldWrapper}>
-            <Text style={styles.fieldLabel}>Repeat</Text>
-            <Pressable
-              style={styles.dropdownTrigger}
-              onPress={() => setShowRepeatPicker(true)}
-            >
-              <Text style={styles.dropdownTriggerText}>{repeatLabel}</Text>
-              <Image source={ChevronDownIcon} style={styles.dropdownIcon} />
-            </Pressable>
-          </View>
+          <RHFSelect<FormValues, RepeatValue>
+            name="repeat"
+            label="Repeat"
+            options={REPEAT_OPTIONS}
+          />
 
           <RHFTextField<FormValues>
             name="description"
@@ -133,58 +120,6 @@ const UpsertNotifications = () => {
           </View>
         </View>
       </RHFForm>
-
-      <Modal
-        visible={showRepeatPicker}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowRepeatPicker(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <Pressable
-            style={styles.modalBackdrop}
-            onPress={() => setShowRepeatPicker(false)}
-          />
-          <View style={styles.modalSheet}>
-            <View style={styles.modalHandle} />
-            <Text style={styles.modalTitle}>Repeat</Text>
-            <FlatList
-              data={REPEAT_OPTIONS}
-              keyExtractor={(item) => item.value}
-              scrollEnabled={false}
-              ItemSeparatorComponent={() => (
-                <View style={styles.repeatOptionDivider} />
-              )}
-              renderItem={({ item }) => {
-                const isActive = repeatValue === item.value;
-                return (
-                  <Pressable
-                    style={[
-                      styles.repeatOption,
-                      isActive && styles.repeatOptionActive,
-                    ]}
-                    onPress={() => {
-                      setValue("repeat", item.value as RepeatValue, {
-                        shouldValidate: true,
-                      });
-                      setShowRepeatPicker(false);
-                    }}
-                  >
-                    <Text
-                      style={[
-                        styles.repeatOptionText,
-                        isActive && styles.repeatOptionTextActive,
-                      ]}
-                    >
-                      {item.label}
-                    </Text>
-                  </Pressable>
-                );
-              }}
-            />
-          </View>
-        </View>
-      </Modal>
     </ParentLayout>
   );
 };
