@@ -1,14 +1,24 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   defaultFormValues,
   FormValues,
+  notificationToFormValues,
   upsertNotificationsSchema,
 } from "./upsert-notifications.utils";
 import { useNotificationStore } from "@/store";
 
 const useUpsertNotifications = () => {
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  const notificationId = typeof id === "string" ? id : undefined;
+  const isEditing = Boolean(notificationId);
+
+  const notifications = useNotificationStore((s) => s.notifications);
+  const addNotification = useNotificationStore((s) => s.addNotification);
+  const editNotification = useNotificationStore((s) => s.editNotification);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(upsertNotificationsSchema),
     defaultValues: defaultFormValues,
@@ -16,18 +26,41 @@ const useUpsertNotifications = () => {
 
   const { handleSubmit } = form;
 
+  useEffect(() => {
+    if (!notificationId) {
+      form.reset(defaultFormValues);
+      return;
+    }
+
+    const existing = notifications.find((n) => n.id === notificationId);
+    if (!existing) {
+      router.back();
+      return;
+    }
+
+    form.reset(notificationToFormValues(existing));
+  }, [notificationId, notifications, form]);
+
   const handleCancel = () => router.back();
 
-  const addNotification = useNotificationStore((s) => s.addNotification);
-
   const onSubmit = (data: FormValues) => {
-    addNotification({
-      title: data.title,
-      date: data.date,
-      time: data.time,
-      repeat: data.repeat,
-      description: data.description,
-    });
+    if (isEditing && notificationId) {
+      editNotification(notificationId, {
+        title: data.title,
+        date: data.date,
+        time: data.time,
+        repeat: data.repeat,
+        description: data.description,
+      });
+    } else {
+      addNotification({
+        title: data.title,
+        date: data.date,
+        time: data.time,
+        repeat: data.repeat,
+        description: data.description,
+      });
+    }
     router.back();
   };
 
@@ -36,6 +69,7 @@ const useUpsertNotifications = () => {
     handleSubmit,
     handleCancel,
     onSubmit,
+    isEditing,
   };
 };
 

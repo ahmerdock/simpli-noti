@@ -1,3 +1,4 @@
+import { INotification } from "@/store";
 import { z } from "zod";
 
 export const DESCRIPTION_MAX = 160;
@@ -13,11 +14,11 @@ export const REPEAT_OPTIONS = [
 export type RepeatValue = (typeof REPEAT_OPTIONS)[number]["value"];
 
 export const upsertNotificationsSchema = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z.string().trim().min(1, "Title is required"),
   date: z.string().min(1, "Date is required"),
   time: z.string().min(1, "Time is required"),
   repeat: z.enum(["none", "daily", "weekly", "monthly", "yearly"]),
-  description: z.string().max(DESCRIPTION_MAX).optional(),
+  description: z.string().trim().max(DESCRIPTION_MAX).optional(),
 });
 
 export type FormValues = z.infer<typeof upsertNotificationsSchema>;
@@ -29,3 +30,13 @@ export const defaultFormValues: FormValues = {
   repeat: "none",
   description: "",
 };
+
+export const notificationToFormValues = (
+  notification: INotification,
+): FormValues => ({
+  title: notification.title,
+  date: notification.date,
+  time: notification.time,
+  repeat: notification.repeat,
+  description: notification.description ?? "",
+});

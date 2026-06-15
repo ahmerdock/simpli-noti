@@ -20,13 +20,17 @@ import {
 
 const UpsertNotifications = () => {
   const styles = upsertNotificationsStyles;
-  const { form, handleSubmit, handleCancel, onSubmit } =
+  const { form, handleSubmit, handleCancel, onSubmit, isEditing } =
     useUpsertNotifications();
 
   return (
     <ParentLayout
       includeTabBarPadding={false}
-      titleProps={{ title: PAGE_TITLES.ADD_NOTIFICATION }}
+      titleProps={{
+        title: isEditing
+          ? PAGE_TITLES.EDIT_NOTIFICATION
+          : PAGE_TITLES.ADD_NOTIFICATION,
+      }}
     >
       <RHFForm form={form}>
         <View style={styles.form}>
@@ -80,7 +84,7 @@ const UpsertNotifications = () => {
             />
             <Button
               variant="submit"
-              label="Save"
+              label={isEditing ? "Update" : "Save"}
               style={{ flex: 1 }}
               onPress={handleSubmit(onSubmit)}
             />
