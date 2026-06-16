@@ -6,10 +6,16 @@ import { Image, TouchableOpacity, View, Text } from "react-native";
 import { homeStyles } from "./home.styles";
 import { PAGE_TITLES, ROUTES } from "@/constants/routes";
 import { useNotificationStore } from "@/store";
-import { formatNotificationDateTime } from "@/utils/date-time-display";
+import NotificationCard from "@/components/notification-card";
 
 const Home = () => {
   const notifications = useNotificationStore((s) => s.notifications);
+
+  const active = notifications.filter((n) => n.isActive);
+  const disabled = notifications.filter((n) => !n.isActive);
+
+  const navigateToEdit = (id: string) =>
+    router.push(`${ROUTES.UPSERT_NOTIFICATIONS}?id=${id}`);
 
   return (
     <ParentLayout
@@ -32,37 +38,31 @@ const Home = () => {
         />
       ) : (
         <View style={homeStyles.listContent}>
-          {notifications.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              style={homeStyles.card}
-              onPress={() =>
-                router.push(`${ROUTES.UPSERT_NOTIFICATIONS}?id=${item.id}`)
-              }
-            >
-              <View style={homeStyles.cardHeader}>
-                <Text style={homeStyles.cardTitle} numberOfLines={1}>
-                  {item.title}
-                </Text>
-                {item.repeat !== "none" && (
-                  <View style={homeStyles.repeatBadge}>
-                    <Text style={homeStyles.repeatBadgeText}>
-                      {item.repeat.charAt(0).toUpperCase() +
-                        item.repeat.slice(1)}
-                    </Text>
-                  </View>
-                )}
-              </View>
-              <Text style={homeStyles.cardDateTime}>
-                {formatNotificationDateTime(item)}
-              </Text>
-              {item.description ? (
-                <Text style={homeStyles.cardDescription} numberOfLines={2}>
-                  {item.description}
-                </Text>
-              ) : null}
-            </TouchableOpacity>
-          ))}
+          {active.length > 0 && (
+            <>
+              <Text style={homeStyles.sectionLabel}>ACTIVE</Text>
+              {active.map((item) => (
+                <NotificationCard
+                  key={item.id}
+                  item={item}
+                  onPress={() => navigateToEdit(item.id)}
+                />
+              ))}
+            </>
+          )}
+
+          {disabled.length > 0 && (
+            <>
+              <Text style={homeStyles.sectionLabel}>DISABLED</Text>
+              {disabled.map((item) => (
+                <NotificationCard
+                  key={item.id}
+                  item={item}
+                  onPress={() => navigateToEdit(item.id)}
+                />
+              ))}
+            </>
+          )}
         </View>
       )}
     </ParentLayout>

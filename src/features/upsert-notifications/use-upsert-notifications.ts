@@ -20,6 +20,7 @@ const useUpsertNotifications = () => {
   const addNotification = useNotificationStore((s) => s.addNotification);
   const editNotification = useNotificationStore((s) => s.editNotification);
   const deleteNotification = useNotificationStore((s) => s.deleteNotification);
+  const toggleNotification = useNotificationStore((s) => s.toggleNotification);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(upsertNotificationsSchema),
@@ -28,26 +29,37 @@ const useUpsertNotifications = () => {
 
   const { handleSubmit } = form;
 
+  const existingNotification = notifications.find(
+    (n) => n.id === notificationId,
+  );
+
   useEffect(() => {
     if (!notificationId) {
       form.reset(defaultFormValues);
       return;
     }
 
-    const existing = notifications.find((n) => n.id === notificationId);
-    if (!existing) {
+    if (!existingNotification) {
       router.back();
       return;
     }
 
-    form.reset(notificationToFormValues(existing));
-  }, [notificationId, notifications, form]);
+    form.reset(notificationToFormValues(existingNotification));
+  }, [notificationId]);
 
   const handleCancel = () => router.back();
 
   const handleDelete = () => {
     if (notificationId) {
       deleteNotification(notificationId);
+      router.back();
+    }
+  };
+
+  const handleToggle = () => {
+    if (notificationId) {
+      toggleNotification(notificationId);
+      router.back();
     }
   };
 
@@ -77,8 +89,10 @@ const useUpsertNotifications = () => {
     handleSubmit,
     handleCancel,
     handleDelete,
+    handleToggle,
     onSubmit,
     isEditing,
+    isActive: existingNotification?.isActive ?? true,
   };
 };
 

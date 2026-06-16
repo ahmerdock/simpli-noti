@@ -3,9 +3,10 @@ import { StyleSheet } from "react-native-unistyles";
 export const settingsStyles = StyleSheet.create((theme) => ({
   appearance: {
     fontFamily: theme.typography.primary.regular,
-    fontSize: 18,
+    fontSize: 12,
     color: theme.colors.textSecondary,
     marginBottom: theme.gap(2),
+    letterSpacing: 0.8,
   },
   iconWrap: {
     width: 36,

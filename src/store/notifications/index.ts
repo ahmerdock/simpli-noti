@@ -11,17 +11,21 @@ export interface INotification {
   time: string;
   repeat: RepeatType;
   description?: string;
+  isActive: boolean;
   createdAt: string;
 }
 
 interface INotificationStore {
   notifications: INotification[];
-  addNotification: (n: Omit<INotification, "id" | "createdAt">) => void;
+  addNotification: (
+    n: Omit<INotification, "id" | "createdAt" | "isActive">,
+  ) => void;
   editNotification: (
     id: string,
-    n: Omit<INotification, "id" | "createdAt">,
+    n: Omit<INotification, "id" | "createdAt" | "isActive">,
   ) => void;
   deleteNotification: (id: string) => void;
+  toggleNotification: (id: string) => void;
 }
 
 export const useNotificationStore = create<INotificationStore>()(
@@ -36,6 +40,7 @@ export const useNotificationStore = create<INotificationStore>()(
             {
               ...n,
               id: Date.now().toString(),
+              isActive: true,
               createdAt: new Date().toISOString(),
             },
           ],
@@ -51,6 +56,13 @@ export const useNotificationStore = create<INotificationStore>()(
       deleteNotification: (id) =>
         set((state) => ({
           notifications: state.notifications.filter((item) => item.id !== id),
+        })),
+
+      toggleNotification: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((item) =>
+            item.id === id ? { ...item, isActive: !item.isActive } : item,
+          ),
         })),
     }),
     {

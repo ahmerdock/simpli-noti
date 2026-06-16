@@ -27,6 +27,8 @@ const UpsertNotifications = () => {
     handleDelete,
     onSubmit,
     isEditing,
+    isActive,
+    handleToggle,
   } = useUpsertNotifications();
 
   return (
@@ -97,7 +99,12 @@ const UpsertNotifications = () => {
           </View>
           {isEditing && (
             <View style={styles.actions}>
-              <Button variant="disable" label="Disable" style={{ flex: 1 }} />
+              <Button
+                variant="disable"
+                label={isActive ? "Disable" : "Reactivate"}
+                style={{ flex: 1 }}
+                onPress={handleToggle}
+              />
               <Button
                 variant="delete"
                 label="Delete"
