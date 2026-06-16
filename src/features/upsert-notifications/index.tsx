@@ -52,7 +52,7 @@ const UpsertNotifications = () => {
           <View style={styles.dateTimeRow}>
             <RHFDatePicker<FormValues>
               name="date"
-              label="Date"
+              label="Start Date"
               placeholder="DD/MM/YY"
               required
               containerStyle={styles.dateTimeField}

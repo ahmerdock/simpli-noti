@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  defaultFormValues,
+  getDefaultFormValues,
   FormValues,
   notificationToFormValues,
   upsertNotificationsSchema,
@@ -24,7 +24,7 @@ const useUpsertNotifications = () => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(upsertNotificationsSchema),
-    defaultValues: defaultFormValues,
+    defaultValues: getDefaultFormValues(),
   });
 
   const { handleSubmit } = form;
@@ -35,7 +35,7 @@ const useUpsertNotifications = () => {
 
   useEffect(() => {
     if (!notificationId) {
-      form.reset(defaultFormValues);
+      form.reset(getDefaultFormValues());
       return;
     }
 

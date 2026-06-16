@@ -1,4 +1,6 @@
+import { DEFAULT_DATE_FORMAT } from "@/components/react-hook-form/rhf-date-picker/rhf-date-picker.utils";
 import { INotification } from "@/store";
+import dayjs from "dayjs";
 import { z } from "zod";
 
 export const DESCRIPTION_MAX = 160;
@@ -23,13 +25,13 @@ export const upsertNotificationsSchema = z.object({
 
 export type FormValues = z.infer<typeof upsertNotificationsSchema>;
 
-export const defaultFormValues: FormValues = {
+export const getDefaultFormValues = (): FormValues => ({
   title: "",
-  date: "",
-  time: "",
+  date: dayjs().format(DEFAULT_DATE_FORMAT),
+  time: dayjs().format("hh:mm A"),
   repeat: "none",
   description: "",
-};
+});
 
 export const notificationToFormValues = (
   notification: INotification,
