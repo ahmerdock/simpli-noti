@@ -3,10 +3,8 @@ import { StyleSheet } from "react-native-unistyles";
 export const customTabBarStyles = StyleSheet.create((theme) => ({
   container: {
     position: "absolute",
-    bottom: 36,
     left: 20,
     right: 20,
-    height: 52,
     borderRadius: 50,
     backgroundColor: theme.colors.backgroundSecondary,
     borderWidth: 1,

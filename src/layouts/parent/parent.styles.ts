@@ -8,7 +8,7 @@ export const parentStyles = StyleSheet.create((theme) => ({
   },
   contentContainer: (tabBarHeight: number) => ({
     paddingTop: theme.gap(3),
-    paddingBottom: tabBarHeight + 12,
+    paddingBottom: tabBarHeight + theme.gap(1.5),
   }),
   contentContainerWithoutTabBar: {
     paddingTop: theme.gap(3),
@@ -20,6 +20,6 @@ export const parentStyles = StyleSheet.create((theme) => ({
     right: 0,
     bottom: 0,
     backgroundColor: theme.colors.background,
-    height: tabBarHeight + 30,
+    height: tabBarHeight + theme.gap(2),
   }),
 }));

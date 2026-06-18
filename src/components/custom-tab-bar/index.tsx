@@ -1,7 +1,9 @@
 import { View } from "react-native";
 import Animated from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TabItem from "../tab-item";
+import { TAB_BAR_HEIGHT, TAB_BAR_MARGIN } from "@/constants/layout";
 import { ICustomTabBarProps } from "./custom-tab-bar.interface";
 import { customTabBarStyles } from "./custom-tab-bar.styles";
 import useCustomTabBar from "./use-custom-tab-bar";
@@ -9,12 +11,22 @@ import { TAB_CONFIG } from "./custom-tab-bar.utils";
 
 const CustomTabBar = (props: ICustomTabBarProps) => {
   const { state, navigation } = props;
+  const insets = useSafeAreaInsets();
 
   const { tabBarWidth, pillX, tabWidth, pillStyle, gradientColors, onLayout } =
     useCustomTabBar(props);
 
   return (
-    <View onLayout={onLayout} style={customTabBarStyles.container}>
+    <View
+      onLayout={onLayout}
+      style={[
+        customTabBarStyles.container,
+        {
+          bottom: insets.bottom + TAB_BAR_MARGIN,
+          height: TAB_BAR_HEIGHT,
+        },
+      ]}
+    >
       {/* Sliding gradient pill */}
       {tabBarWidth > 0 && (
         <Animated.View

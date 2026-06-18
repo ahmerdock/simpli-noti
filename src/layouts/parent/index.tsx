@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Text } from "react-native";
 import { parentStyles } from "./parent.styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IParentLayoutProps } from "./parent.interface";
@@ -54,7 +54,11 @@ const ParentLayout = (props: IParentLayoutProps) => {
   return (
     <View style={parentStyles.container}>
       <SafeAreaView
-        edges={["top", "right", "bottom", "left"]}
+        edges={
+          includeTabBarPadding
+            ? ["top", "right", "left"]
+            : ["top", "right", "bottom", "left"]
+        }
         style={{ flex: 1 }}
       >
         {includeTabBarPadding ? (
