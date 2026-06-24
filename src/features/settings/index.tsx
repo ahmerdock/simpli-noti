@@ -7,6 +7,8 @@ import { MoonIcon, SunIcon } from "@/assets/icons";
 import CustomSwitch from "@/components/custom-switch";
 import { PAGE_TITLES } from "@/constants/routes";
 import ShortHeading from "@/components/short-heading";
+import { CONTACT_LINKS } from "./settings.data";
+import { ContactLink } from "./components";
 
 const Settings = () => {
   const { rt } = useUnistyles();
@@ -38,6 +40,10 @@ const Settings = () => {
       </Card>
 
       <ShortHeading heading="CONTACT ME" style={settingsStyles.contactMe} />
+
+      {CONTACT_LINKS.map((link) => (
+        <ContactLink key={link.label} {...link} />
+      ))}
     </ParentLayout>
   );
 };

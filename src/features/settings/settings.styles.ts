@@ -27,6 +27,6 @@ export const settingsStyles = StyleSheet.create((theme) => ({
     alignSelf: "center",
   },
   contactMe: {
-    marginTop: theme.gap(3),
+    marginTop: theme.gap(1),
   },
 }));

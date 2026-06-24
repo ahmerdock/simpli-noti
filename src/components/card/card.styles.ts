@@ -8,5 +8,6 @@ export const cardStyles = StyleSheet.create((theme) => ({
     borderRadius: 12,
     padding: 12,
     gap: 10,
+    marginBottom: theme.gap(2),
   },
 }));

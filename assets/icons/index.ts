@@ -8,3 +8,6 @@ export { default as AddIcon } from "./add-icon.png";
 export { default as ChevronDownIcon } from "./chevron-down-icon.png";
 export { default as CalendarIcon } from "./calendar-icon.png";
 export { default as ClockIcon } from "./clock-icon.png";
+export { default as GithubIcon } from "./github-icon.png";
+export { default as LinkedinIcon } from "./linkedin-icon.png";
+export { default as GlobeIcon } from "./globe-icon.png";
