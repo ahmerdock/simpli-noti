@@ -23,9 +23,6 @@ export const settingsStyles = StyleSheet.create((theme) => ({
     color: theme.colors.textSecondary,
     fontFamily: theme.typography.primary.regular,
   },
-  switch: {
-    alignSelf: "center",
-  },
   contactMe: {
     marginTop: theme.gap(1),
   },

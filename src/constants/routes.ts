@@ -12,8 +12,6 @@ export const ROUTES = {
   UPSERT_NOTIFICATIONS: "/upsert-notifications",
 } as const satisfies Record<string, Href>;
 
-export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];
-
 export const PAGE_TITLES = {
   HOME: "Home",
   HELP_ME: "Help Me",
