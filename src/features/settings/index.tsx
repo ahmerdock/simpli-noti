@@ -6,6 +6,7 @@ import { useUnistyles, UnistylesRuntime } from "react-native-unistyles";
 import { MoonIcon, SunIcon } from "@/assets/icons";
 import CustomSwitch from "@/components/custom-switch";
 import { PAGE_TITLES } from "@/constants/routes";
+import ShortHeading from "@/components/short-heading";
 
 const Settings = () => {
   const { rt } = useUnistyles();
@@ -17,7 +18,7 @@ const Settings = () => {
 
   return (
     <ParentLayout titleProps={{ title: PAGE_TITLES.SETTINGS }}>
-      <Text style={settingsStyles.appearance}>APPEARANCE</Text>
+      <ShortHeading heading="APPEARANCE" />
 
       <Card>
         <View style={settingsStyles.iconWrap}>
@@ -35,6 +36,8 @@ const Settings = () => {
         </View>
         <CustomSwitch value={isDark} onValueChange={toggleTheme} />
       </Card>
+
+      <ShortHeading heading="CONTACT ME" style={settingsStyles.contactMe} />
     </ParentLayout>
   );
 };

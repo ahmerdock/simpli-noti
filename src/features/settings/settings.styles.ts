@@ -1,13 +1,6 @@
 import { StyleSheet } from "react-native-unistyles";
 
 export const settingsStyles = StyleSheet.create((theme) => ({
-  appearance: {
-    fontFamily: theme.typography.primary.regular,
-    fontSize: 12,
-    color: theme.colors.textSecondary,
-    marginBottom: theme.gap(2),
-    letterSpacing: 0.8,
-  },
   iconWrap: {
     width: 36,
     height: 36,
@@ -32,5 +25,8 @@ export const settingsStyles = StyleSheet.create((theme) => ({
   },
   switch: {
     alignSelf: "center",
+  },
+  contactMe: {
+    marginTop: theme.gap(3),
   },
 }));
