@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { ROUTE_NAMES } from "@/constants/routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import ToastManager from "toastify-react-native";
+import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,7 +42,7 @@ export default function RootLayout() {
             options={{ headerShown: false }}
           />
         </Stack>
-        <ToastManager />
+        <Toast position="bottom" />
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );

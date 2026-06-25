@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ActivityIndicator, Text } from "react-native";
-import { Toast } from "toastify-react-native";
+import Toast from "react-native-toast-message";
 import { PAGE_TITLES } from "@/constants/routes";
 import ShortHeading from "@/components/short-heading";
 import ActionCard, { actionCardStyles } from "@/components/action-card";
@@ -30,7 +30,10 @@ const HelpMe = () => {
     const tier = HELP_ME_PRODUCTS.find(
       (product) => product.id === successProductId,
     );
-    Toast.success(tier?.successMessage ?? "Thank you for your support!");
+    Toast.show({
+      type: "success",
+      text1: tier?.successMessage ?? "Thank you for your support!",
+    });
     clearSuccess();
   }, [successProductId, clearSuccess]);
 
@@ -39,7 +42,10 @@ const HelpMe = () => {
       return;
     }
 
-    Toast.error(error);
+    Toast.show({
+      type: "error",
+      text1: error,
+    });
     clearError();
   }, [error, clearError]);
 
