@@ -11,3 +11,6 @@ export { default as ClockIcon } from "./clock-icon.png";
 export { default as GithubIcon } from "./github-icon.png";
 export { default as LinkedinIcon } from "./linkedin-icon.png";
 export { default as GlobeIcon } from "./globe-icon.png";
+export { default as CoffeeIcon } from "./coffee-icon.png";
+export { default as BurgerIcon } from "./burger-icon.png";
+export { default as RocketIcon } from "./rocket-icon.png";
