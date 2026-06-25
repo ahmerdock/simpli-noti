@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { Text } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 import { Toast } from "toastify-react-native";
 import { PAGE_TITLES } from "@/constants/routes";
 import ShortHeading from "@/components/short-heading";
-import SupportTierCard from "@/components/support-tier-card";
+import ActionCard, { actionCardStyles } from "@/components/action-card";
 import { ParentLayout } from "@/layouts";
 import { HELP_ME_PRODUCTS } from "./help-me.data";
 import { helpMeStyles } from "./help-me.styles";
@@ -53,18 +53,35 @@ const HelpMe = () => {
         </Text>
       )}
 
-      {HELP_ME_PRODUCTS.map((tier) => (
-        <SupportTierCard
-          key={tier.id}
-          label={tier.label}
-          description={tier.description}
-          icon={tier.icon}
-          displayPrice={productsById[tier.id]?.displayPrice ?? null}
-          isPurchasing={purchasingProductId === tier.id}
-          disabled={!isAvailable || isProductsLoading || !productsById[tier.id]}
-          onPress={() => purchase(tier.id)}
-        />
-      ))}
+      {HELP_ME_PRODUCTS.map((tier) => {
+        const isPurchasing = purchasingProductId === tier.id;
+        const displayPrice = productsById[tier.id]?.displayPrice;
+
+        return (
+          <ActionCard
+            key={tier.id}
+            label={tier.label}
+            description={tier.description}
+            icon={tier.icon}
+            disabled={
+              !isAvailable ||
+              isProductsLoading ||
+              !productsById[tier.id] ||
+              isPurchasing
+            }
+            onPress={() => purchase(tier.id)}
+            trailing={
+              isPurchasing ? (
+                <ActivityIndicator size="small" />
+              ) : displayPrice ? (
+                <Text style={actionCardStyles.trailingText}>
+                  {displayPrice}
+                </Text>
+              ) : null
+            }
+          />
+        );
+      })}
     </ParentLayout>
   );
 };

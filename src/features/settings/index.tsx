@@ -1,14 +1,13 @@
+import { Linking } from "react-native";
 import { ParentLayout } from "@/layouts";
-import { Image, Text, View } from "react-native";
-import { settingsStyles } from "./settings.styles";
-import Card from "@/components/card";
 import { useUnistyles, UnistylesRuntime } from "react-native-unistyles";
 import { MoonIcon, SunIcon } from "@/assets/icons";
+import ActionCard from "@/components/action-card";
 import CustomSwitch from "@/components/custom-switch";
 import { PAGE_TITLES } from "@/constants/routes";
 import ShortHeading from "@/components/short-heading";
 import { CONTACT_LINKS } from "./settings.data";
-import { ContactLink } from "./components";
+import { settingsStyles } from "./settings.styles";
 
 const Settings = () => {
   const { rt } = useUnistyles();
@@ -22,27 +21,24 @@ const Settings = () => {
     <ParentLayout titleProps={{ title: PAGE_TITLES.SETTINGS }}>
       <ShortHeading heading="APPEARANCE" />
 
-      <Card>
-        <View style={settingsStyles.iconWrap}>
-          <Image
-            source={isDark ? MoonIcon : SunIcon}
-            style={{ width: 20, height: 20 }}
-          />
-        </View>
-
-        <View style={settingsStyles.textWrap}>
-          <Text style={settingsStyles.label}>Dark Mode</Text>
-          <Text style={settingsStyles.sub}>
-            {isDark ? "Currently active" : "Currently off"}
-          </Text>
-        </View>
-        <CustomSwitch value={isDark} onValueChange={toggleTheme} />
-      </Card>
+      <ActionCard
+        label="Dark Mode"
+        description={isDark ? "Currently active" : "Currently off"}
+        icon={isDark ? MoonIcon : SunIcon}
+        onPress={toggleTheme}
+        trailing={<CustomSwitch value={isDark} onValueChange={toggleTheme} />}
+      />
 
       <ShortHeading heading="CONTACT ME" style={settingsStyles.contactMe} />
 
       {CONTACT_LINKS.map((link) => (
-        <ContactLink key={link.label} {...link} />
+        <ActionCard
+          key={link.label}
+          label={link.label}
+          description={link.description}
+          icon={link.icon}
+          onPress={() => Linking.openURL(link.url)}
+        />
       ))}
     </ParentLayout>
   );

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native-unistyles";
 
-export const supportTierCardStyles = StyleSheet.create((theme) => ({
+export const actionCardStyles = StyleSheet.create((theme) => ({
   iconWrap: {
     width: 36,
     height: 36,
@@ -27,12 +27,12 @@ export const supportTierCardStyles = StyleSheet.create((theme) => ({
     color: theme.colors.textSecondary,
     fontFamily: theme.typography.primary.regular,
   },
-  priceWrap: {
+  trailingWrap: {
     minWidth: 56,
     alignItems: "flex-end",
     justifyContent: "center",
   },
-  price: {
+  trailingText: {
     fontSize: 16,
     fontFamily: theme.typography.primary.medium,
     color: theme.colors.text,
