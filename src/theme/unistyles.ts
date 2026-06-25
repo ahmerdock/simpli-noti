@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native-unistyles";
+import { createMMKV } from "react-native-mmkv";
+
+export const mmkvStorage = createMMKV();
 
 const typography = {
   primary: {
@@ -53,9 +56,17 @@ declare module "react-native-unistyles" {
   export interface UnistylesThemes extends AppThemes {}
 }
 
+const savedTheme = mmkvStorage.getString("app_theme") as
+  | "light"
+  | "dark"
+  | undefined;
+
 StyleSheet.configure({
   settings: {
-    initialTheme: "light",
+    initialTheme: savedTheme ?? "light",
   },
-  themes: appThemes,
+  themes: {
+    light: lightTheme,
+    dark: darkTheme,
+  },
 });

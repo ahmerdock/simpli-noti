@@ -8,13 +8,17 @@ import { PAGE_TITLES } from "@/constants/routes";
 import ShortHeading from "@/components/short-heading";
 import { CONTACT_LINKS } from "./settings.data";
 import { settingsStyles } from "./settings.styles";
+import { mmkvStorage } from "@/theme/unistyles";
 
 const Settings = () => {
   const { rt } = useUnistyles();
 
   const toggleTheme = () => {
-    UnistylesRuntime.setTheme(rt.themeName === "light" ? "dark" : "light");
+    const newTheme = rt.themeName === "light" ? "dark" : "light";
+    UnistylesRuntime.setTheme(newTheme);
+    mmkvStorage.set("app_theme", newTheme);
   };
+
   const isDark = rt.themeName === "dark";
 
   return (
