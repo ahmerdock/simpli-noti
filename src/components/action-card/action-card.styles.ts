@@ -33,7 +33,7 @@ export const actionCardStyles = StyleSheet.create((theme) => ({
     justifyContent: "center",
   },
   trailingText: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: theme.typography.primary.medium,
     color: theme.colors.text,
   },
