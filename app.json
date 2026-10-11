@@ -41,7 +41,8 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      "./plugins/with-gradle-memory"
     ],
     "experiments": {
       "typedRoutes": true,
@@ -50,7 +51,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "b72250dc-439d-4045-bfa6-0a9ba049bd64"
+        "projectId": "f03af68e-2272-449a-9eb1-d7dc770a7d14"
       }
     },
     "owner": "ahmersdev"
