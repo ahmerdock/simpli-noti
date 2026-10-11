@@ -11,6 +11,8 @@ export interface NativeScheduleInput {
   body: string;
   triggerAtMillis: number;
   repeat: NativeRepeat;
+  /** First occurrence; repeats are computed from it so month-ends do not drift. */
+  anchorMillis: number;
 }
 
 export type PermissionStatus = "granted" | "denied" | "undetermined";

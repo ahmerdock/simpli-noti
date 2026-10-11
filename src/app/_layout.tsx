@@ -28,34 +28,43 @@ export default function RootLayout() {
     }
   }, [loaded, error]);
 
-  // Ensure permission/channel and re-sync native alarms with the persisted
-  // store (repairs drift from reboots, permission changes and app upgrades).
+  // Ask for permission, then re-sync native alarms with the persisted store
+  // (repairs drift from reboots, permission changes, clock changes and app
+  // upgrades). The re-sync runs even if the permission step fails, and again
+  // whenever the app returns to the foreground.
   useEffect(() => {
+    let cancelled = false;
     let unsub: (() => void) | undefined;
 
-    const reconcile = () =>
-      NotificationService.reconcile(useNotificationStore.getState().notifications);
+    const reconcile = () => {
+      const { notifications, expireNotification } =
+        useNotificationStore.getState();
+      NotificationService.reconcile(notifications, expireNotification).catch(
+        () => {},
+      );
+    };
 
-    (async () => {
-      await NotificationService.ensureReady();
+    const reconcileWhenHydrated = () => {
       if (useNotificationStore.persist.hasHydrated()) {
-        void reconcile();
+        reconcile();
       } else {
-        unsub = useNotificationStore.persist.onFinishHydration(() => {
-          void reconcile();
-        });
+        unsub = useNotificationStore.persist.onFinishHydration(reconcile);
       }
-    })();
+    };
 
-    // Re-sync whenever the app returns to the foreground, so permission or
-    // battery-setting changes and clock/timezone shifts are picked up.
+    reconcileWhenHydrated();
+    NotificationService.ensureReady().then(() => {
+      if (!cancelled) reconcile();
+    });
+
     const sub = AppState.addEventListener("change", (state) => {
       if (state === "active" && useNotificationStore.persist.hasHydrated()) {
-        void reconcile();
+        reconcile();
       }
     });
 
     return () => {
+      cancelled = true;
       unsub?.();
       sub.remove();
     };

@@ -16,7 +16,7 @@ object NotificationPresenter {
 
     val builder =
       NotificationCompat.Builder(context, NotificationChannels.CHANNEL_ID)
-        .setSmallIcon(context.applicationInfo.icon)
+        .setSmallIcon(R.drawable.ic_notification)
         .setContentTitle(item.title.ifBlank { context.applicationInfo.loadLabel(context.packageManager).toString() })
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setCategory(NotificationCompat.CATEGORY_REMINDER)

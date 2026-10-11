@@ -10,7 +10,7 @@ export interface ExactNotificationsNativeModule {
   getPermissionStatus(): Promise<PermissionStatus>;
   requestPermission(): Promise<PermissionStatus>;
   schedule(input: NativeScheduleInput): Promise<void>;
-  cancel(id: string): Promise<void>;
+  cancel(id: string, clearDelivered?: boolean): Promise<void>;
   cancelAll(): Promise<void>;
   getScheduledIds(): Promise<string[]>;
   openBatteryOptimizationSettings(): Promise<void>;

@@ -3,6 +3,7 @@ package expo.modules.exactnotifications
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import java.util.TimeZone
 
 /**
  * Fired by AlarmManager at the scheduled time. Posts the notification and, for
@@ -23,11 +24,13 @@ class NotificationDeliveryReceiver : BroadcastReceiver() {
       return
     }
 
+    val after = maxOf(System.currentTimeMillis(), item.triggerAtMillis)
     val next =
-      NextOccurrence.nextFuture(
-        NextOccurrence.advance(item.triggerAtMillis, item.repeat),
+      NextOccurrence.nextAfter(
+        item.anchorMillis,
         item.repeat,
-        System.currentTimeMillis(),
+        after,
+        TimeZone.getTimeZone(item.tzId),
       )
     val updated = item.copy(triggerAtMillis = next)
     store.save(updated)

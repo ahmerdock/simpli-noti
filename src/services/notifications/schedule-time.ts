@@ -21,26 +21,36 @@ export function parseNotificationDateTime(
   return parsed.isValid() ? parsed.second(0).millisecond(0) : null;
 }
 
-function advance(d: Dayjs, repeat: RepeatType): Dayjs {
+function occurrence(base: Dayjs, repeat: RepeatType, n: number): Dayjs {
   switch (repeat) {
     case "daily":
-      return d.add(1, "day");
+      return base.add(n, "day");
     case "weekly":
-      return d.add(1, "week");
+      return base.add(n, "week");
     case "monthly":
-      return d.add(1, "month");
+      return base.add(n, "month");
     case "yearly":
-      return d.add(1, "year");
+      return base.add(n, "year");
     default:
-      return d;
+      return base;
   }
+}
+
+/** True when a one-time reminder's chosen date/time has already passed. */
+export function isInThePast(
+  notification: Pick<INotification, "date" | "time">,
+  now: Dayjs = dayjs(),
+): boolean {
+  const base = parseNotificationDateTime(notification);
+  return base != null && !base.isAfter(now);
 }
 
 /**
  * Resolves the next absolute fire time (epoch ms) for a notification.
- * - One-shot in the past → `null` (nothing to schedule).
- * - Repeating in the past → rolled forward to the next future occurrence,
- *   mirroring `formatNotificationDateTime` recurrence semantics.
+ * - One-shot in the past -> `null` (nothing to schedule).
+ * - Repeating in the past -> the next future occurrence. Each occurrence is
+ *   computed from the original date (not the previous occurrence), so a
+ *   monthly reminder on the 31st stays on the 31st in months that have it.
  */
 export function computeTriggerAt(
   notification: Pick<INotification, "date" | "time" | "repeat">,
@@ -53,9 +63,11 @@ export function computeTriggerAt(
     return base.isAfter(now) ? base.valueOf() : null;
   }
 
+  let n = 0;
   let next = base;
   while (!next.isAfter(now)) {
-    next = advance(next, notification.repeat);
+    n += 1;
+    next = occurrence(base, notification.repeat, n);
   }
   return next.valueOf();
 }

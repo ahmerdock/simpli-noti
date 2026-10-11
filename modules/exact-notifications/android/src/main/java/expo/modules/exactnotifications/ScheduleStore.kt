@@ -13,6 +13,10 @@ data class ScheduledItem(
   val body: String,
   val triggerAtMillis: Long,
   val repeat: String,
+  /** Original first occurrence; all repeats are computed from it (no month-end drift). */
+  val anchorMillis: Long = triggerAtMillis,
+  /** Timezone the wall-clock time was chosen in; used to follow timezone changes. */
+  val tzId: String = java.util.TimeZone.getDefault().id,
 ) {
   fun toJson(): String =
     JSONObject()
@@ -21,18 +25,23 @@ data class ScheduledItem(
       .put("body", body)
       .put("triggerAtMillis", triggerAtMillis)
       .put("repeat", repeat)
+      .put("anchorMillis", anchorMillis)
+      .put("tzId", tzId)
       .toString()
 
   companion object {
     fun fromJson(json: String): ScheduledItem? =
       try {
         val obj = JSONObject(json)
+        val trigger = obj.getLong("triggerAtMillis")
         ScheduledItem(
           id = obj.getString("id"),
           title = obj.optString("title"),
           body = obj.optString("body"),
-          triggerAtMillis = obj.getLong("triggerAtMillis"),
+          triggerAtMillis = trigger,
           repeat = obj.optString("repeat", "none"),
+          anchorMillis = obj.optLong("anchorMillis", trigger),
+          tzId = obj.optString("tzId", java.util.TimeZone.getDefault().id),
         )
       } catch (e: Exception) {
         null

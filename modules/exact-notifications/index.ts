@@ -35,9 +35,12 @@ export function schedule(input: NativeScheduleInput): Promise<void> {
   return ExactNotificationsModule?.schedule(input) ?? Promise.resolve();
 }
 
-/** Cancels a scheduled notification and clears any posted one for this `id`. */
-export function cancel(id: string): Promise<void> {
-  return ExactNotificationsModule?.cancel(id) ?? Promise.resolve();
+/**
+ * Cancels a scheduled notification. By default also clears any posted one for
+ * this `id`; pass `clearDelivered: false` to leave it in the tray.
+ */
+export function cancel(id: string, clearDelivered = true): Promise<void> {
+  return ExactNotificationsModule?.cancel(id, clearDelivered) ?? Promise.resolve();
 }
 
 /** Cancels every scheduled notification owned by this module. */

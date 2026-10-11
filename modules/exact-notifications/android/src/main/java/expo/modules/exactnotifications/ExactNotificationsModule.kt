@@ -1,6 +1,7 @@
 package expo.modules.exactnotifications
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,6 +25,7 @@ class ScheduleRecord : Record {
   @Field val body: String = ""
   @Field val triggerAtMillis: Double = 0.0
   @Field val repeat: String = "none"
+  @Field val anchorMillis: Double = 0.0
 
   fun toItem(): ScheduledItem =
     ScheduledItem(
@@ -32,6 +34,7 @@ class ScheduleRecord : Record {
       body = body,
       triggerAtMillis = triggerAtMillis.toLong(),
       repeat = repeat,
+      anchorMillis = if (anchorMillis > 0) anchorMillis.toLong() else triggerAtMillis.toLong(),
     )
 }
 
@@ -74,15 +77,33 @@ class ExactNotificationsModule : Module() {
 
       AsyncFunction("schedule") { record: ScheduleRecord ->
         NotificationChannels.ensure(context)
-        val item = record.toItem()
-        ScheduleStore(context).save(item)
+        val store = ScheduleStore(context)
+        var item = record.toItem()
+        // A foreground re-sync can race an alarm that just fired and advanced
+        // itself. For the same schedule, never move the next fire time backwards.
+        val existing = store.get(item.id)
+        if (
+          existing != null &&
+            item.repeat != "none" &&
+            existing.repeat == item.repeat &&
+            existing.anchorMillis == item.anchorMillis &&
+            existing.triggerAtMillis > System.currentTimeMillis() &&
+            item.triggerAtMillis < existing.triggerAtMillis
+        ) {
+          item = item.copy(triggerAtMillis = existing.triggerAtMillis)
+        }
+        store.save(item)
         AlarmScheduler.arm(context, item)
       }
 
-      AsyncFunction("cancel") { id: String ->
+      // `clearDelivered` defaults to true; pass false to keep an already-posted
+      // notification in the tray (e.g. a one-shot that has simply fired).
+      AsyncFunction("cancel") { id: String, clearDelivered: Boolean? ->
         ScheduleStore(context).remove(id)
         AlarmScheduler.cancel(context, id)
-        NotificationManagerCompat.from(context).cancel(id.hashCode())
+        if (clearDelivered != false) {
+          NotificationManagerCompat.from(context).cancel(id.hashCode())
+        }
       }
 
       AsyncFunction("cancelAll") {
@@ -98,12 +119,25 @@ class ExactNotificationsModule : Module() {
       AsyncFunction("getScheduledIds") { ScheduleStore(context).ids() }
 
       AsyncFunction("openBatteryOptimizationSettings") {
-        val intent =
-          Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-            data = Uri.parse("package:" + context.packageName)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        // The list screen needs no special permission (unlike the direct
+        // per-app exemption dialog, which Play restricts).
+        val candidates =
+          listOf(
+            Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS),
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+              data = Uri.parse("package:" + context.packageName)
+            },
+          )
+        // Stop at the first screen this device can actually open.
+        candidates.firstOrNull { intent ->
+          try {
+            context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            true
+          } catch (e: ActivityNotFoundException) {
+            false
           }
-        context.startActivity(intent)
+        }
+        null
       }
     }
 

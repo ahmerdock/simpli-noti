@@ -7,11 +7,30 @@ struct ScheduleRecord: Record {
   @Field var body: String = ""
   @Field var triggerAtMillis: Double = 0
   @Field("repeat") var repeatRule: String = "none"
+  @Field var anchorMillis: Double = 0
+}
+
+/// Without a delegate iOS suppresses notifications that arrive while the app is
+/// open; this presents them as banners instead.
+final class ForegroundPresenter: NSObject, UNUserNotificationCenterDelegate {
+  static let shared = ForegroundPresenter()
+
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+  ) {
+    completionHandler([.banner, .list, .sound])
+  }
 }
 
 public class ExactNotificationsModule: Module {
   public func definition() -> ModuleDefinition {
     Name("ExactNotifications")
+
+    OnCreate {
+      UNUserNotificationCenter.current().delegate = ForegroundPresenter.shared
+    }
 
     // Channels are Android-only.
     AsyncFunction("ensureChannel") {}
@@ -59,10 +78,12 @@ public class ExactNotificationsModule: Module {
       }
     }
 
-    AsyncFunction("cancel") { (id: String) in
+    AsyncFunction("cancel") { (id: String, clearDelivered: Bool?) in
       let center = UNUserNotificationCenter.current()
       center.removePendingNotificationRequests(withIdentifiers: [id])
-      center.removeDeliveredNotifications(withIdentifiers: [id])
+      if clearDelivered != false {
+        center.removeDeliveredNotifications(withIdentifiers: [id])
+      }
     }
 
     AsyncFunction("cancelAll") {

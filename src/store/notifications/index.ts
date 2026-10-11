@@ -27,6 +27,8 @@ interface INotificationStore {
   ) => void;
   deleteNotification: (id: string) => void;
   toggleNotification: (id: string) => void;
+  /** Marks a one-time reminder that has already fired as done. */
+  expireNotification: (id: string) => void;
 }
 
 export const useNotificationStore = create<INotificationStore>()(
@@ -45,7 +47,10 @@ export const useNotificationStore = create<INotificationStore>()(
           notifications: [...state.notifications, item],
         }));
         // Keep the native scheduled alarm in sync with the new record.
-        void NotificationService.syncWithPermission(item);
+        void NotificationService.syncWithPermission(
+          () => get().notifications.find((x) => x.id === item.id),
+          () => get().expireNotification(item.id),
+        );
       },
 
       editNotification: (id, n) => {
@@ -54,8 +59,10 @@ export const useNotificationStore = create<INotificationStore>()(
             item.id === id ? { ...item, ...n } : item,
           ),
         }));
-        const updated = get().notifications.find((item) => item.id === id);
-        if (updated) void NotificationService.syncWithPermission(updated);
+        void NotificationService.syncWithPermission(
+          () => get().notifications.find((item) => item.id === id),
+          () => get().expireNotification(id),
+        );
       },
 
       deleteNotification: (id) => {
@@ -72,9 +79,20 @@ export const useNotificationStore = create<INotificationStore>()(
           ),
         }));
         // syncNotification arms when active, cancels when inactive.
-        const updated = get().notifications.find((item) => item.id === id);
-        if (updated) void NotificationService.syncWithPermission(updated);
+        void NotificationService.syncWithPermission(
+          () => get().notifications.find((item) => item.id === id),
+          () => get().expireNotification(id),
+        );
       },
+
+      expireNotification: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((item) =>
+            item.id === id && item.isActive && item.repeat === "none"
+              ? { ...item, isActive: false }
+              : item,
+          ),
+        })),
     }),
     {
       name: "notifications-storage",
