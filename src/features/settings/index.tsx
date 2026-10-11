@@ -1,4 +1,4 @@
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 import { ParentLayout } from "@/layouts";
 import { useUnistyles, UnistylesRuntime } from "react-native-unistyles";
 import { MoonIcon, SunIcon } from "@/assets/icons";
@@ -9,6 +9,7 @@ import ShortHeading from "@/components/short-heading";
 import { CONTACT_LINKS } from "./settings.data";
 import { settingsStyles } from "./settings.styles";
 import { mmkvStorage } from "@/theme/unistyles";
+import { NotificationService } from "@/services/notifications";
 
 const Settings = () => {
   const { rt } = useUnistyles();
@@ -32,6 +33,18 @@ const Settings = () => {
         onPress={toggleTheme}
         trailing={<CustomSwitch value={isDark} onValueChange={toggleTheme} />}
       />
+
+      {Platform.OS === "android" && (
+        <>
+          <ShortHeading heading="RELIABILITY" style={settingsStyles.contactMe} />
+          <ActionCard
+            label="Allow background activity"
+            description="Stops the phone from delaying reminders"
+            icon={isDark ? MoonIcon : SunIcon}
+            onPress={() => void NotificationService.openBatteryOptimizationSettings()}
+          />
+        </>
+      )}
 
       <ShortHeading heading="CONTACT ME" style={settingsStyles.contactMe} />
 

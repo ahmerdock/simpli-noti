@@ -1,0 +1,34 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!-- Exact, Doze-proof alarms. USE_EXACT_ALARM is auto-granted and is the
+       Play-policy-appropriate choice for a reminder/alarm-style app. -->
+  <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+  <!-- Runtime-requested on Android 13+ before posting. -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <!-- Re-arm alarms after a reboot (they are cleared by the OS on restart). -->
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <!-- For the optional battery-optimization exemption prompt. -->
+  <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+  <application>
+    <!-- Fires when an alarm goes off: posts the notification and re-arms the
+         next occurrence for repeating schedules. -->
+    <receiver
+      android:name="expo.modules.exactnotifications.NotificationDeliveryReceiver"
+      android:enabled="true"
+      android:exported="false" />
+
+    <!-- Re-arms all persisted schedules after boot / app update. -->
+    <receiver
+      android:name="expo.modules.exactnotifications.BootReceiver"
+      android:enabled="true"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+      </intent-filter>
+    </receiver>
+  </application>
+</manifest>

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NotificationService } from "@/services/notifications";
 
 export type RepeatType = "none" | "daily" | "weekly" | "monthly" | "yearly";
 
@@ -30,40 +31,50 @@ interface INotificationStore {
 
 export const useNotificationStore = create<INotificationStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       notifications: [],
 
-      addNotification: (n) =>
+      addNotification: (n) => {
+        const item: INotification = {
+          ...n,
+          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          isActive: true,
+          createdAt: new Date().toISOString(),
+        };
         set((state) => ({
-          notifications: [
-            ...state.notifications,
-            {
-              ...n,
-              id: Date.now().toString(),
-              isActive: true,
-              createdAt: new Date().toISOString(),
-            },
-          ],
-        })),
+          notifications: [...state.notifications, item],
+        }));
+        // Keep the native scheduled alarm in sync with the new record.
+        void NotificationService.syncWithPermission(item);
+      },
 
-      editNotification: (id, n) =>
+      editNotification: (id, n) => {
         set((state) => ({
           notifications: state.notifications.map((item) =>
             item.id === id ? { ...item, ...n } : item,
           ),
-        })),
+        }));
+        const updated = get().notifications.find((item) => item.id === id);
+        if (updated) void NotificationService.syncWithPermission(updated);
+      },
 
-      deleteNotification: (id) =>
+      deleteNotification: (id) => {
         set((state) => ({
           notifications: state.notifications.filter((item) => item.id !== id),
-        })),
+        }));
+        void NotificationService.cancelNotification(id);
+      },
 
-      toggleNotification: (id) =>
+      toggleNotification: (id) => {
         set((state) => ({
           notifications: state.notifications.map((item) =>
             item.id === id ? { ...item, isActive: !item.isActive } : item,
           ),
-        })),
+        }));
+        // syncNotification arms when active, cancels when inactive.
+        const updated = get().notifications.find((item) => item.id === id);
+        if (updated) void NotificationService.syncWithPermission(updated);
+      },
     }),
     {
       name: "notifications-storage",
