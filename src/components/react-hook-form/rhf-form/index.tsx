@@ -1,9 +1,8 @@
 import { FormProvider, FieldValues } from "react-hook-form";
 import { IRHFFormProps } from "./rhf-form.interface";
 
-const RHFForm = <T extends FieldValues>({
-  form,
-  children,
-}: IRHFFormProps<T>) => <FormProvider {...form}>{children}</FormProvider>;
+export default function RHFForm<T extends FieldValues>(props: IRHFFormProps<T>) {
+  const { form, children } = props;
 
-export default RHFForm;
+  return <FormProvider {...form}>{children}</FormProvider>;
+}

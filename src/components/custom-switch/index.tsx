@@ -4,7 +4,7 @@ import { ICustomSwitchProps } from "./custom-switch.interface";
 import { customSwitchStyles } from "./custom-switch.styles";
 import useCustomSwitch from "./use-custom-switch";
 
-const CustomSwitch = (props: ICustomSwitchProps) => {
+export default function CustomSwitch(props: ICustomSwitchProps) {
   const { value } = props;
 
   const { toggleSwitch, thumbStyle } = useCustomSwitch(props);
@@ -19,6 +19,4 @@ const CustomSwitch = (props: ICustomSwitchProps) => {
       <Animated.View style={[customSwitchStyles.thumb, thumbStyle]} />
     </Pressable>
   );
-};
-
-export default CustomSwitch;
+}

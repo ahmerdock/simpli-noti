@@ -9,10 +9,6 @@ export const actionCardStyles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  icon: {
-    width: 20,
-    height: 20,
-  },
   textWrap: {
     flex: 1,
   },
@@ -31,6 +27,9 @@ export const actionCardStyles = StyleSheet.create((theme) => ({
     minWidth: 56,
     alignItems: "flex-end",
     justifyContent: "center",
+  },
+  disabled: {
+    opacity: 0.5,
   },
   trailingText: {
     fontSize: 14,

@@ -5,7 +5,7 @@ import {
 } from "react-native-reanimated";
 import { ICustomSwitchProps } from "./custom-switch.interface";
 
-const useCustomSwitch = (props: ICustomSwitchProps) => {
+export default function useCustomSwitch(props: ICustomSwitchProps) {
   const { value, onValueChange } = props;
 
   const translateX = useSharedValue(value ? 18 : 0);
@@ -27,6 +27,4 @@ const useCustomSwitch = (props: ICustomSwitchProps) => {
     toggleSwitch,
     thumbStyle,
   };
-};
-
-export default useCustomSwitch;
+}

@@ -10,7 +10,7 @@ import {
 } from "./upsert-notifications.utils";
 import { useNotificationStore } from "@/store";
 
-const useUpsertNotifications = () => {
+export default function useUpsertNotifications() {
   const { id } = useLocalSearchParams<{ id?: string }>();
 
   const notificationId = typeof id === "string" ? id : undefined;
@@ -94,6 +94,4 @@ const useUpsertNotifications = () => {
     isEditing,
     isActive: existingNotification?.isActive ?? true,
   };
-};
-
-export default useUpsertNotifications;
+}

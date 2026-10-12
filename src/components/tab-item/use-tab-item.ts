@@ -5,7 +5,7 @@ import {
   Extrapolation,
 } from "react-native-reanimated";
 
-const useTabItem = (props: ITabItemProps) => {
+export default function useTabItem(props: ITabItemProps) {
   const { pillX, tabIndex, tabWidth } = props;
 
   const labelWrapperStyle = useAnimatedStyle(() => {
@@ -30,6 +30,4 @@ const useTabItem = (props: ITabItemProps) => {
   return {
     labelWrapperStyle,
   };
-};
-
-export default useTabItem;
+}

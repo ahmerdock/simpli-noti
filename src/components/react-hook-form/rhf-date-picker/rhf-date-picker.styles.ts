@@ -16,11 +16,6 @@ export const rhfDatePickerStyles = StyleSheet.create((theme) => ({
     fontFamily: theme.typography.primary.regular,
     color: theme.colors.text,
   },
-  triggerIcon: {
-    width: 16,
-    height: 16,
-    tintColor: theme.colors.textSecondary,
-  },
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",

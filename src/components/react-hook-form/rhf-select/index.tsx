@@ -1,15 +1,17 @@
-import { View, Text, Pressable, Image, Modal, FlatList } from "react-native";
+import { View, Text, Pressable, Modal, FlatList } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
-import { ChevronDownIcon } from "@/assets/icons";
+import ChevronDown from "lucide-react-native/icons/chevron-down";
+import { useUnistyles } from "react-native-unistyles";
+import AppIcon from "../../app-icon";
 import { rhfFieldStyles } from "../react-hook-form.styles";
 import { rhfSelectStyles } from "./rhf-select.styles";
 import { IRHFSelectProps } from "./rhf-select.interface";
 import { useRHFSelect } from "./use-rhf-select";
 import { getSelectedLabel } from "./rhf-select.utils";
 
-const RHFSelect = <T extends FieldValues, V extends string>(
+export default function RHFSelect<T extends FieldValues, V extends string>(
   props: IRHFSelectProps<T, V>,
-) => {
+) {
   const {
     name,
     label,
@@ -22,6 +24,7 @@ const RHFSelect = <T extends FieldValues, V extends string>(
 
   const { control } = useFormContext<T>();
   const fieldStyles = rhfFieldStyles;
+  const { theme } = useUnistyles();
   const styles = rhfSelectStyles;
 
   const { visible, open, close, selectOption } = useRHFSelect();
@@ -51,7 +54,11 @@ const RHFSelect = <T extends FieldValues, V extends string>(
                 accessibilityLabel={required ? `${label}, required` : label}
               >
                 <Text style={styles.triggerText}>{selectedLabel}</Text>
-                <Image source={ChevronDownIcon} style={styles.triggerIcon} />
+                <AppIcon
+                  icon={ChevronDown}
+                  size={16}
+                  color={theme.colors.textSecondary}
+                />
               </Pressable>
 
               {error && (
@@ -107,6 +114,4 @@ const RHFSelect = <T extends FieldValues, V extends string>(
       }}
     />
   );
-};
-
-export default RHFSelect;
+}

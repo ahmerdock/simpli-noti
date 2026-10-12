@@ -2,13 +2,13 @@ import { Text, TouchableOpacity } from "react-native";
 import { IButtonProps } from "./button.interface";
 import { buttonStyles } from "./button.styles";
 
-const Button = ({
+export default function Button({
   variant = "submit",
   label,
   style,
   disabled,
   ...rest
-}: IButtonProps) => {
+}: IButtonProps) {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -23,6 +23,4 @@ const Button = ({
       <Text style={buttonStyles.label(variant)}>{label}</Text>
     </TouchableOpacity>
   );
-};
-
-export default Button;
+}

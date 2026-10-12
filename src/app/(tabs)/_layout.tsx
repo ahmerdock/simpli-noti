@@ -1,12 +1,12 @@
 import "@/theme/unistyles";
 
-import CustomTabBar from "@/components/custom-tab-bar";
+import { CustomTabBar } from "@/components";
 import { getTabBarBottomInset } from "@/constants/layout";
 import { ROUTE_NAMES } from "@/constants/routes";
 import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const TabsLayout = () => {
+export default function TabsLayout() {
   const insets = useSafeAreaInsets();
 
   return (
@@ -25,6 +25,4 @@ const TabsLayout = () => {
       <Tabs.Screen name={ROUTE_NAMES.SETTINGS} />
     </Tabs>
   );
-};
-
-export default TabsLayout;
+}

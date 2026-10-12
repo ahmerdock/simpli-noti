@@ -1,8 +1,9 @@
-import { View, Text, Pressable, Image, Modal } from "react-native";
+import { View, Text, Pressable, Modal } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
-import { ClockIcon } from "@/assets/icons";
-import TimePicker from "@/components/time-picker";
+import Clock from "lucide-react-native/icons/clock";
+import AppIcon from "../../app-icon";
+import TimePicker from "../../time-picker";
 import { rhfFieldStyles } from "../react-hook-form.styles";
 import { rhfTimePickerStyles } from "./rhf-time-picker.styles";
 import { IRHFTimePickerProps } from "./rhf-time-picker.interface";
@@ -10,12 +11,12 @@ import { useRHFTimePicker } from "./use-rhf-time-picker";
 import {
   DEFAULT_MODAL_TITLE,
   DEFAULT_PLACEHOLDER,
+  isValidTimeValue,
 } from "./rhf-time-picker.utils";
-import { isValidTimeValue } from "./rhf-time-picker.utils";
 
-const RHFTimePicker = <T extends FieldValues>(
+export default function RHFTimePicker<T extends FieldValues>(
   props: IRHFTimePickerProps<T>,
-) => {
+) {
   const {
     name,
     label,
@@ -69,7 +70,7 @@ const RHFTimePicker = <T extends FieldValues>(
                 >
                   {displayValue || placeholder}
                 </Text>
-                <Image source={ClockIcon} style={styles.triggerIcon} />
+                <AppIcon icon={Clock} size={16} color={theme.colors.textSecondary} />
               </Pressable>
 
               {error && (
@@ -108,6 +109,4 @@ const RHFTimePicker = <T extends FieldValues>(
       }}
     />
   );
-};
-
-export default RHFTimePicker;
+}

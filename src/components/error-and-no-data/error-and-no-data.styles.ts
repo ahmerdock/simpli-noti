@@ -8,10 +8,7 @@ export const errorAndNoDataStyles = StyleSheet.create((theme, runtime) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    width: 30,
-    height: 30,
-    tintColor: theme.colors.primary,
+  iconWrap: {
     marginBottom: theme.gap(1),
   },
   messageText: {

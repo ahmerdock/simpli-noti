@@ -2,10 +2,13 @@
 
 # dependencies
 node_modules/
+.pnpm-store
+.vscode
 
 # Expo
 .expo/
 dist/
+web-build/
 expo-env.d.ts
 
 # Native
@@ -31,6 +34,7 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
 
 # typescript
 *.tsbuildinfo
@@ -41,10 +45,17 @@ example
 /ios
 /android
 
-# local module build artifacts
-modules/*/android/build/
-modules/*/ios/build/
+# claude
+.claude
 
-.env
+# plans
+/docs/plans
 
-.pnpm-store/
+# local native modules: Gradle build output
+/modules/*/android/build/
+/modules/*/android/.gradle/
+/modules/*/android/.cxx/
+/modules/*/ios/build/
+
+# test coverage
+coverage/

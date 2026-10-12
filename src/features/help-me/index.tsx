@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { ActivityIndicator, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import { PAGE_TITLES } from "@/constants/routes";
-import ShortHeading from "@/components/short-heading";
-import ActionCard, { actionCardStyles } from "@/components/action-card";
-import { ParentLayout } from "@/layouts";
+import { ActionCard, actionCardStyles, ShortHeading } from "@/components";
+import { TabsLayout } from "@/layouts";
 import { HELP_ME_PRODUCTS } from "./help-me.data";
 import { helpMeStyles } from "./help-me.styles";
 import useHelpMe from "./use-help-me";
 
-const HelpMe = () => {
+export default function HelpMe() {
   const {
     isAvailable,
     isProductsLoading,
@@ -50,7 +49,7 @@ const HelpMe = () => {
   }, [error, clearError]);
 
   return (
-    <ParentLayout titleProps={{ title: PAGE_TITLES.HELP_ME }}>
+    <TabsLayout titleProps={{ title: PAGE_TITLES.HELP_ME }}>
       <ShortHeading heading="SUPPORT THE APP" />
 
       {!isAvailable && (
@@ -88,8 +87,6 @@ const HelpMe = () => {
           />
         );
       })}
-    </ParentLayout>
+    </TabsLayout>
   );
-};
-
-export default HelpMe;
+}

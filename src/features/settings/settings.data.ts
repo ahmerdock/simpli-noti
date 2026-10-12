@@ -1,4 +1,5 @@
-import { GithubIcon, LinkedinIcon, GlobeIcon } from "@/assets/icons";
+import Globe from "lucide-react-native/icons/globe";
+import { GithubIcon, LinkedinIcon } from "@/assets/icon";
 
 export const CONTACT_LINKS = [
   {
@@ -16,7 +17,7 @@ export const CONTACT_LINKS = [
   {
     label: "Portfolio",
     description: "ahmersdev.com",
-    icon: GlobeIcon,
+    icon: Globe,
     url: "https://ahmersdev.com",
   },
 ] as const;

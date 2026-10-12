@@ -1,7 +1,5 @@
 import HelpMe from "@/features/help-me";
 
-const HelpMeScreen = () => {
+export default function HelpMeScreen() {
   return <HelpMe />;
-};
-
-export default HelpMeScreen;
+}

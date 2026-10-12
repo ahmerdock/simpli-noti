@@ -4,7 +4,7 @@ import { ITimePickerProps } from "./time-picker.interface";
 import { WheelColumn } from "./components";
 import { timePickerStyles } from "./time-picker.styles";
 
-const TimePicker = (props: ITimePickerProps) => {
+export default function TimePicker(props: ITimePickerProps) {
   const { hour, minute, period, onChange } = props;
 
   return (
@@ -27,6 +27,4 @@ const TimePicker = (props: ITimePickerProps) => {
       />
     </View>
   );
-};
-
-export default TimePicker;
+}

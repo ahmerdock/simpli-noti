@@ -8,7 +8,7 @@
     "scheme": "simplinoti",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.ahmersdev.simplinoti"
     },
     "android": {

@@ -8,7 +8,7 @@ import {
 import { useUnistyles } from "react-native-unistyles";
 import { ICustomTabBarProps } from "./custom-tab-bar.interface";
 
-const useCustomTabBar = (props: ICustomTabBarProps) => {
+export default function useCustomTabBar(props: ICustomTabBarProps) {
   const { state } = props;
 
   const { theme } = useUnistyles();
@@ -53,6 +53,4 @@ const useCustomTabBar = (props: ICustomTabBarProps) => {
     gradientColors,
     onLayout,
   };
-};
-
-export default useCustomTabBar;
+}

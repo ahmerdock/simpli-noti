@@ -3,7 +3,7 @@ import { formatNotificationDateTime } from "@/utils/date-time-display";
 import { INotificationCardProps } from "./notification-card.interface";
 import { notificationCardStyles } from "./notification-card.styles";
 
-const NotificationCard = (props: INotificationCardProps) => {
+export default function NotificationCard(props: INotificationCardProps) {
   const { item, onPress } = props;
 
   return (
@@ -30,6 +30,4 @@ const NotificationCard = (props: INotificationCardProps) => {
       ) : null}
     </TouchableOpacity>
   );
-};
-
-export default NotificationCard;
+}

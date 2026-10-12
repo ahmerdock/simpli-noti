@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import { IScreenTitleProps } from "./screen-title.interface";
 import { screenTitleStyles } from "./screen-title.styles";
 
-const ScreenTitle = (props: IScreenTitleProps) => {
+export default function ScreenTitle(props: IScreenTitleProps) {
   const { title, children } = props;
 
   return (
@@ -11,6 +11,4 @@ const ScreenTitle = (props: IScreenTitleProps) => {
       {children}
     </View>
   );
-};
-
-export default ScreenTitle;
+}

@@ -1,9 +1,11 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import Card from "@/components/card";
+import { Text, TouchableOpacity, View } from "react-native";
+import { useUnistyles } from "react-native-unistyles";
+import AppIcon from "../app-icon";
+import Card from "../card";
 import { IActionCardProps } from "./action-card.interface";
 import { actionCardStyles } from "./action-card.styles";
 
-const ActionCard = (props: IActionCardProps) => {
+export default function ActionCard(props: IActionCardProps) {
   const {
     label,
     description,
@@ -13,10 +15,12 @@ const ActionCard = (props: IActionCardProps) => {
     trailing,
   } = props;
 
+  const { theme } = useUnistyles();
+
   const content = (
     <Card>
       <View style={actionCardStyles.iconWrap}>
-        <Image source={icon} style={actionCardStyles.icon} />
+        <AppIcon icon={icon} size={20} color={theme.colors.primary} />
       </View>
 
       <View style={actionCardStyles.textWrap}>
@@ -34,25 +38,14 @@ const ActionCard = (props: IActionCardProps) => {
     return content;
   }
 
-  const handlePress = () => {
-    if (disabled) {
-      return;
-    }
-
-    onPress();
-  };
-
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       disabled={disabled}
-      onPress={handlePress}
-      style={disabled && { opacity: 0.5 }}
+      onPress={onPress}
+      style={disabled && actionCardStyles.disabled}
     >
       {content}
     </TouchableOpacity>
   );
-};
-
-export default ActionCard;
-export { actionCardStyles } from "./action-card.styles";
+}

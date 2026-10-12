@@ -7,7 +7,7 @@ import {
 import { ITEM_HEIGHT, VELOCITY_THRESHOLD } from "./wheel-column.utils";
 import { IWheelColumnProps } from "./wheel-column.interface";
 
-const useWheelColumn = (props: IWheelColumnProps) => {
+export default function useWheelColumn(props: IWheelColumnProps) {
   const { data, selected, onSelect } = props;
 
   const scrollRef = useRef<ScrollView>(null);
@@ -81,6 +81,4 @@ const useWheelColumn = (props: IWheelColumnProps) => {
     handleMomentumScrollEnd,
     selectIndex,
   };
-};
-
-export default useWheelColumn;
+}

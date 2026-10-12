@@ -4,7 +4,7 @@ import { IWheelColumnProps } from "./wheel-column.interface";
 import useWheelColumn from "./use-wheel-column";
 import { wheelColumnStyles } from "./wheel-column.styles";
 
-const WheelColumn = (props: IWheelColumnProps) => {
+export default function WheelColumn(props: IWheelColumnProps) {
   const { data, selected } = props;
 
   const {
@@ -44,6 +44,4 @@ const WheelColumn = (props: IWheelColumnProps) => {
       </ScrollView>
     </View>
   );
-};
-
-export default WheelColumn;
+}

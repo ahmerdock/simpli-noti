@@ -9,7 +9,7 @@ import { customTabBarStyles } from "./custom-tab-bar.styles";
 import useCustomTabBar from "./use-custom-tab-bar";
 import { TAB_CONFIG } from "./custom-tab-bar.utils";
 
-const CustomTabBar = (props: ICustomTabBarProps) => {
+export default function CustomTabBar(props: ICustomTabBarProps) {
   const { state, navigation } = props;
   const insets = useSafeAreaInsets();
 
@@ -74,6 +74,4 @@ const CustomTabBar = (props: ICustomTabBarProps) => {
       })}
     </View>
   );
-};
-
-export default CustomTabBar;
+}

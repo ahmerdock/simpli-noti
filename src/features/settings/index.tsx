@@ -1,35 +1,24 @@
-import { Linking, Platform } from "react-native";
-import { ParentLayout } from "@/layouts";
-import { useUnistyles, UnistylesRuntime } from "react-native-unistyles";
-import { MoonIcon, SunIcon } from "@/assets/icons";
-import ActionCard from "@/components/action-card";
-import CustomSwitch from "@/components/custom-switch";
+import { Platform } from "react-native";
+import { TabsLayout } from "@/layouts";
+import Moon from "lucide-react-native/icons/moon";
+import Sun from "lucide-react-native/icons/sun";
+import { ActionCard, CustomSwitch, ShortHeading } from "@/components";
 import { PAGE_TITLES } from "@/constants/routes";
-import ShortHeading from "@/components/short-heading";
 import { CONTACT_LINKS } from "./settings.data";
 import { settingsStyles } from "./settings.styles";
-import { mmkvStorage } from "@/theme/unistyles";
-import { NotificationService } from "@/services/notifications";
+import useSettings from "./use-settings";
 
-const Settings = () => {
-  const { rt } = useUnistyles();
-
-  const toggleTheme = () => {
-    const newTheme = rt.themeName === "light" ? "dark" : "light";
-    UnistylesRuntime.setTheme(newTheme);
-    mmkvStorage.set("app_theme", newTheme);
-  };
-
-  const isDark = rt.themeName === "dark";
+export default function Settings() {
+  const { isDark, toggleTheme, openLink, openBatterySettings } = useSettings();
 
   return (
-    <ParentLayout titleProps={{ title: PAGE_TITLES.SETTINGS }}>
+    <TabsLayout titleProps={{ title: PAGE_TITLES.SETTINGS }}>
       <ShortHeading heading="APPEARANCE" />
 
       <ActionCard
         label="Dark Mode"
         description={isDark ? "Currently active" : "Currently off"}
-        icon={isDark ? MoonIcon : SunIcon}
+        icon={isDark ? Moon : Sun}
         onPress={toggleTheme}
         trailing={<CustomSwitch value={isDark} onValueChange={toggleTheme} />}
       />
@@ -40,8 +29,8 @@ const Settings = () => {
           <ActionCard
             label="Allow background activity"
             description="Stops the phone from delaying reminders"
-            icon={isDark ? MoonIcon : SunIcon}
-            onPress={() => void NotificationService.openBatteryOptimizationSettings()}
+            icon={isDark ? Moon : Sun}
+            onPress={openBatterySettings}
           />
         </>
       )}
@@ -54,11 +43,9 @@ const Settings = () => {
           label={link.label}
           description={link.description}
           icon={link.icon}
-          onPress={() => Linking.openURL(link.url)}
+          onPress={() => openLink(link.url)}
         />
       ))}
-    </ParentLayout>
+    </TabsLayout>
   );
-};
-
-export default Settings;
+}

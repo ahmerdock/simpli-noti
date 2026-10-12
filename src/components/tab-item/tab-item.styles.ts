@@ -1,11 +1,17 @@
 import { StyleSheet } from "react-native-unistyles";
 
 export const tabItemStyles = StyleSheet.create((theme) => ({
-  image: (focused: boolean) => ({
-    width: 20,
-    height: 20,
-    tintColor: focused ? theme.colors.text : theme.colors.textSecondary,
-  }),
+  container: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 6,
+  },
+  labelWrapper: {
+    overflow: "hidden",
+  },
   text: {
     fontSize: 14,
     fontFamily: theme.typography.primary.medium,

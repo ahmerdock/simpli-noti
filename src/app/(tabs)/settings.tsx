@@ -1,7 +1,5 @@
 import Settings from "@/features/settings";
 
-const SettingsScreen = () => {
+export default function SettingsScreen() {
   return <Settings />;
-};
-
-export default SettingsScreen;
+}

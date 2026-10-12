@@ -5,7 +5,7 @@ import { rhfFieldStyles } from "../react-hook-form.styles";
 import { rhfTextFieldStyles } from "./rhf-text-field.styles";
 import { IRHFTextFieldProps } from "./rhf-text-field.interface";
 
-const RHFTextField = <T extends FieldValues>(props: IRHFTextFieldProps<T>) => {
+export default function RHFTextField<T extends FieldValues>(props: IRHFTextFieldProps<T>) {
   const {
     name,
     label,
@@ -65,6 +65,4 @@ const RHFTextField = <T extends FieldValues>(props: IRHFTextFieldProps<T>) => {
       )}
     />
   );
-};
-
-export default RHFTextField;
+}

@@ -1,14 +1,20 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
+import BellOff from "lucide-react-native/icons/bell-off";
+import { useUnistyles } from "react-native-unistyles";
+import AppIcon from "../app-icon";
 import { IErrorAndNoDataStateProps } from "./error-and-no-data.interface";
-import { BellOffIcon } from "@/assets/icons";
 import { errorAndNoDataStyles } from "./error-and-no-data.styles";
 
-const ErrorAndNoData = (props: IErrorAndNoDataStateProps) => {
+export default function ErrorAndNoData(props: IErrorAndNoDataStateProps) {
   const { message, description } = props;
+
+  const { theme } = useUnistyles();
 
   return (
     <View style={errorAndNoDataStyles.container}>
-      <Image source={BellOffIcon} style={errorAndNoDataStyles.image} />
+      <View style={errorAndNoDataStyles.iconWrap}>
+        <AppIcon icon={BellOff} size={30} color={theme.colors.primary} />
+      </View>
 
       {message && (
         <Text style={errorAndNoDataStyles.messageText}>{message}</Text>
@@ -19,6 +25,4 @@ const ErrorAndNoData = (props: IErrorAndNoDataStateProps) => {
       )}
     </View>
   );
-};
-
-export default ErrorAndNoData;
+}

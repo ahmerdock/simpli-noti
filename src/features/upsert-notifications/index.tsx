@@ -1,15 +1,15 @@
-import { ParentLayout } from "@/layouts";
+import { StackLayout } from "@/layouts";
 import { View } from "react-native";
-import Button from "@/components/button";
 import { upsertNotificationsStyles } from "./upsert-notifications.styles";
 import { PAGE_TITLES } from "@/constants/routes";
 import {
-  RHFForm,
-  RHFTextField,
+  Button,
   RHFDatePicker,
-  RHFTimePicker,
+  RHFForm,
   RHFSelect,
-} from "@/components/react-hook-form";
+  RHFTextField,
+  RHFTimePicker,
+} from "@/components";
 import useUpsertNotifications from "./use-upsert-notifications";
 import {
   DESCRIPTION_MAX,
@@ -18,7 +18,7 @@ import {
   RepeatValue,
 } from "./upsert-notifications.utils";
 
-const UpsertNotifications = () => {
+export default function UpsertNotifications() {
   const styles = upsertNotificationsStyles;
   const {
     form,
@@ -32,8 +32,7 @@ const UpsertNotifications = () => {
   } = useUpsertNotifications();
 
   return (
-    <ParentLayout
-      includeTabBarPadding={false}
+    <StackLayout
       titleProps={{
         title: isEditing
           ? PAGE_TITLES.EDIT_NOTIFICATION
@@ -115,8 +114,6 @@ const UpsertNotifications = () => {
           )}
         </View>
       </RHFForm>
-    </ParentLayout>
+    </StackLayout>
   );
-};
-
-export default UpsertNotifications;
+}

@@ -1,9 +1,10 @@
-import { View, Text, Pressable, Image, Modal } from "react-native";
+import { View, Text, Pressable, Modal } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
 import DateTimePicker from "react-native-ui-datepicker";
 import dayjs from "dayjs";
-import { CalendarIcon } from "@/assets/icons";
+import Calendar from "lucide-react-native/icons/calendar";
+import AppIcon from "../../app-icon";
 import { rhfFieldStyles } from "../react-hook-form.styles";
 import { rhfDatePickerStyles } from "./rhf-date-picker.styles";
 import { IRHFDatePickerProps } from "./rhf-date-picker.interface";
@@ -14,9 +15,9 @@ import {
   DEFAULT_PLACEHOLDER,
 } from "./rhf-date-picker.utils";
 
-const RHFDatePicker = <T extends FieldValues>(
+export default function RHFDatePicker<T extends FieldValues>(
   props: IRHFDatePickerProps<T>,
-) => {
+) {
   const {
     name,
     label,
@@ -67,7 +68,7 @@ const RHFDatePicker = <T extends FieldValues>(
               >
                 {value || placeholder}
               </Text>
-              <Image source={CalendarIcon} style={styles.triggerIcon} />
+              <AppIcon icon={Calendar} size={16} color={theme.colors.textSecondary} />
             </Pressable>
 
             {error && (
@@ -108,6 +109,4 @@ const RHFDatePicker = <T extends FieldValues>(
       )}
     />
   );
-};
-
-export default RHFDatePicker;
+}

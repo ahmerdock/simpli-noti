@@ -41,7 +41,7 @@ const getErrorMessage = (error: unknown): string => {
   return "An unexpected error occurred";
 };
 
-const useHelpMe = (): UseHelpMeReturn => {
+export default function useHelpMe(): UseHelpMeReturn {
   const isAvailable = Platform.OS === "android";
 
   const [isProductsLoading, setIsProductsLoading] = useState(false);
@@ -250,6 +250,4 @@ const useHelpMe = (): UseHelpMeReturn => {
     clearError,
     clearSuccess,
   };
-};
-
-export default useHelpMe;
+}
