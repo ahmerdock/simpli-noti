@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { FormValues } from "./upsert-notifications.interface";
@@ -14,7 +14,7 @@ export default function useUpsertNotifications() {
   const { id } = useLocalSearchParams<{ id?: string }>();
 
   const notificationId = typeof id === "string" ? id : undefined;
-  const isEditing = Boolean(notificationId);
+  const isEditing = notificationId !== undefined;
 
   const notifications = useNotificationStore((s) => s.notifications);
   const addNotification = useNotificationStore((s) => s.addNotification);
@@ -33,7 +33,14 @@ export default function useUpsertNotifications() {
     (n) => n.id === notificationId,
   );
 
+  // Fill the form once per screen target. Later store changes (such as this
+  // very reminder being deleted) must not reset it or navigate back again.
+  const initializedForRef = useRef<string | null | undefined>(null);
+
   useEffect(() => {
+    if (initializedForRef.current === notificationId) return;
+    initializedForRef.current = notificationId;
+
     if (!notificationId) {
       form.reset(getDefaultFormValues());
       return;
@@ -45,7 +52,7 @@ export default function useUpsertNotifications() {
     }
 
     form.reset(notificationToFormValues(existingNotification));
-  }, [notificationId]);
+  }, [notificationId, existingNotification, form]);
 
   const handleCancel = () => router.back();
 
@@ -64,22 +71,10 @@ export default function useUpsertNotifications() {
   };
 
   const onSubmit = (data: FormValues) => {
-    if (isEditing && notificationId) {
-      editNotification(notificationId, {
-        title: data.title,
-        date: data.date,
-        time: data.time,
-        repeat: data.repeat,
-        description: data.description,
-      });
+    if (notificationId) {
+      editNotification(notificationId, data);
     } else {
-      addNotification({
-        title: data.title,
-        date: data.date,
-        time: data.time,
-        repeat: data.repeat,
-        description: data.description,
-      });
+      addNotification(data);
     }
     router.back();
   };

@@ -5,7 +5,6 @@ import Clock from "lucide-react-native/icons/clock";
 import AppIcon from "../../app-icon";
 import TimePicker from "../../time-picker";
 import { rhfFieldStyles } from "../react-hook-form.styles";
-import { rhfTimePickerStyles } from "./rhf-time-picker.styles";
 import { IRHFTimePickerProps } from "./rhf-time-picker.interface";
 import { useRHFTimePicker } from "./use-rhf-time-picker";
 import {
@@ -29,7 +28,6 @@ export default function RHFTimePicker<T extends FieldValues>(
   const { control } = useFormContext<T>();
   const { theme } = useUnistyles();
   const fieldStyles = rhfFieldStyles;
-  const styles = rhfTimePickerStyles;
 
   const {
     visible,
@@ -58,13 +56,13 @@ export default function RHFTimePicker<T extends FieldValues>(
               </View>
 
               <Pressable
-                style={styles.trigger}
+                style={fieldStyles.trigger}
                 onPress={() => openPicker(displayValue)}
                 accessibilityLabel={required ? `${label}, required` : label}
               >
                 <Text
                   style={[
-                    styles.triggerText,
+                    fieldStyles.triggerText,
                     !displayValue && { color: theme.colors.textSecondary },
                   ]}
                 >
@@ -88,11 +86,14 @@ export default function RHFTimePicker<T extends FieldValues>(
               animationType="slide"
               onRequestClose={closePicker}
             >
-              <View style={styles.modalOverlay}>
-                <Pressable style={styles.modalBackdrop} onPress={closePicker} />
-                <View style={styles.modalSheet}>
-                  <View style={styles.modalHandle} />
-                  <Text style={styles.modalTitle}>{modalTitle}</Text>
+              <View style={fieldStyles.modalOverlay}>
+                <Pressable
+                  style={fieldStyles.modalBackdrop}
+                  onPress={closePicker}
+                />
+                <View style={fieldStyles.modalSheet}>
+                  <View style={fieldStyles.modalHandle} />
+                  <Text style={fieldStyles.modalTitle}>{modalTitle}</Text>
                   <TimePicker
                     hour={hour}
                     minute={minute}
@@ -100,10 +101,10 @@ export default function RHFTimePicker<T extends FieldValues>(
                     onChange={handleTimeChange}
                   />
                   <Pressable
-                    style={styles.modalConfirmBtn}
+                    style={fieldStyles.modalConfirmBtn}
                     onPress={() => confirm(onChange)}
                   >
-                    <Text style={styles.modalConfirmText}>Confirm</Text>
+                    <Text style={fieldStyles.modalConfirmText}>Confirm</Text>
                   </Pressable>
                 </View>
               </View>

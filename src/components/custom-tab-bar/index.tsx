@@ -40,7 +40,7 @@ export default function CustomTabBar(props: ICustomTabBarProps) {
         </Animated.View>
       )}
 
-      {state.routes.map((route: any, index: number) => {
+      {state.routes.map((route, index) => {
         const config = TAB_CONFIG[route.name];
         if (!config) return null;
 

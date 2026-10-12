@@ -12,50 +12,52 @@ export default function useWheelColumn(props: IWheelColumnProps) {
 
   const scrollRef = useRef<ScrollView>(null);
   const lastSnappedIndexRef = useRef(data.indexOf(selected));
-  const selectedIndex = data.indexOf(selected);
+  const initialIndexRef = useRef(data.indexOf(selected));
 
   useEffect(() => {
-    if (selectedIndex >= 0) {
-      lastSnappedIndexRef.current = selectedIndex;
+    const initialIndex = initialIndexRef.current;
+    if (initialIndex >= 0) {
+      lastSnappedIndexRef.current = initialIndex;
       scrollRef.current?.scrollTo({
-        y: selectedIndex * ITEM_HEIGHT,
+        y: initialIndex * ITEM_HEIGHT,
         animated: false,
       });
     }
   }, []);
 
-  const selectIndex = useCallback(
+  const commitIndex = useCallback(
     (index: number) => {
       const clamped = Math.max(0, Math.min(index, data.length - 1));
-      const targetY = clamped * ITEM_HEIGHT;
-
-      scrollRef.current?.scrollTo({ y: targetY, animated: true });
 
       if (lastSnappedIndexRef.current !== clamped) {
         lastSnappedIndexRef.current = clamped;
         onSelect(data[clamped]);
       }
+
+      return clamped;
     },
     [data, onSelect],
+  );
+
+  const selectIndex = useCallback(
+    (index: number) => {
+      const clamped = commitIndex(index);
+      scrollRef.current?.scrollTo({ y: clamped * ITEM_HEIGHT, animated: true });
+    },
+    [commitIndex],
   );
 
   const snapToNearest = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
       const y = e.nativeEvent.contentOffset.y;
-      const index = Math.round(y / ITEM_HEIGHT);
-      const clamped = Math.max(0, Math.min(index, data.length - 1));
+      const clamped = commitIndex(Math.round(y / ITEM_HEIGHT));
       const targetY = clamped * ITEM_HEIGHT;
 
       if (Math.abs(y - targetY) > 0.5) {
         scrollRef.current?.scrollTo({ y: targetY, animated: false });
       }
-
-      if (lastSnappedIndexRef.current !== clamped) {
-        lastSnappedIndexRef.current = clamped;
-        onSelect(data[clamped]);
-      }
     },
-    [data, onSelect],
+    [commitIndex],
   );
 
   const handleScrollEndDrag = useCallback(
@@ -68,17 +70,10 @@ export default function useWheelColumn(props: IWheelColumnProps) {
     [snapToNearest],
   );
 
-  const handleMomentumScrollEnd = useCallback(
-    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-      snapToNearest(e);
-    },
-    [snapToNearest],
-  );
-
   return {
     scrollRef,
     handleScrollEndDrag,
-    handleMomentumScrollEnd,
+    handleMomentumScrollEnd: snapToNearest,
     selectIndex,
   };
 }

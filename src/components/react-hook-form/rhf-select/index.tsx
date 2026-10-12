@@ -49,11 +49,11 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
               </View>
 
               <Pressable
-                style={styles.trigger}
+                style={fieldStyles.trigger}
                 onPress={open}
                 accessibilityLabel={required ? `${label}, required` : label}
               >
-                <Text style={styles.triggerText}>{selectedLabel}</Text>
+                <Text style={fieldStyles.triggerText}>{selectedLabel}</Text>
                 <AppIcon
                   icon={ChevronDown}
                   size={16}
@@ -72,11 +72,11 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
               animationType="slide"
               onRequestClose={close}
             >
-              <View style={styles.modalOverlay}>
-                <Pressable style={styles.modalBackdrop} onPress={close} />
-                <View style={styles.modalSheet}>
-                  <View style={styles.modalHandle} />
-                  <Text style={styles.modalTitle}>{modalTitle}</Text>
+              <View style={fieldStyles.modalOverlay}>
+                <Pressable style={fieldStyles.modalBackdrop} onPress={close} />
+                <View style={fieldStyles.modalSheet}>
+                  <View style={fieldStyles.modalHandle} />
+                  <Text style={fieldStyles.modalTitle}>{modalTitle}</Text>
                   <FlatList
                     data={options}
                     keyExtractor={(item) => item.value}

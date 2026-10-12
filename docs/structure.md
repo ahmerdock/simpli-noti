@@ -147,7 +147,7 @@ The icon is a red bell with a clock. The files are in `assets/`, and `app.json` 
 
 ## Theme
 
-`theme/unistyles.ts` defines the light and dark themes, loads the saved theme from MMKV and registers them with Unistyles.
+`theme/unistyles.ts` defines the light and dark themes, loads the saved theme from MMKV and registers them with Unistyles. Dark is the default when nothing has been saved.
 
 - Fonts: `theme.typography.primary.regular | medium` (Inter) for body text and `theme.typography.secondary.bold` (DM Sans Bold) for headings and labels.
 - Theme colors beyond the basics: `onPrimary` (text and icons on the primary color), `warning` and `destructive`, each with a `...Muted` background. Add new colors to both themes.

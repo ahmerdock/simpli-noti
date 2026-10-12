@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 import { TabsLayout } from "@/layouts";
+import BatteryCharging from "lucide-react-native/icons/battery-charging";
 import Moon from "lucide-react-native/icons/moon";
 import Sun from "lucide-react-native/icons/sun";
 import { ActionCard, CustomSwitch, ShortHeading } from "@/components";
@@ -32,7 +33,7 @@ export default function Settings() {
           <ActionCard
             label="Allow background activity"
             description="Stops the phone from delaying reminders"
-            icon={isDark ? Moon : Sun}
+            icon={BatteryCharging}
             onPress={openBatterySettings}
           />
         </>

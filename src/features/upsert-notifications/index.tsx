@@ -49,7 +49,6 @@ export default function UpsertNotifications() {
             <RHFDatePicker<FormValues>
               name="date"
               label="Start Date"
-              placeholder="DD/MM/YY"
               required
               containerStyle={styles.dateTimeField}
             />
@@ -57,7 +56,6 @@ export default function UpsertNotifications() {
             <RHFTimePicker<FormValues>
               name="time"
               label="Time"
-              placeholder="HH:MM AM"
               required
               containerStyle={styles.dateTimeField}
             />
@@ -83,13 +81,13 @@ export default function UpsertNotifications() {
             <Button
               variant="cancel"
               label="Cancel"
-              style={{ flex: 1 }}
+              style={styles.actionButton}
               onPress={handleCancel}
             />
             <Button
               variant="submit"
               label={isEditing ? "Update" : "Save"}
-              style={{ flex: 1 }}
+              style={styles.actionButton}
               onPress={handleSubmit(onSubmit)}
             />
           </View>
@@ -98,13 +96,13 @@ export default function UpsertNotifications() {
               <Button
                 variant="disable"
                 label={isActive ? "Disable" : "Reactivate"}
-                style={{ flex: 1 }}
+                style={styles.actionButton}
                 onPress={handleToggle}
               />
               <Button
                 variant="delete"
                 label="Delete"
-                style={{ flex: 1 }}
+                style={styles.actionButton}
                 onPress={handleDelete}
               />
             </View>

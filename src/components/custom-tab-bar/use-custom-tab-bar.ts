@@ -34,7 +34,7 @@ export default function useCustomTabBar(props: ICustomTabBarProps) {
         mass: 0.7,
       });
     }
-  }, [state.index, tabWidth]);
+  }, [state.index, tabWidth, pillX]);
 
   const pillStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: pillX.value }],

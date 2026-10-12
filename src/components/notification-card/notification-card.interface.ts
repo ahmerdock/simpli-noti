@@ -1,4 +1,6 @@
+import type { INotification } from "@/store";
+
 export interface INotificationCardProps {
-  item: any;
+  item: INotification;
   onPress: () => void;
 }

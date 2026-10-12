@@ -74,6 +74,16 @@ export default function useHelpMe(): UseHelpMeReturn {
     [],
   );
 
+  const handlePurchaseError = useCallback(
+    (purchaseError: unknown) => {
+      if (!isUserCancelledError(purchaseError)) {
+        showError(getErrorMessage(purchaseError));
+      }
+      setPurchasingProductIdState(null);
+    },
+    [setPurchasingProductIdState],
+  );
+
   const {
     connected,
     products,
@@ -99,15 +109,7 @@ export default function useHelpMe(): UseHelpMeReturn {
         setPurchasingProductIdState(null);
       }
     },
-    onPurchaseError: (purchaseError) => {
-      if (isUserCancelledError(purchaseError)) {
-        setPurchasingProductIdState(null);
-        return;
-      }
-
-      showError(getErrorMessage(purchaseError));
-      setPurchasingProductIdState(null);
-    },
+    onPurchaseError: handlePurchaseError,
   });
 
   const productsById = useMemo(() => {
@@ -221,13 +223,7 @@ export default function useHelpMe(): UseHelpMeReturn {
           type: "in-app",
         });
       } catch (purchaseError) {
-        if (isUserCancelledError(purchaseError)) {
-          setPurchasingProductIdState(null);
-          return;
-        }
-
-        showError(getErrorMessage(purchaseError));
-        setPurchasingProductIdState(null);
+        handlePurchaseError(purchaseError);
       }
     },
     [
@@ -237,6 +233,7 @@ export default function useHelpMe(): UseHelpMeReturn {
       productsById,
       requestPurchase,
       setPurchasingProductIdState,
+      handlePurchaseError,
     ],
   );
 

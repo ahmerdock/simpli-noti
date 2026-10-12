@@ -67,7 +67,7 @@ const savedTheme =
 
 StyleSheet.configure({
   settings: {
-    initialTheme: savedTheme ?? "light",
+    initialTheme: savedTheme ?? "dark",
   },
   themes: appThemes,
 });

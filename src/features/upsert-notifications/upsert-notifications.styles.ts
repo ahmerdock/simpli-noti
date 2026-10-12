@@ -6,6 +6,9 @@ export const upsertNotificationsStyles = StyleSheet.create((theme) => ({
     gap: theme.gap(1.5),
     marginTop: theme.gap(1),
   },
+  actionButton: {
+    flex: 1,
+  },
   form: {
     gap: theme.gap(2),
     paddingTop: theme.gap(1),
