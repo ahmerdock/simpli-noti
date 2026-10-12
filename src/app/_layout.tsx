@@ -3,6 +3,9 @@ import "react-native-gesture-handler";
 
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { DMSans_700Bold } from "@expo-google-fonts/dm-sans/700Bold";
+import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
+import { Inter_500Medium } from "@expo-google-fonts/inter/500Medium";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { AppState } from "react-native";
@@ -17,9 +20,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    InterRegular: require("@/assets/fonts/Inter_18pt-Regular.ttf"),
-    InterMedium: require("@/assets/fonts/Inter_18pt-Medium.ttf"),
-    DMSansBold: require("@/assets/fonts/DMSans_18pt-Bold.ttf"),
+    Inter_400Regular,
+    Inter_500Medium,
+    DMSans_700Bold,
   });
 
   useEffect(() => {

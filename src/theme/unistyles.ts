@@ -5,11 +5,11 @@ export const mmkvStorage = createMMKV();
 
 const typography = {
   primary: {
-    regular: "InterRegular",
-    medium: "InterMedium",
+    regular: "Inter_400Regular",
+    medium: "Inter_500Medium",
   },
   secondary: {
-    bold: "DMSansBold",
+    bold: "DMSans_700Bold",
   },
 };
 
