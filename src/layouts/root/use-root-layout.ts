@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { AppState } from "react-native";
 import { useUnistyles } from "react-native-unistyles";
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function useRootLayout() {
   const { rt } = useUnistyles();
@@ -22,7 +22,7 @@ export default function useRootLayout() {
 
   useEffect(() => {
     if (loaded || error) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch(() => {});
     }
   }, [loaded, error]);
 
@@ -37,6 +37,7 @@ export default function useRootLayout() {
     const reconcile = () => {
       const { notifications, expireNotification } =
         useNotificationStore.getState();
+      // A failed sync is retried on the next start or foreground.
       NotificationService.reconcile(notifications, expireNotification).catch(
         () => {},
       );

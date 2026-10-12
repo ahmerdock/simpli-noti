@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
 import { useDefaultStyles } from "react-native-ui-datepicker";
 import { parseDateValue } from "./rhf-date-picker.utils";
@@ -69,7 +69,7 @@ export const useRHFDatePicker = <T extends FieldValues>() => {
   const closePicker = () => setVisible(false);
 
   const confirm = (name: Path<T>, dateFormat: string) => {
-    setValue(name, selectedDate.format(dateFormat) as never, {
+    setValue(name, selectedDate.format(dateFormat) as PathValue<T, Path<T>>, {
       shouldValidate: true,
     });
     closePicker();

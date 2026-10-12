@@ -44,7 +44,8 @@ export const useNotificationStore = create<INotificationStore>()(
         set((state) => ({
           notifications: state.notifications.filter((item) => item.id !== id),
         }));
-        void NotificationService.cancelNotification(id);
+        // If the native cancel fails, the next reconcile removes the orphan alarm.
+        NotificationService.cancelNotification(id).catch(() => {});
       },
 
       toggleNotification: (id) => {
