@@ -25,7 +25,10 @@ export default function Settings() {
 
       {Platform.OS === "android" && (
         <>
-          <ShortHeading heading="RELIABILITY" style={settingsStyles.contactMe} />
+          <ShortHeading
+            heading="RELIABILITY"
+            style={settingsStyles.contactMe}
+          />
           <ActionCard
             label="Allow background activity"
             description="Stops the phone from delaying reminders"

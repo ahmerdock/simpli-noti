@@ -1,10 +1,7 @@
 import Toast from "react-native-toast-message";
 import type { INotification } from "@/store";
 import * as ExactNotifications from "../../../modules/exact-notifications";
-import {
-  computeTriggerAt,
-  parseNotificationDateTime,
-} from "./schedule-time";
+import { computeTriggerAt, parseNotificationDateTime } from "./schedule-time";
 
 function bodyOf(n: INotification): string {
   return n.description?.trim() ?? "";

@@ -70,7 +70,11 @@ export default function RHFTimePicker<T extends FieldValues>(
                 >
                   {displayValue || placeholder}
                 </Text>
-                <AppIcon icon={Clock} size={16} color={theme.colors.textSecondary} />
+                <AppIcon
+                  icon={Clock}
+                  size={16}
+                  color={theme.colors.textSecondary}
+                />
               </Pressable>
 
               {error && (

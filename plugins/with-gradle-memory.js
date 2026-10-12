@@ -9,7 +9,8 @@ const JVM_ARGS =
 module.exports = function withGradleMemory(config) {
   return withGradleProperties(config, (cfg) => {
     cfg.modResults = cfg.modResults.filter(
-      (item) => !(item.type === "property" && item.key === "org.gradle.jvmargs"),
+      (item) =>
+        !(item.type === "property" && item.key === "org.gradle.jvmargs"),
     );
     cfg.modResults.push({
       type: "property",

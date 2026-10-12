@@ -68,7 +68,11 @@ export default function RHFDatePicker<T extends FieldValues>(
               >
                 {value || placeholder}
               </Text>
-              <AppIcon icon={Calendar} size={16} color={theme.colors.textSecondary} />
+              <AppIcon
+                icon={Calendar}
+                size={16}
+                color={theme.colors.textSecondary}
+              />
             </Pressable>
 
             {error && (

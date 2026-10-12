@@ -1,7 +1,9 @@
 import { formatNotificationDateTime } from "./date-time-display";
 
-const format = (date: string, repeat: Parameters<typeof formatNotificationDateTime>[0]["repeat"]) =>
-  formatNotificationDateTime({ date, time: "09:30", repeat });
+const format = (
+  date: string,
+  repeat: Parameters<typeof formatNotificationDateTime>[0]["repeat"],
+) => formatNotificationDateTime({ date, time: "09:30", repeat });
 
 describe("formatNotificationDateTime", () => {
   it("shows the date and time for a one-off notification", () => {
