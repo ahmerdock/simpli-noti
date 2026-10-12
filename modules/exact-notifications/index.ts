@@ -6,9 +6,6 @@ import type {
 
 export * from "./src/ExactNotifications.types";
 
-/** True when the native module is linked (false on web). */
-export const isAvailable = ExactNotificationsModule != null;
-
 /**
  * Creates the Android notification channel (no-op on iOS). Safe to call
  * repeatedly.
@@ -19,12 +16,16 @@ export function ensureChannel(): Promise<void> {
 
 /** Current POST_NOTIFICATIONS (Android) / UN authorization (iOS) status. */
 export function getPermissionStatus(): Promise<PermissionStatus> {
-  return ExactNotificationsModule?.getPermissionStatus() ?? Promise.resolve("denied");
+  return (
+    ExactNotificationsModule?.getPermissionStatus() ?? Promise.resolve("denied")
+  );
 }
 
 /** Prompts for notification permission and resolves with the new status. */
 export function requestPermission(): Promise<PermissionStatus> {
-  return ExactNotificationsModule?.requestPermission() ?? Promise.resolve("denied");
+  return (
+    ExactNotificationsModule?.requestPermission() ?? Promise.resolve("denied")
+  );
 }
 
 /**
@@ -40,12 +41,9 @@ export function schedule(input: NativeScheduleInput): Promise<void> {
  * this `id`; pass `clearDelivered: false` to leave it in the tray.
  */
 export function cancel(id: string, clearDelivered = true): Promise<void> {
-  return ExactNotificationsModule?.cancel(id, clearDelivered) ?? Promise.resolve();
-}
-
-/** Cancels every scheduled notification owned by this module. */
-export function cancelAll(): Promise<void> {
-  return ExactNotificationsModule?.cancelAll() ?? Promise.resolve();
+  return (
+    ExactNotificationsModule?.cancel(id, clearDelivered) ?? Promise.resolve()
+  );
 }
 
 /** Ids currently armed in the native layer (source of truth for reconcile). */
@@ -58,5 +56,8 @@ export function getScheduledIds(): Promise<string[]> {
  * OEM power managers don't delay/kill alarms. No-op on iOS/web.
  */
 export function openBatteryOptimizationSettings(): Promise<void> {
-  return ExactNotificationsModule?.openBatteryOptimizationSettings() ?? Promise.resolve();
+  return (
+    ExactNotificationsModule?.openBatteryOptimizationSettings() ??
+    Promise.resolve()
+  );
 }

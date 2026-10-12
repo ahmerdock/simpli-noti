@@ -5,13 +5,12 @@ import type {
   PermissionStatus,
 } from "./ExactNotifications.types";
 
-export interface ExactNotificationsNativeModule {
+interface ExactNotificationsNativeModule {
   ensureChannel(): Promise<void>;
   getPermissionStatus(): Promise<PermissionStatus>;
   requestPermission(): Promise<PermissionStatus>;
   schedule(input: NativeScheduleInput): Promise<void>;
   cancel(id: string, clearDelivered?: boolean): Promise<void>;
-  cancelAll(): Promise<void>;
   getScheduledIds(): Promise<string[]>;
   openBatteryOptimizationSettings(): Promise<void>;
 }

@@ -2,7 +2,7 @@ import Coffee from "lucide-react-native/icons/coffee";
 import Hamburger from "lucide-react-native/icons/hamburger";
 import Rocket from "lucide-react-native/icons/rocket";
 
-export const HELP_ME_PRODUCT_IDS = {
+const HELP_ME_PRODUCT_IDS = {
   COFFEE: "tip_coffee",
   LUNCH: "tip_lunch",
   FEATURE: "tip_feature",

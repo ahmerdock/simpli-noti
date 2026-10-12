@@ -147,7 +147,6 @@ async function reconcile(
 
 export const NotificationService = {
   ensureReady,
-  syncNotification,
   syncWithPermission,
   cancelNotification,
   reconcile,
@@ -158,5 +157,4 @@ export const NotificationService = {
       // No settings screen available on this device; nothing else to do.
     }
   },
-  isAvailable: ExactNotifications.isAvailable,
 };

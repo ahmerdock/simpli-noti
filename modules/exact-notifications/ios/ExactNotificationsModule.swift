@@ -86,10 +86,6 @@ public class ExactNotificationsModule: Module {
       }
     }
 
-    AsyncFunction("cancelAll") {
-      UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-    }
-
     AsyncFunction("getScheduledIds") { (promise: Promise) in
       UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
         promise.resolve(requests.map { $0.identifier })

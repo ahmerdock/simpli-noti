@@ -7,6 +7,5 @@ export interface IRHFTimePickerProps<T extends FieldValues> {
   required?: boolean;
   placeholder?: string;
   modalTitle?: string;
-  timeFormat?: string;
   containerStyle?: StyleProp<ViewStyle>;
 }

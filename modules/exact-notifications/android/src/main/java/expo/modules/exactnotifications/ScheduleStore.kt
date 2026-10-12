@@ -69,10 +69,6 @@ class ScheduleStore(context: Context) {
     prefs.edit().remove(id).apply()
   }
 
-  fun clear() {
-    prefs.edit().clear().apply()
-  }
-
   fun ids(): List<String> = prefs.all.keys.toList()
 
   fun all(): List<ScheduledItem> =

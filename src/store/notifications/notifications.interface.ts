@@ -11,10 +11,7 @@ export interface INotification {
   createdAt: string;
 }
 
-export type NotificationInput = Omit<
-  INotification,
-  "id" | "createdAt" | "isActive"
->;
+type NotificationInput = Omit<INotification, "id" | "createdAt" | "isActive">;
 
 export interface INotificationStore {
   notifications: INotification[];

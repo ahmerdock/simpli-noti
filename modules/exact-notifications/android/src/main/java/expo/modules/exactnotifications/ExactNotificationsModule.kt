@@ -106,16 +106,6 @@ class ExactNotificationsModule : Module() {
         }
       }
 
-      AsyncFunction("cancelAll") {
-        val store = ScheduleStore(context)
-        val manager = NotificationManagerCompat.from(context)
-        store.ids().forEach { id ->
-          AlarmScheduler.cancel(context, id)
-          manager.cancel(id.hashCode())
-        }
-        store.clear()
-      }
-
       AsyncFunction("getScheduledIds") { ScheduleStore(context).ids() }
 
       AsyncFunction("openBatteryOptimizationSettings") {

@@ -1,4 +1,4 @@
-export type NativeRepeat = "none" | "daily" | "weekly" | "monthly" | "yearly";
+type NativeRepeat = "none" | "daily" | "weekly" | "monthly" | "yearly";
 
 /**
  * The minimal shape the native layer needs to arm an exact alarm / calendar

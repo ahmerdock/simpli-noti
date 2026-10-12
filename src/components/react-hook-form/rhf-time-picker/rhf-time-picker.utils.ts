@@ -1,7 +1,7 @@
 export const DEFAULT_PLACEHOLDER = "HH:MM AM";
 export const DEFAULT_MODAL_TITLE = "Select Time";
 
-export const TIME_VALUE_REGEX = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i;
+const TIME_VALUE_REGEX = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i;
 
 export const DEFAULT_HOUR = "12";
 export const DEFAULT_MINUTE = "00";
