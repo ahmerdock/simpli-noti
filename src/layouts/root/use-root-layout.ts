@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { AppState } from "react-native";
-import { useFonts } from "expo-font";
+import { NotificationService } from "@/services";
+import { useNotificationStore } from "@/store";
 import { DMSans_700Bold } from "@expo-google-fonts/dm-sans/700Bold";
 import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
 import { Inter_500Medium } from "@expo-google-fonts/inter/500Medium";
+import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { AppState } from "react-native";
 import { useUnistyles } from "react-native-unistyles";
-import { NotificationService } from "@/services/notifications";
-import { useNotificationStore } from "@/store";
 
 SplashScreen.preventAutoHideAsync();
 
