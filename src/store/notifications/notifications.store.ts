@@ -22,7 +22,6 @@ export const useNotificationStore = create<INotificationStore>()(
         set((state) => ({
           notifications: [...state.notifications, item],
         }));
-        // Keep the native scheduled alarm in sync with the new record.
         void NotificationService.syncWithPermission(
           () => get().notifications.find((x) => x.id === item.id),
           () => get().expireNotification(item.id),

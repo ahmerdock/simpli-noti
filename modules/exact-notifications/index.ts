@@ -21,7 +21,6 @@ export function getPermissionStatus(): Promise<PermissionStatus> {
   );
 }
 
-/** Prompts for notification permission and resolves with the new status. */
 export function requestPermission(): Promise<PermissionStatus> {
   return (
     ExactNotificationsModule?.requestPermission() ?? Promise.resolve("denied")

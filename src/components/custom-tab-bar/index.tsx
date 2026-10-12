@@ -27,7 +27,6 @@ export default function CustomTabBar(props: ICustomTabBarProps) {
         },
       ]}
     >
-      {/* Sliding gradient pill */}
       {tabBarWidth > 0 && (
         <Animated.View
           style={[customTabBarStyles.viewPill(tabWidth), pillStyle]}
@@ -41,7 +40,6 @@ export default function CustomTabBar(props: ICustomTabBarProps) {
         </Animated.View>
       )}
 
-      {/* Tab items rendered on top of the pill */}
       {state.routes.map((route: any, index: number) => {
         const config = TAB_CONFIG[route.name];
         if (!config) return null;

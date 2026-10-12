@@ -32,7 +32,6 @@ function occurrence(base: Dayjs, repeat: RepeatType, n: number): Dayjs {
   }
 }
 
-/** True when a one-time reminder's chosen date/time has already passed. */
 export function isInThePast(
   notification: Pick<INotification, "date" | "time">,
   now: Dayjs = dayjs(),
