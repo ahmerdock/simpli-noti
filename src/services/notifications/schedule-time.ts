@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DATETIME_FORMAT } from "@/constants/date-time";
-import type { INotification, RepeatType } from "@/store";
+import type { INotification } from "@/store";
 
 dayjs.extend(customParseFormat);
 
@@ -17,19 +17,19 @@ export function parseNotificationDateTime(
   return parsed.isValid() ? parsed.second(0).millisecond(0) : null;
 }
 
-function occurrence(base: Dayjs, repeat: RepeatType, n: number): Dayjs {
-  switch (repeat) {
-    case "daily":
-      return base.add(n, "day");
-    case "weekly":
-      return base.add(n, "week");
-    case "monthly":
-      return base.add(n, "month");
-    case "yearly":
-      return base.add(n, "year");
-    default:
-      return base;
-  }
+const REPEAT_UNIT = {
+  daily: "day",
+  weekly: "week",
+  monthly: "month",
+  yearly: "year",
+} as const;
+
+function occurrence(
+  base: Dayjs,
+  repeat: keyof typeof REPEAT_UNIT,
+  n: number,
+): Dayjs {
+  return base.add(n, REPEAT_UNIT[repeat]);
 }
 
 export function isInThePast(
@@ -58,8 +58,10 @@ export function computeTriggerAt(
     return base.isAfter(now) ? base.valueOf() : null;
   }
 
-  let n = 0;
-  let next = base;
+  // Jump close to `now` instead of stepping from the first occurrence, which
+  // would take thousands of iterations for an old daily reminder.
+  let n = Math.max(0, now.diff(base, REPEAT_UNIT[notification.repeat]) - 1);
+  let next = occurrence(base, notification.repeat, n);
   while (!next.isAfter(now)) {
     n += 1;
     next = occurrence(base, notification.repeat, n);
