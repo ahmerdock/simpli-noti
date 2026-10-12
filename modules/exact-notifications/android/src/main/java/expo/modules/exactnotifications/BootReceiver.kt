@@ -16,6 +16,10 @@ import java.util.TimeZone
  */
 class BootReceiver : BroadcastReceiver() {
   override fun onReceive(context: Context, intent: Intent) {
+    // The receiver is exported for system broadcasts, so ignore anything else
+    // another app might send to it.
+    if (intent.action !in HANDLED_ACTIONS) return
+
     val store = ScheduleStore(context)
     val now = System.currentTimeMillis()
     val currentTz = TimeZone.getDefault()
@@ -57,5 +61,17 @@ class BootReceiver : BroadcastReceiver() {
       anchorMillis = NextOccurrence.convertZone(item.anchorMillis, from, current),
       tzId = current.id,
     )
+  }
+
+  private companion object {
+    val HANDLED_ACTIONS =
+      setOf(
+        Intent.ACTION_BOOT_COMPLETED,
+        Intent.ACTION_LOCKED_BOOT_COMPLETED,
+        Intent.ACTION_MY_PACKAGE_REPLACED,
+        "android.intent.action.QUICKBOOT_POWERON",
+        Intent.ACTION_TIMEZONE_CHANGED,
+        Intent.ACTION_TIME_CHANGED,
+      )
   }
 }
