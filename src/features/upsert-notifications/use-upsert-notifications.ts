@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
+import { Alert } from "react-native";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { FormValues } from "./upsert-notifications.interface";
@@ -57,10 +58,19 @@ export default function useUpsertNotifications() {
   const handleCancel = () => router.back();
 
   const handleDelete = () => {
-    if (notificationId) {
-      deleteNotification(notificationId);
-      router.back();
-    }
+    if (!notificationId) return;
+
+    Alert.alert("Delete notification?", "This can't be undone.", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => {
+          deleteNotification(notificationId);
+          router.back();
+        },
+      },
+    ]);
   };
 
   const handleToggle = () => {

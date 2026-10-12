@@ -36,6 +36,8 @@ export default function WheelColumn(props: IWheelColumnProps) {
               key={item}
               style={wheelColumnStyles.item}
               onPress={() => selectIndex(index)}
+              accessibilityRole="button"
+              accessibilityState={{ selected: isSelected }}
             >
               <Text style={wheelColumnStyles.itemText(isSelected)}>{item}</Text>
             </Pressable>

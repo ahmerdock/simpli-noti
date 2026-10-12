@@ -7,7 +7,11 @@ export default function NotificationCard(props: INotificationCardProps) {
   const { item, onPress } = props;
 
   return (
-    <TouchableOpacity style={notificationCardStyles.card} onPress={onPress}>
+    <TouchableOpacity
+      style={notificationCardStyles.card}
+      onPress={onPress}
+      accessibilityRole="button"
+    >
       <View style={notificationCardStyles.cardHeader}>
         <Text style={notificationCardStyles.cardTitle} numberOfLines={1}>
           {item.title}

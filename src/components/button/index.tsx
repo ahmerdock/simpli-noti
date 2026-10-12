@@ -13,6 +13,8 @@ export default function Button({
     <TouchableOpacity
       activeOpacity={0.7}
       disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
       style={[
         buttonStyles.container(variant),
         disabled && { opacity: 0.5 },

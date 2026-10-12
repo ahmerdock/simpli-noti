@@ -18,6 +18,7 @@ export default function CustomTabBar(props: ICustomTabBarProps) {
 
   return (
     <View
+      accessibilityRole="tablist"
       onLayout={onLayout}
       style={[
         customTabBarStyles.container,

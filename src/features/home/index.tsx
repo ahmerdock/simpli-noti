@@ -24,6 +24,9 @@ export default function Home() {
           <TouchableOpacity
             style={homeStyles.addButton}
             onPress={navigateToAdd}
+            accessibilityRole="button"
+            accessibilityLabel="Add notification"
+            hitSlop={6}
           >
             <AppIcon icon={Plus} size={24} color={theme.colors.onPrimary} />
           </TouchableOpacity>

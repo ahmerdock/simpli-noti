@@ -34,7 +34,15 @@ export default function RHFTextField<T extends FieldValues>(
         <View style={[fieldStyles.fieldWrapper, containerStyle]}>
           <View style={fieldStyles.labelRow}>
             <Text style={fieldStyles.fieldLabel}>{label}</Text>
-            {required && <Text style={fieldStyles.requiredMark}>*</Text>}
+            {required && (
+              <Text
+                style={fieldStyles.requiredMark}
+                importantForAccessibility="no"
+                accessibilityElementsHidden
+              >
+                *
+              </Text>
+            )}
           </View>
 
           <TextInput
@@ -56,7 +64,15 @@ export default function RHFTextField<T extends FieldValues>(
             {...textInputProps}
           />
 
-          {error && <Text style={fieldStyles.fieldError}>{error.message}</Text>}
+          {error && (
+            <Text
+              style={fieldStyles.fieldError}
+              accessibilityRole="alert"
+              accessibilityLiveRegion="polite"
+            >
+              {error.message}
+            </Text>
+          )}
 
           {showCharCount && maxLength != null && (
             <Text style={inputStyles.charCount}>

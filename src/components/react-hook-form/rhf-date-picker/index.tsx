@@ -50,13 +50,23 @@ export default function RHFDatePicker<T extends FieldValues>(
           <View style={[fieldStyles.fieldWrapper, containerStyle]}>
             <View style={fieldStyles.labelRow}>
               <Text style={fieldStyles.fieldLabel}>{label}</Text>
-              {required && <Text style={fieldStyles.requiredMark}>*</Text>}
+              {required && (
+                <Text
+                  style={fieldStyles.requiredMark}
+                  importantForAccessibility="no"
+                  accessibilityElementsHidden
+                >
+                  *
+                </Text>
+              )}
             </View>
 
             <Pressable
               style={fieldStyles.trigger}
               onPress={() => openPicker(value ?? "", dateFormat)}
+              accessibilityRole="button"
               accessibilityLabel={required ? `${label}, required` : label}
+              accessibilityValue={{ text: value || placeholder }}
             >
               <Text
                 style={[
@@ -74,7 +84,13 @@ export default function RHFDatePicker<T extends FieldValues>(
             </Pressable>
 
             {error && (
-              <Text style={fieldStyles.fieldError}>{error.message}</Text>
+              <Text
+                style={fieldStyles.fieldError}
+                accessibilityRole="alert"
+                accessibilityLiveRegion="polite"
+              >
+                {error.message}
+              </Text>
             )}
           </View>
 
@@ -103,6 +119,7 @@ export default function RHFDatePicker<T extends FieldValues>(
                 />
                 <Pressable
                   style={fieldStyles.modalConfirmBtn}
+                  accessibilityRole="button"
                   onPress={() => confirm(name, dateFormat)}
                 >
                   <Text style={fieldStyles.modalConfirmText}>Confirm</Text>

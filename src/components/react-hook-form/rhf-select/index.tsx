@@ -45,13 +45,23 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
             <View style={[fieldStyles.fieldWrapper, containerStyle]}>
               <View style={fieldStyles.labelRow}>
                 <Text style={fieldStyles.fieldLabel}>{label}</Text>
-                {required && <Text style={fieldStyles.requiredMark}>*</Text>}
+                {required && (
+                  <Text
+                    style={fieldStyles.requiredMark}
+                    importantForAccessibility="no"
+                    accessibilityElementsHidden
+                  >
+                    *
+                  </Text>
+                )}
               </View>
 
               <Pressable
                 style={fieldStyles.trigger}
                 onPress={open}
+                accessibilityRole="button"
                 accessibilityLabel={required ? `${label}, required` : label}
+                accessibilityValue={{ text: selectedLabel }}
               >
                 <Text style={fieldStyles.triggerText}>{selectedLabel}</Text>
                 <AppIcon
@@ -62,7 +72,13 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
               </Pressable>
 
               {error && (
-                <Text style={fieldStyles.fieldError}>{error.message}</Text>
+                <Text
+                  style={fieldStyles.fieldError}
+                  accessibilityRole="alert"
+                  accessibilityLiveRegion="polite"
+                >
+                  {error.message}
+                </Text>
               )}
             </View>
 
@@ -73,7 +89,12 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
               onRequestClose={close}
             >
               <View style={fieldStyles.modalOverlay}>
-                <Pressable style={fieldStyles.modalBackdrop} onPress={close} />
+                <Pressable
+                  style={fieldStyles.modalBackdrop}
+                  onPress={close}
+                  accessibilityRole="button"
+                  accessibilityLabel="Close"
+                />
                 <View style={fieldStyles.modalSheet}>
                   <View style={fieldStyles.modalHandle} />
                   <Text style={fieldStyles.modalTitle}>{modalTitle}</Text>
@@ -93,6 +114,8 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
                             isActive && styles.optionActive,
                           ]}
                           onPress={() => selectOption(onChange, item.value)}
+                          accessibilityRole="button"
+                          accessibilityState={{ selected: isActive }}
                         >
                           <Text
                             style={[

@@ -18,6 +18,8 @@ export default function StackLayout(props: IStackLayoutProps) {
         <ScrollView
           contentContainerStyle={stackStyles.contentContainer}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustKeyboardInsets
         >
           {children}
         </ScrollView>

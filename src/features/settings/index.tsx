@@ -21,7 +21,13 @@ export default function Settings() {
         description={isDark ? "Currently active" : "Currently off"}
         icon={isDark ? Moon : Sun}
         onPress={toggleTheme}
-        trailing={<CustomSwitch value={isDark} onValueChange={toggleTheme} />}
+        trailing={
+          <CustomSwitch
+            value={isDark}
+            onValueChange={toggleTheme}
+            accessibilityLabel="Dark Mode"
+          />
+        }
       />
 
       {Platform.OS === "android" && (
