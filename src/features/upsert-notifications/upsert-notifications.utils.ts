@@ -2,7 +2,7 @@ import { DATE_FORMAT, TIME_FORMAT } from "@/constants/date-time";
 import type { INotification } from "@/store";
 import dayjs from "dayjs";
 import { z } from "zod";
-import { isInThePast } from "@/services/notifications/schedule-time";
+import { isInThePast } from "@/services";
 import { DESCRIPTION_MAX } from "./upsert-notifications.data";
 import type { FormValues } from "./upsert-notifications.interface";
 

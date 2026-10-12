@@ -2,58 +2,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Platform } from "react-native";
 import {
   getAvailablePurchases as getAvailablePurchasesDirect,
-  ErrorCode,
   useIAP,
 } from "expo-iap";
 import type { Purchase } from "expo-iap";
-import Toast from "react-native-toast-message";
-import {
-  HELP_ME_PRODUCTS,
-  HELP_ME_SKU_SET,
-  HELP_ME_SKUS,
-} from "./help-me.data";
+import { HELP_ME_SKUS } from "./help-me.data";
 import type {
   HelpMeProductDetails,
   UseHelpMeReturn,
 } from "./help-me.interface";
-
-const isHelpMeProductId = (productId: string): boolean =>
-  HELP_ME_SKU_SET.has(productId);
-
-const showSuccess = (productId: string) => {
-  const tier = HELP_ME_PRODUCTS.find((product) => product.id === productId);
-  Toast.show({
-    type: "success",
-    text1: tier?.successMessage ?? "Thank you for your support!",
-  });
-};
-
-const showError = (message: string) => {
-  Toast.show({ type: "error", text1: message });
-};
-
-const isUserCancelledError = (error: unknown): boolean => {
-  if (error && typeof error === "object" && "code" in error) {
-    return (error as { code?: string }).code === ErrorCode.UserCancelled;
-  }
-
-  return false;
-};
-
-const getErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) {
-    return error.message;
-  }
-
-  if (error && typeof error === "object" && "message" in error) {
-    const message = (error as { message?: unknown }).message;
-    return typeof message === "string"
-      ? message
-      : "An unexpected error occurred";
-  }
-
-  return "An unexpected error occurred";
-};
+import {
+  getErrorMessage,
+  isHelpMeProductId,
+  isUserCancelledError,
+  showError,
+  showSuccess,
+} from "./help-me.utils";
 
 export default function useHelpMe(): UseHelpMeReturn {
   const isAvailable = Platform.OS === "android";
