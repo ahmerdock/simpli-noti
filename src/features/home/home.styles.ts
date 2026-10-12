@@ -15,7 +15,7 @@ export const homeStyles = StyleSheet.create((theme) => ({
   },
   sectionLabel: {
     fontSize: 12,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
     color: theme.colors.textSecondary,
     letterSpacing: 0.8,
   },

@@ -14,7 +14,7 @@ export const tabItemStyles = StyleSheet.create((theme) => ({
   },
   text: {
     fontSize: 14,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.text,
   },
 }));

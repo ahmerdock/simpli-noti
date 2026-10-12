@@ -31,11 +31,11 @@ const getCalendarStyles = (
   },
   month_selector_label: {
     color: theme.colors.text,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
   },
   year_selector_label: {
     color: theme.colors.text,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
   },
   button_prev: {
     tintColor: theme.colors.primary,

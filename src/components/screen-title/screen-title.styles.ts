@@ -7,8 +7,8 @@ export const screenTitleStyles = StyleSheet.create((theme) => ({
     alignItems: "center",
   },
   title: {
-    fontSize: 26,
-    fontFamily: theme.typography.secondary.bold,
+    fontSize: 34,
+    fontFamily: theme.typography.heading.regular,
     color: theme.colors.text,
   },
 }));

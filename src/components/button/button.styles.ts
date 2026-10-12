@@ -31,7 +31,7 @@ export const buttonStyles = StyleSheet.create((theme) => ({
   }),
   label: (variant: ButtonVariant) => ({
     fontSize: 16,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: labelColor[variant](theme),
   }),
 }));

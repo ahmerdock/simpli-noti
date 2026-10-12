@@ -5,11 +5,12 @@ import { THEME_STORAGE_KEY } from "@/constants/storage";
 export const mmkvStorage = createMMKV();
 
 const typography = {
-  primary: {
-    regular: "Inter_400Regular",
-    medium: "Inter_500Medium",
+  heading: {
+    regular: "BebasNeue_400Regular",
   },
-  secondary: {
+  body: {
+    regular: "DMSans_400Regular",
+    medium: "DMSans_500Medium",
     bold: "DMSans_700Bold",
   },
 };

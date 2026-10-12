@@ -16,7 +16,7 @@ export const notificationCardStyles = StyleSheet.create((theme) => ({
   cardTitle: {
     flex: 1,
     fontSize: 15,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.text,
   },
   repeatBadge: {
@@ -27,17 +27,17 @@ export const notificationCardStyles = StyleSheet.create((theme) => ({
   },
   repeatBadgeText: {
     fontSize: 11,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.onPrimary,
   },
   cardDateTime: {
     fontSize: 13,
-    fontFamily: theme.typography.secondary.bold,
+    fontFamily: theme.typography.body.bold,
     color: theme.colors.textSecondary,
   },
   cardDescription: {
     fontSize: 12,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
     color: theme.colors.textSecondary,
   },
 }));

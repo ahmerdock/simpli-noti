@@ -14,7 +14,7 @@ Simpli Noti is an Expo (SDK 57) React Native app that schedules reminders as exa
 | Persisted reminders | `zustand` with `persist` on AsyncStorage (see `store/`) |
 | Forms | `react-hook-form` with `zod` and the `components/react-hook-form` fields |
 | Icons | `lucide-react-native`, plus two local brand logos |
-| Fonts | Inter (body) and DM Sans Bold (headings and labels), via `@expo-google-fonts` |
+| Fonts | Bebas Neue (headings), DM Sans (body), via `@expo-google-fonts` |
 | Exact alarms | the local native module `modules/exact-notifications` (Kotlin and Swift) |
 | In-app purchases | `expo-iap` (one-time tips on the Help Me tab) |
 | Toasts | `react-native-toast-message` |
@@ -126,7 +126,7 @@ Lucide 1.x no longer includes brand logos, so `github.tsx` and `linkedin.tsx` ar
 
 ### `services/` and `store/`
 
-- `services/notifications/` (`index.ts` is a barrel; the logic is in `notifications.service.ts`) wraps `modules/exact-notifications`: permission handling, scheduling, cancelling and `reconcile` (re-syncs the native alarms with the saved reminders after reboots, permission changes, clock changes and app upgrades).
+- `services/notifications/` (`services/index.ts` is the barrel; the logic is in `notifications.service.ts`, and `schedule-time.ts` has the time maths) wraps `modules/exact-notifications`: permission handling, scheduling, cancelling and `reconcile` (re-syncs the native alarms with the saved reminders after reboots, permission changes, clock changes and app upgrades).
 - `store/notifications/` is the persisted Zustand store of reminders (`notifications.store.ts`, with its types in `notifications.interface.ts`, re-exported from `index.ts`). Reminder data is saved in AsyncStorage, so changing that storage would need a migration for existing users.
 
 ### `utils/`
@@ -149,9 +149,9 @@ The icon is a red bell with a clock. The files are in `assets/`, and `app.json` 
 
 `theme/unistyles.ts` defines the light and dark themes, loads the saved theme from MMKV and registers them with Unistyles. Dark is the default when nothing has been saved.
 
-- Fonts: `theme.typography.primary.regular | medium` (Inter) for body text and `theme.typography.secondary.bold` (DM Sans Bold) for headings and labels.
+- Fonts: `theme.typography.heading.regular` (Bebas Neue) for screen titles and section headings, and `theme.typography.body.regular | medium | bold` (DM Sans) for everything else. Bebas Neue is all-caps, so never use it for text where upper and lower case must differ. The other apps also have a `mono` font (DM Mono); simpli-noti has no use for it yet. Each font is imported from its own sub-path (for example `@expo-google-fonts/dm-sans/700Bold`) so only the weights in use are bundled.
 - Theme colors beyond the basics: `onPrimary` (text and icons on the primary color), `warning` and `destructive`, each with a `...Muted` background. Add new colors to both themes.
 
 ## Tests
 
-Jest with the `jest-expo` preset (`pnpm test`). Only `utils/date-time-display.test.ts` exists so far. Put a test next to the file it covers.
+Jest with the `jest-expo` preset (`pnpm test`). Tests so far: `utils/date-time-display.test.ts` and `services/notifications/schedule-time.test.ts`. Put a test next to the file it covers.

@@ -7,7 +7,7 @@ export const rhfTextFieldStyles = StyleSheet.create((theme) => ({
     paddingHorizontal: theme.gap(1.5),
     paddingVertical: theme.gap(1.25),
     fontSize: 15,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
     color: theme.colors.text,
   },
   textInputMultiline: {
@@ -16,7 +16,7 @@ export const rhfTextFieldStyles = StyleSheet.create((theme) => ({
   },
   charCount: {
     fontSize: 11,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
     color: theme.colors.textSecondary,
     textAlign: "right",
     marginTop: theme.gap(0.25),

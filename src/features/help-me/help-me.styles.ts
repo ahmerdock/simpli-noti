@@ -5,6 +5,6 @@ export const helpMeStyles = StyleSheet.create((theme) => ({
     fontSize: 14,
     marginBottom: theme.gap(1),
     color: theme.colors.textSecondary,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
   },
 }));

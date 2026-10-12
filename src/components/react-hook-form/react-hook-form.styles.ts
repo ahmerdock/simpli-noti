@@ -11,7 +11,7 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
   },
   fieldLabel: {
     fontSize: 12,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.textSecondary,
     letterSpacing: 0.5,
     textTransform: "uppercase",
@@ -19,7 +19,7 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
   requiredMark: {
     fontSize: 10,
     lineHeight: 12,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.destructive,
     marginLeft: 2,
   },
@@ -34,7 +34,7 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
   },
   triggerText: {
     fontSize: 15,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
     color: theme.colors.text,
   },
   modalOverlay: {
@@ -64,7 +64,7 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
   },
   modalTitle: {
     fontSize: 16,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.text,
     textAlign: "center",
     marginBottom: theme.gap(1.5),
@@ -78,12 +78,12 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
   },
   modalConfirmText: {
     fontSize: 15,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.onPrimary,
   },
   fieldError: {
     fontSize: 11,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
     color: theme.colors.destructive,
   },
 }));

@@ -14,14 +14,14 @@ export const actionCardStyles = StyleSheet.create((theme) => ({
   },
   label: {
     fontSize: 16,
-    fontFamily: theme.typography.secondary.bold,
+    fontFamily: theme.typography.body.bold,
     color: theme.colors.text,
   },
   description: {
     fontSize: 14,
     marginTop: 2,
     color: theme.colors.textSecondary,
-    fontFamily: theme.typography.primary.regular,
+    fontFamily: theme.typography.body.regular,
   },
   trailingWrap: {
     minWidth: 56,
@@ -33,7 +33,7 @@ export const actionCardStyles = StyleSheet.create((theme) => ({
   },
   trailingText: {
     fontSize: 14,
-    fontFamily: theme.typography.primary.medium,
+    fontFamily: theme.typography.body.medium,
     color: theme.colors.text,
   },
 }));

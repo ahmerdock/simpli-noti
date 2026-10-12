@@ -1,8 +1,9 @@
 import { NotificationService } from "@/services";
 import { useNotificationStore } from "@/store";
+import { BebasNeue_400Regular } from "@expo-google-fonts/bebas-neue/400Regular";
+import { DMSans_400Regular } from "@expo-google-fonts/dm-sans/400Regular";
+import { DMSans_500Medium } from "@expo-google-fonts/dm-sans/500Medium";
 import { DMSans_700Bold } from "@expo-google-fonts/dm-sans/700Bold";
-import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
-import { Inter_500Medium } from "@expo-google-fonts/inter/500Medium";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
@@ -15,8 +16,9 @@ export default function useRootLayout() {
   const { rt } = useUnistyles();
 
   const [loaded, error] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
+    BebasNeue_400Regular,
+    DMSans_400Regular,
+    DMSans_500Medium,
     DMSans_700Bold,
   });
 

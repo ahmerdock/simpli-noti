@@ -29,8 +29,8 @@ export const wheelColumnStyles = StyleSheet.create((theme) => ({
   itemText: (isSelected: boolean) => ({
     fontSize: isSelected ? 20 : 16,
     fontFamily: isSelected
-      ? theme.typography.primary.medium
-      : theme.typography.primary.regular,
+      ? theme.typography.body.medium
+      : theme.typography.body.regular,
     color: isSelected ? theme.colors.text : theme.colors.textSecondary,
   }),
 }));
