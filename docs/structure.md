@@ -18,7 +18,7 @@ Simpli Noti is an Expo (SDK 57) React Native app that schedules reminders as exa
 | Exact alarms | the local native module `modules/exact-notifications` (Kotlin and Swift) |
 | In-app purchases | `expo-iap` (one-time tips on the Help Me tab) |
 | Toasts | `react-native-toast-message` |
-| Tests | Jest with the `jest-expo` preset and `@testing-library/react-native` |
+| Tests | Jest with the `jest-expo` preset |
 
 Native modules (MMKV, Unistyles, `expo-iap`, the exact-notifications module) mean the app needs a development build. It does not run in Expo Go: `npx expo run:android`.
 
