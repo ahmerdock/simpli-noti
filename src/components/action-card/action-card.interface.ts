@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { IAppIcon } from "../app-icon/app-icon.interface";
+import type { IAppIcon } from "@/components/app-icon/app-icon.interface";
 
 export interface IActionCardProps {
   label: string;

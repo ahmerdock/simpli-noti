@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native-unistyles";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 
 export const customTabBarStyles = StyleSheet.create((theme) => ({
   container: {
@@ -11,6 +12,13 @@ export const customTabBarStyles = StyleSheet.create((theme) => ({
     borderColor: theme.colors.background,
     overflow: "hidden",
     flexDirection: "row",
+  },
+  containerPosition: (bottom: number) => ({
+    bottom,
+    height: TAB_BAR_HEIGHT,
+  }),
+  gradient: {
+    flex: 1,
   },
   viewPill: (tabWidth: number) => ({
     position: "absolute",

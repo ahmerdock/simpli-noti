@@ -9,7 +9,7 @@ import { useUnistyles } from "react-native-unistyles";
 import { ICustomTabBarProps } from "./custom-tab-bar.interface";
 
 export default function useCustomTabBar(props: ICustomTabBarProps) {
-  const { state } = props;
+  const { state, navigation } = props;
 
   const { theme } = useUnistyles();
   const [tabBarWidth, setTabBarWidth] = useState(0);
@@ -40,6 +40,18 @@ export default function useCustomTabBar(props: ICustomTabBarProps) {
     transform: [{ translateX: pillX.value }],
   }));
 
+  const getOnPress = (routeKey: string, routeName: string) => () => {
+    const isFocused = state.routes[state.index].key === routeKey;
+    const event = navigation.emit({
+      type: "tabPress",
+      target: routeKey,
+      canPreventDefault: true,
+    });
+    if (!isFocused && !event.defaultPrevented) {
+      navigation.navigate(routeName);
+    }
+  };
+
   const gradientColors: [string, string] = [
     theme.colors.background,
     theme.colors.primary,
@@ -52,5 +64,6 @@ export default function useCustomTabBar(props: ICustomTabBarProps) {
     pillStyle,
     gradientColors,
     onLayout,
+    getOnPress,
   };
 }
