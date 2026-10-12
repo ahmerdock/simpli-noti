@@ -1,20 +1,10 @@
-import { DEFAULT_DATE_FORMAT } from "@/components/react-hook-form/rhf-date-picker/rhf-date-picker.utils";
-import { INotification } from "@/store";
+import { DATE_FORMAT, TIME_FORMAT } from "@/constants/date-time";
+import type { INotification } from "@/store";
 import dayjs from "dayjs";
 import { z } from "zod";
 import { isInThePast } from "@/services/notifications/schedule-time";
-
-export const DESCRIPTION_MAX = 160;
-
-export const REPEAT_OPTIONS = [
-  { label: "No Repeat", value: "none" },
-  { label: "Daily", value: "daily" },
-  { label: "Weekly", value: "weekly" },
-  { label: "Monthly", value: "monthly" },
-  { label: "Yearly", value: "yearly" },
-] as const;
-
-export type RepeatValue = (typeof REPEAT_OPTIONS)[number]["value"];
+import { DESCRIPTION_MAX } from "./upsert-notifications.data";
+import type { FormValues } from "./upsert-notifications.interface";
 
 export const upsertNotificationsSchema = z
   .object({
@@ -29,13 +19,11 @@ export const upsertNotificationsSchema = z
     { message: "Pick a date and time in the future", path: ["time"] },
   );
 
-export type FormValues = z.infer<typeof upsertNotificationsSchema>;
-
 export const getDefaultFormValues = (): FormValues => ({
   title: "",
-  date: dayjs().format(DEFAULT_DATE_FORMAT),
+  date: dayjs().format(DATE_FORMAT),
   // A few minutes ahead, so saving with the defaults is a valid reminder.
-  time: dayjs().add(5, "minute").format("hh:mm A"),
+  time: dayjs().add(5, "minute").format(TIME_FORMAT),
   repeat: "none",
   description: "",
 });

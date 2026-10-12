@@ -51,10 +51,10 @@ src/
 ├── layouts/        RootLayout (app shell), TabsLayout (tab pages) and StackLayout (pages outside the tabs)
 ├── components/     Reusable UI components, plus a barrel (index.ts)
 ├── assets/icon/    Our own SVG icon components (GitHub, LinkedIn)
-├── constants/      Route names, page titles, layout numbers
+├── constants/      Route names, page titles, layout numbers, date/time formats, storage keys
 ├── services/       Non-UI logic that talks to the native module (notifications)
 ├── store/          Zustand stores (the persisted reminders)
-├── utils/          Small pure helpers (date and time display text)
+├── utils/          Small pure helpers (date and time display text) and their types
 └── theme/          Unistyles setup: themes, fonts, saved-theme loading
 ```
 
@@ -87,10 +87,10 @@ A feature folder holds everything for one screen:
 | `<feature>.styles.ts` | Unistyles styles |
 
 Create only the files a feature needs. Examples:
-- `home/`: the reminder list, grouped into Active and Disabled. It reads the store directly.
-- `upsert-notifications/`: the add and edit form. `use-upsert-notifications.ts` holds the form and the save flow, `upsert-notifications.utils.ts` the form types, options and validation.
+- `home/`: the reminder list, grouped into Active and Disabled. `use-home.ts` reads the store and handles navigation.
+- `upsert-notifications/`: the add and edit form. `use-upsert-notifications.ts` holds the form and the save flow, `upsert-notifications.utils.ts` the validation schema and form mapping, `upsert-notifications.data.ts` the repeat options, `upsert-notifications.interface.ts` the form types.
 - `settings/`: `use-settings.ts` (theme toggle and saving, opening links, the Android battery-settings shortcut), `settings.data.ts` (contact links), `settings.styles.ts`.
-- `help-me/`: `use-help-me.ts` (store connection, purchases and the success and error toasts), `help-me.data.ts` (tip tiers), `help-me.interface.ts`, `help-me.styles.ts`.
+- `help-me/`: `use-help-me.ts` (store connection, purchases and the success and error toasts, shown straight from the hook), `help-me.data.ts` (tip tiers), `help-me.interface.ts`, `help-me.styles.ts`.
 
 ### `components/` (reusable UI)
 
@@ -108,7 +108,7 @@ Add `use-<name>.ts` when the component has logic (state, animation, handlers) an
 - `notification-card/`, `error-and-no-data/`: the reminder row and the empty state.
 - `time-picker/`: the wheel time picker used by the form.
 - `react-hook-form/`: form fields wired to `react-hook-form` (`RHFForm`, `RHFTextField`, `RHFDatePicker`, `RHFTimePicker`, `RHFSelect`).
-- Components never import from `features/`, and import each other with relative paths.
+- Components never import from `features/`, and import each other with relative paths. Shared constants (such as date formats) come from `@/constants`.
 
 `components/index.ts` is the barrel. Every component is exported from it, and screens import from `@/components`.
 
@@ -126,8 +126,8 @@ Lucide 1.x no longer includes brand logos, so `github.tsx` and `linkedin.tsx` ar
 
 ### `services/` and `store/`
 
-- `services/notifications/` wraps `modules/exact-notifications`: permission handling, scheduling, cancelling and `reconcile` (re-syncs the native alarms with the saved reminders after reboots, permission changes, clock changes and app upgrades).
-- `store/notifications/` is the persisted Zustand store of reminders. Reminder data is saved in AsyncStorage, so changing that storage would need a migration for existing users.
+- `services/notifications/` (`index.ts` is a barrel; the logic is in `notifications.service.ts`) wraps `modules/exact-notifications`: permission handling, scheduling, cancelling and `reconcile` (re-syncs the native alarms with the saved reminders after reboots, permission changes, clock changes and app upgrades).
+- `store/notifications/` is the persisted Zustand store of reminders (`notifications.store.ts`, with its types in `notifications.interface.ts`, re-exported from `index.ts`). Reminder data is saved in AsyncStorage, so changing that storage would need a migration for existing users.
 
 ### `utils/`
 

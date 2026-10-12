@@ -1,13 +1,9 @@
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DEFAULT_DATE_FORMAT } from "@/components/react-hook-form/rhf-date-picker/rhf-date-picker.utils";
+import { DATETIME_FORMAT } from "@/constants/date-time";
 import type { INotification, RepeatType } from "@/store";
 
 dayjs.extend(customParseFormat);
-
-// Matches the formats the form persists: date "DD / MM / YYYY", time "hh:mm A".
-const TIME_FORMAT = "hh:mm A";
-const DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} ${TIME_FORMAT}`;
 
 /** Parses the stored display date+time into a Dayjs, or null if malformed. */
 export function parseNotificationDateTime(

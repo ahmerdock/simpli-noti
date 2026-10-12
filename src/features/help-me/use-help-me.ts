@@ -6,17 +6,31 @@ import {
   useIAP,
 } from "expo-iap";
 import type { Purchase } from "expo-iap";
-import { HELP_ME_PRODUCT_IDS } from "./help-me.data";
+import Toast from "react-native-toast-message";
+import {
+  HELP_ME_PRODUCTS,
+  HELP_ME_SKU_SET,
+  HELP_ME_SKUS,
+} from "./help-me.data";
 import type {
   HelpMeProductDetails,
   UseHelpMeReturn,
 } from "./help-me.interface";
 
-const HELP_ME_SKUS = Object.values(HELP_ME_PRODUCT_IDS);
-const HELP_ME_SKU_SET = new Set<string>(HELP_ME_SKUS);
-
 const isHelpMeProductId = (productId: string): boolean =>
   HELP_ME_SKU_SET.has(productId);
+
+const showSuccess = (productId: string) => {
+  const tier = HELP_ME_PRODUCTS.find((product) => product.id === productId);
+  Toast.show({
+    type: "success",
+    text1: tier?.successMessage ?? "Thank you for your support!",
+  });
+};
+
+const showError = (message: string) => {
+  Toast.show({ type: "error", text1: message });
+};
 
 const isUserCancelledError = (error: unknown): boolean => {
   if (error && typeof error === "object" && "code" in error) {
@@ -48,8 +62,6 @@ export default function useHelpMe(): UseHelpMeReturn {
   const [purchasingProductId, setPurchasingProductId] = useState<string | null>(
     null,
   );
-  const [error, setError] = useState<string | null>(null);
-  const [successProductId, setSuccessProductId] = useState<string | null>(null);
 
   const purchasingProductIdRef = useRef<string | null>(null);
   const hasConsumedPendingRef = useRef(false);
@@ -76,10 +88,9 @@ export default function useHelpMe(): UseHelpMeReturn {
 
       try {
         await finishTransaction({ purchase, isConsumable: true });
-        setSuccessProductId(purchase.productId);
-        setError(null);
+        showSuccess(purchase.productId);
       } catch (finishError) {
-        setError(
+        showError(
           finishError instanceof Error
             ? finishError.message
             : "Failed to complete purchase",
@@ -94,7 +105,7 @@ export default function useHelpMe(): UseHelpMeReturn {
         return;
       }
 
-      setError(getErrorMessage(purchaseError));
+      showError(getErrorMessage(purchaseError));
       setPurchasingProductIdState(null);
     },
   });
@@ -169,7 +180,7 @@ export default function useHelpMe(): UseHelpMeReturn {
         }
       } catch (loadError) {
         if (!cancelled) {
-          setError(getErrorMessage(loadError));
+          showError(getErrorMessage(loadError));
         }
       } finally {
         if (!cancelled) {
@@ -200,8 +211,6 @@ export default function useHelpMe(): UseHelpMeReturn {
       }
 
       setPurchasingProductIdState(productId);
-      setError(null);
-      setSuccessProductId(null);
 
       try {
         await requestPurchase({
@@ -217,7 +226,7 @@ export default function useHelpMe(): UseHelpMeReturn {
           return;
         }
 
-        setError(getErrorMessage(purchaseError));
+        showError(getErrorMessage(purchaseError));
         setPurchasingProductIdState(null);
       }
     },
@@ -231,23 +240,11 @@ export default function useHelpMe(): UseHelpMeReturn {
     ],
   );
 
-  const clearError = useCallback(() => {
-    setError(null);
-  }, []);
-
-  const clearSuccess = useCallback(() => {
-    setSuccessProductId(null);
-  }, []);
-
   return {
     isAvailable,
     isProductsLoading: isAvailable ? isProductsLoading : false,
     productsById: isAvailable ? productsById : {},
     purchasingProductId: isAvailable ? purchasingProductId : null,
-    error: isAvailable ? error : null,
-    successProductId: isAvailable ? successProductId : null,
     purchase,
-    clearError,
-    clearSuccess,
   };
 }

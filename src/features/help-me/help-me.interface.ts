@@ -8,9 +8,5 @@ export type UseHelpMeReturn = {
   isProductsLoading: boolean;
   productsById: Record<string, HelpMeProductDetails | undefined>;
   purchasingProductId: string | null;
-  error: string | null;
-  successProductId: string | null;
   purchase: (productId: string) => Promise<void>;
-  clearError: () => void;
-  clearSuccess: () => void;
 };

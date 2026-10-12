@@ -2,7 +2,8 @@ import { Linking } from "react-native";
 import Toast from "react-native-toast-message";
 import { UnistylesRuntime, useUnistyles } from "react-native-unistyles";
 import { NotificationService } from "@/services/notifications";
-import { mmkvStorage, THEME_STORAGE_KEY } from "@/theme/unistyles";
+import { THEME_STORAGE_KEY } from "@/constants/storage";
+import { mmkvStorage } from "@/theme/unistyles";
 
 export default function useSettings() {
   const { rt } = useUnistyles();

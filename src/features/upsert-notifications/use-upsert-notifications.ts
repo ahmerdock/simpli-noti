@@ -2,9 +2,9 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { FormValues } from "./upsert-notifications.interface";
 import {
   getDefaultFormValues,
-  FormValues,
   notificationToFormValues,
   upsertNotificationsSchema,
 } from "./upsert-notifications.utils";

@@ -31,3 +31,6 @@ export const HELP_ME_PRODUCTS = [
     successMessage: "Thank you for sponsoring a feature! 🚀",
   },
 ] as const;
+
+export const HELP_ME_SKUS = Object.values(HELP_ME_PRODUCT_IDS);
+export const HELP_ME_SKU_SET = new Set<string>(HELP_ME_SKUS);

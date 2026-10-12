@@ -1,18 +1,11 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DEFAULT_DATE_FORMAT } from "@/components/react-hook-form/rhf-date-picker/rhf-date-picker.utils";
-import type { RepeatType } from "@/store";
+import { DATE_FORMAT } from "@/constants/date-time";
+import type { FormatNotificationDateTimeParams } from "./date-time-display.interface";
 
 dayjs.extend(customParseFormat);
 
-type FormatNotificationDateTimeParams = {
-  date: string;
-  time: string;
-  repeat: RepeatType;
-};
-
-const parseNotificationDate = (date: string) =>
-  dayjs(date, DEFAULT_DATE_FORMAT, true);
+const parseNotificationDate = (date: string) => dayjs(date, DATE_FORMAT, true);
 
 const formatOrdinalDay = (day: number): string => {
   const remainder = day % 100;

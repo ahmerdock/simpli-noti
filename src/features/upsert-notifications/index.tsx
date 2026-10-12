@@ -11,12 +11,9 @@ import {
   RHFTimePicker,
 } from "@/components";
 import useUpsertNotifications from "./use-upsert-notifications";
-import {
-  DESCRIPTION_MAX,
-  FormValues,
-  REPEAT_OPTIONS,
-  RepeatValue,
-} from "./upsert-notifications.utils";
+import { DESCRIPTION_MAX, REPEAT_OPTIONS } from "./upsert-notifications.data";
+import type { FormValues } from "./upsert-notifications.interface";
+import type { RepeatType } from "@/store";
 
 export default function UpsertNotifications() {
   const styles = upsertNotificationsStyles;
@@ -66,7 +63,7 @@ export default function UpsertNotifications() {
             />
           </View>
 
-          <RHFSelect<FormValues, RepeatValue>
+          <RHFSelect<FormValues, RepeatType>
             name="repeat"
             label="Repeat"
             options={REPEAT_OPTIONS}

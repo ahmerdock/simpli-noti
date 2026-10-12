@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native-unistyles";
 import { createMMKV } from "react-native-mmkv";
+import { THEME_STORAGE_KEY } from "@/constants/storage";
 
 export const mmkvStorage = createMMKV();
-export const THEME_STORAGE_KEY = "app_theme";
 
 const typography = {
   primary: {

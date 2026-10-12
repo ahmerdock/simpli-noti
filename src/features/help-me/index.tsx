@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { ActivityIndicator, Text } from "react-native";
-import Toast from "react-native-toast-message";
 import { PAGE_TITLES } from "@/constants/routes";
 import { ActionCard, actionCardStyles, ShortHeading } from "@/components";
 import { TabsLayout } from "@/layouts";
@@ -15,38 +13,7 @@ export default function HelpMe() {
     productsById,
     purchasingProductId,
     purchase,
-    error,
-    successProductId,
-    clearError,
-    clearSuccess,
   } = useHelpMe();
-
-  useEffect(() => {
-    if (!successProductId) {
-      return;
-    }
-
-    const tier = HELP_ME_PRODUCTS.find(
-      (product) => product.id === successProductId,
-    );
-    Toast.show({
-      type: "success",
-      text1: tier?.successMessage ?? "Thank you for your support!",
-    });
-    clearSuccess();
-  }, [successProductId, clearSuccess]);
-
-  useEffect(() => {
-    if (!error) {
-      return;
-    }
-
-    Toast.show({
-      type: "error",
-      text1: error,
-    });
-    clearError();
-  }, [error, clearError]);
 
   return (
     <TabsLayout titleProps={{ title: PAGE_TITLES.HELP_ME }}>

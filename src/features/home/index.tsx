@@ -1,22 +1,20 @@
-import { router } from "expo-router";
 import Plus from "lucide-react-native/icons/plus";
-import { useUnistyles } from "react-native-unistyles";
 import { TabsLayout } from "@/layouts";
 import { TouchableOpacity, View, Text } from "react-native";
 import { homeStyles } from "./home.styles";
-import { PAGE_TITLES, ROUTES } from "@/constants/routes";
-import { useNotificationStore } from "@/store";
+import useHome from "./use-home";
+import { PAGE_TITLES } from "@/constants/routes";
 import { AppIcon, ErrorAndNoData, NotificationCard } from "@/components";
 
 export default function Home() {
-  const { theme } = useUnistyles();
-  const notifications = useNotificationStore((s) => s.notifications);
-
-  const active = notifications.filter((n) => n.isActive);
-  const disabled = notifications.filter((n) => !n.isActive);
-
-  const navigateToEdit = (id: string) =>
-    router.push(`${ROUTES.UPSERT_NOTIFICATIONS}?id=${id}`);
+  const {
+    theme,
+    notifications,
+    active,
+    disabled,
+    navigateToAdd,
+    navigateToEdit,
+  } = useHome();
 
   return (
     <TabsLayout
@@ -25,7 +23,7 @@ export default function Home() {
         children: (
           <TouchableOpacity
             style={homeStyles.addButton}
-            onPress={() => router.push(ROUTES.UPSERT_NOTIFICATIONS)}
+            onPress={navigateToAdd}
           >
             <AppIcon icon={Plus} size={24} color={theme.colors.onPrimary} />
           </TouchableOpacity>
