@@ -19,12 +19,12 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
     fontSize: 10,
     lineHeight: 12,
     fontFamily: theme.typography.primary.medium,
-    color: "#ff4d4d",
+    color: theme.colors.destructive,
     marginLeft: 2,
   },
   fieldError: {
     fontSize: 11,
     fontFamily: theme.typography.primary.regular,
-    color: "#ff4d4d",
+    color: theme.colors.destructive,
   },
 }));
