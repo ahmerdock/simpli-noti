@@ -63,6 +63,6 @@ export const rhfTimePickerStyles = StyleSheet.create((theme) => ({
   modalConfirmText: {
     fontSize: 15,
     fontFamily: theme.typography.primary.medium,
-    color: theme.colors.background,
+    color: theme.colors.onPrimary,
   },
 }));

@@ -68,7 +68,7 @@ export const rhfSelectStyles = StyleSheet.create((theme) => ({
   },
   optionTextActive: {
     fontFamily: theme.typography.primary.medium,
-    color: theme.colors.background,
+    color: theme.colors.onPrimary,
   },
   optionDivider: {
     height: 0.5,

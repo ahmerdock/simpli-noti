@@ -15,11 +15,12 @@ const typography = {
 
 const lightTheme = {
   colors: {
-    primary: "#c9f31d",
-    background: "#ffffff",
-    backgroundSecondary: "#f1f1f1",
-    text: "#100E0E",
-    textSecondary: "#888888",
+    primary: "#b63331",
+    background: "#FDFDFD",
+    backgroundSecondary: "#F0F0F0",
+    text: "#121212",
+    textSecondary: "#12121280",
+    onPrimary: "#FDFDFD",
     warning: "#EA580C",
     warningMuted: "#FFF7ED",
     destructive: "#DC2626",
@@ -31,11 +32,12 @@ const lightTheme = {
 
 const darkTheme = {
   colors: {
-    primary: "#c9f31d",
-    background: "#0F0E0E",
-    backgroundSecondary: "#1f1f1f",
-    text: "#ffffff",
-    textSecondary: "#b1b1b1",
+    primary: "#b63331",
+    background: "#0D0C0C",
+    backgroundSecondary: "#1C1C1C",
+    text: "#FDFDFD",
+    textSecondary: "#FDFDFD80",
+    onPrimary: "#FDFDFD",
     warning: "#FB923C",
     warningMuted: "#2A1A0F",
     destructive: "#F87171",

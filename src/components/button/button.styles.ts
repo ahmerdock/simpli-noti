@@ -16,7 +16,7 @@ const labelColor: Record<
   (theme: { colors: Record<string, string> }) => string
 > = {
   cancel: (theme) => theme.colors.text,
-  submit: (theme) => theme.colors.background,
+  submit: (theme) => theme.colors.onPrimary,
   disable: (theme) => theme.colors.warning,
   delete: (theme) => theme.colors.destructive,
 };

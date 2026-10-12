@@ -28,7 +28,7 @@ export const notificationCardStyles = StyleSheet.create((theme) => ({
   repeatBadgeText: {
     fontSize: 11,
     fontFamily: theme.typography.primary.medium,
-    color: theme.colors.background,
+    color: theme.colors.onPrimary,
   },
   cardDateTime: {
     fontSize: 13,

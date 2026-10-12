@@ -12,7 +12,7 @@ export const homeStyles = StyleSheet.create((theme) => ({
   addButtonIcon: {
     width: 24,
     height: 24,
-    tintColor: theme.colors.background,
+    tintColor: theme.colors.onPrimary,
   },
   listContent: {
     gap: theme.gap(2),

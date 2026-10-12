@@ -1,6 +1,7 @@
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 import { ICustomSwitchProps } from "./custom-switch.interface";
+import { customSwitchStyles } from "./custom-switch.styles";
 import useCustomSwitch from "./use-custom-switch";
 
 const CustomSwitch = (props: ICustomSwitchProps) => {
@@ -10,27 +11,12 @@ const CustomSwitch = (props: ICustomSwitchProps) => {
 
   return (
     <Pressable
+      accessibilityRole="switch"
+      accessibilityState={{ checked: value }}
       onPress={toggleSwitch}
-      style={{
-        width: 44,
-        height: 26,
-        borderRadius: 13,
-        padding: 3,
-        backgroundColor: value ? "#c9f31d" : "#100E0E",
-        justifyContent: "center",
-      }}
+      style={customSwitchStyles.track(value)}
     >
-      <Animated.View
-        style={[
-          {
-            width: 20,
-            height: 20,
-            borderRadius: 10,
-            backgroundColor: "#ffffff",
-          },
-          thumbStyle,
-        ]}
-      />
+      <Animated.View style={[customSwitchStyles.thumb, thumbStyle]} />
     </Pressable>
   );
 };

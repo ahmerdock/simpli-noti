@@ -18,7 +18,7 @@ const getCalendarStyles = (
     backgroundColor: theme.colors.primary,
   },
   selected_label: {
-    color: theme.colors.background,
+    color: theme.colors.onPrimary,
   },
   day_label: {
     color: theme.colors.text,
