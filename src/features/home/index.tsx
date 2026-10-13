@@ -11,6 +11,7 @@ export default function Home() {
   const {
     theme,
     isHydrated,
+    hydrationFailed,
     notifications,
     sections,
     navigateToAdd,
@@ -21,7 +22,8 @@ export default function Home() {
     <TabsLayout
       titleProps={{
         title: PAGE_TITLES.HOME,
-        children: (
+        // Adding while the saved list is unreadable would overwrite it.
+        children: hydrationFailed ? null : (
           <TouchableOpacity
             style={homeStyles.addButton}
             onPress={navigateToAdd}
@@ -34,7 +36,12 @@ export default function Home() {
         ),
       }}
     >
-      {!isHydrated ? null : notifications.length === 0 ? (
+      {hydrationFailed ? (
+        <ErrorAndNoData
+          message="Couldn't load your notifications"
+          description="Close and reopen the app to try again"
+        />
+      ) : !isHydrated ? null : notifications.length === 0 ? (
         <ErrorAndNoData
           message="No notifications yet"
           description="Tap + to add your first one"

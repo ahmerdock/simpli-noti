@@ -19,6 +19,7 @@ export const useNotificationStore = create<INotificationStore>()(
 
       return {
         notifications: [],
+        hydrationFailed: false,
 
         addNotification: (n) => {
           const item: INotification = {
@@ -77,6 +78,15 @@ export const useNotificationStore = create<INotificationStore>()(
     {
       name: "notifications-storage",
       storage: createJSONStorage(() => AsyncStorage),
+      // Only the reminders are saved; flags like hydrationFailed are not.
+      partialize: (state) => ({ notifications: state.notifications }),
+      // When the saved list cannot be read, hasHydrated never becomes true, so
+      // the screen needs this flag to show an error instead of waiting forever.
+      onRehydrateStorage: () => (_state, error) => {
+        if (error) {
+          useNotificationStore.setState({ hydrationFailed: true });
+        }
+      },
       merge: (persisted, current) => ({
         ...current,
         notifications: parseStoredNotifications(persisted) ?? current.notifications,

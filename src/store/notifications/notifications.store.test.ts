@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { INotification } from "./notifications.interface";
 import { useNotificationStore } from "./notifications.store";
 
@@ -93,5 +94,38 @@ describe("expireNotification", () => {
     seed({ ...base, isActive: true });
     useNotificationStore.getState().expireNotification("n1");
     expect(current().isActive).toBe(false);
+  });
+});
+
+describe("rehydrating from storage", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+    useNotificationStore.setState({ hydrationFailed: false });
+  });
+
+  it("flags a storage read failure so the screen can show an error", async () => {
+    jest.spyOn(AsyncStorage, "getItem").mockRejectedValueOnce(new Error("io"));
+
+    await useNotificationStore.persist.rehydrate();
+
+    expect(useNotificationStore.getState().hydrationFailed).toBe(true);
+  });
+
+  it("drops invalid saved records and keeps the valid ones", async () => {
+    jest
+      .spyOn(AsyncStorage, "getItem")
+      .mockResolvedValueOnce(
+        JSON.stringify({
+          state: { notifications: [base, { ...base, id: "bad", repeat: "x" }] },
+          version: 0,
+        }),
+      );
+
+    await useNotificationStore.persist.rehydrate();
+
+    expect(
+      useNotificationStore.getState().notifications.map((n) => n.id),
+    ).toEqual(["n1"]);
+    expect(useNotificationStore.getState().hydrationFailed).toBe(false);
   });
 });

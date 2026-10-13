@@ -15,6 +15,7 @@ type INotificationInput = Omit<INotification, "id" | "createdAt" | "isActive">;
 
 export interface INotificationStore {
   notifications: INotification[];
+  hydrationFailed: boolean;
   addNotification: (n: INotificationInput) => void;
   editNotification: (id: string, n: INotificationInput) => void;
   deleteNotification: (id: string) => void;

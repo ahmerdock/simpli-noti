@@ -15,6 +15,8 @@ export default function useHome() {
     useNotificationStore.persist.hasHydrated,
   );
 
+  const hydrationFailed = useNotificationStore((s) => s.hydrationFailed);
+
   const sections = [
     { label: "ACTIVE", items: notifications.filter((n) => n.isActive) },
     { label: "DISABLED", items: notifications.filter((n) => !n.isActive) },
@@ -28,6 +30,7 @@ export default function useHome() {
   return {
     theme,
     isHydrated,
+    hydrationFailed,
     notifications,
     sections,
     navigateToAdd,
