@@ -10,17 +10,20 @@ export default function TimePicker(props: ITimePickerProps) {
   return (
     <View style={timePickerStyles.container}>
       <WheelColumn
+        label="Hour"
         data={HOURS}
         selected={hour}
         onSelect={(h) => onChange(h, minute, period)}
       />
       <Text style={timePickerStyles.separator}>:</Text>
       <WheelColumn
+        label="Minute"
         data={MINUTES}
         selected={minute}
         onSelect={(m) => onChange(hour, m, period)}
       />
       <WheelColumn
+        label="AM or PM"
         data={PERIODS}
         selected={period}
         onSelect={(p) => onChange(hour, minute, p)}

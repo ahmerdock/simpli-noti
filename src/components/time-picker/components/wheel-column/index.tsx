@@ -5,7 +5,7 @@ import useWheelColumn from "./use-wheel-column";
 import { wheelColumnStyles } from "./wheel-column.styles";
 
 export default function WheelColumn(props: IWheelColumnProps) {
-  const { data, selected } = props;
+  const { label, data, selected } = props;
 
   const {
     scrollRef,
@@ -37,6 +37,7 @@ export default function WheelColumn(props: IWheelColumnProps) {
               style={wheelColumnStyles.item}
               onPress={() => selectIndex(index)}
               accessibilityRole="button"
+              accessibilityLabel={`${label} ${item}`}
               accessibilityState={{ selected: isSelected }}
             >
               <Text style={wheelColumnStyles.itemText(isSelected)}>{item}</Text>

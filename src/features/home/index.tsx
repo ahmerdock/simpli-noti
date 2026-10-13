@@ -39,7 +39,12 @@ export default function Home() {
             ({ label, items }) =>
               items.length > 0 && (
                 <Fragment key={label}>
-                  <Text style={homeStyles.sectionLabel}>{label}</Text>
+                  <Text
+                    accessibilityRole="header"
+                    style={homeStyles.sectionLabel}
+                  >
+                    {label}
+                  </Text>
                   {items.map((item) => (
                     <NotificationCard
                       key={item.id}
