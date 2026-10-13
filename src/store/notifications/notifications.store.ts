@@ -54,7 +54,6 @@ export const useNotificationStore = create<INotificationStore>()(
             item.id === id ? { ...item, isActive: !item.isActive } : item,
           ),
         }));
-        // syncNotification arms when active, cancels when inactive.
         void NotificationService.syncWithPermission(
           () => get().notifications.find((item) => item.id === id),
           () => get().expireNotification(id),
