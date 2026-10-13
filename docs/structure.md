@@ -18,7 +18,7 @@ Simpli Noti is an Expo (SDK 57) React Native app that schedules reminders as exa
 | Exact alarms | the local native module `modules/exact-notifications` (Kotlin and Swift) |
 | In-app purchases | `expo-iap` (one-time tips on the Help Me tab) |
 | Toasts | `react-native-toast-message` |
-| Tests | Jest with the `jest-expo` preset |
+| Tests | Jest with the `jest-expo` preset and `@testing-library/react-native` |
 
 Native modules (MMKV, Unistyles, `expo-iap`, the exact-notifications module) mean the app needs a development build. It does not run in Expo Go: `npx expo run:android`.
 
@@ -116,7 +116,7 @@ Add `use-<name>.ts` when the component has logic (state, animation, handlers) an
 
 Each layout is a folder with the same anatomy as a component and is exported from `layouts/index.ts`.
 
-- `root/` (`RootLayout`): the app shell rendered by `app/_layout.tsx`. It loads fonts, keeps the splash screen up until they are ready, syncs the native alarms with the saved reminders (on start and whenever the app returns to the foreground), and renders the gesture root, safe area provider, status bar, stack and toast host. Its logic is in `use-root-layout.ts`.
+- `root/` (`RootLayout`): the app shell rendered by `app/_layout.tsx`. It loads fonts, keeps the splash screen up until they are ready, syncs the native alarms with the saved reminders (on start and whenever the app returns to the foreground), and renders the gesture root, safe area provider, status bar, stack and toast host. Its logic is in `use-root-layout.ts`; the alarm re-sync is its own hook, `use-notification-sync.ts`. It waits for the saved reminders to load (an empty list would cancel every alarm), runs one re-sync at a time, and runs once more on fresh data when a request or a store change arrives mid-run.
 - `tabs/` (`TabsLayout`): safe area, the page title (`ScreenTitle`), a scrolling body, and padding so content clears the floating tab bar. Every tab screen renders inside it and passes its title as `titleProps`.
 - `stack/` (`StackLayout`): the same page frame without tab-bar padding, for screens outside the tabs (the add and edit screen).
 
@@ -158,4 +158,4 @@ The icon is a red bell with a clock. The files are in `assets/`, and `app.json` 
 
 ## Tests
 
-Jest with the `jest-expo` preset (`pnpm test`). Tests so far: `utils/date-time-display.test.ts` and `services/notifications/schedule-time.test.ts`. Put a test next to the file it covers.
+Jest with the `jest-expo` preset (`pnpm test`). Tests so far cover date display, schedule times, the notifications store (validation and load failure) and the alarm re-sync hook (`layouts/root/use-notification-sync.test.ts`). Hooks are tested with `renderHook`. Put a test next to the file it covers.
