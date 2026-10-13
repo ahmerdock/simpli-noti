@@ -3,9 +3,9 @@ export const DEFAULT_MODAL_TITLE = "Select Time";
 
 const TIME_VALUE_REGEX = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i;
 
-export const DEFAULT_HOUR = "12";
-export const DEFAULT_MINUTE = "00";
-export const DEFAULT_PERIOD = "AM";
+const DEFAULT_HOUR = "12";
+const DEFAULT_MINUTE = "00";
+const DEFAULT_PERIOD = "AM";
 
 export const DEFAULT_TIME = {
   hour: DEFAULT_HOUR,
