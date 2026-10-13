@@ -19,7 +19,7 @@ export const showError = (message: string) => {
 
 export const isUserCancelledError = (error: unknown): boolean => {
   if (error && typeof error === "object" && "code" in error) {
-    return (error as { code?: string }).code === ErrorCode.UserCancelled;
+    return error.code === ErrorCode.UserCancelled;
   }
 
   return false;
@@ -31,9 +31,8 @@ export const getErrorMessage = (error: unknown): string => {
   }
 
   if (error && typeof error === "object" && "message" in error) {
-    const message = (error as { message?: unknown }).message;
-    return typeof message === "string"
-      ? message
+    return typeof error.message === "string"
+      ? error.message
       : "An unexpected error occurred";
   }
 

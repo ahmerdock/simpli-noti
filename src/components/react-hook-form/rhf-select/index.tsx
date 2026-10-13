@@ -37,11 +37,7 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
       control={control}
       name={name}
       render={({ field: { value, onChange }, fieldState: { error } }) => {
-        const selectedLabel = getSelectedLabel(
-          value as V,
-          options,
-          placeholder,
-        );
+        const selectedLabel = getSelectedLabel(value, options, placeholder);
 
         return (
           <>

@@ -127,7 +127,8 @@ async function reconcile(
   const active = notifications.filter((n) => n.isActive);
   const activeIds = new Set(active.map((n) => n.id));
 
-  await Promise.all(
+  // One failed cancel must not stop the active reminders from being re-armed.
+  await Promise.allSettled(
     scheduledIds
       .filter((id) => !activeIds.has(id))
       .map((id) => cancelNotification(id)),
