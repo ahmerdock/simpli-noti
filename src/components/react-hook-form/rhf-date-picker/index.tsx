@@ -1,17 +1,12 @@
-import { View, Text, Pressable } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
-import { useUnistyles } from "react-native-unistyles";
 import DateTimePicker from "react-native-ui-datepicker";
 import dayjs from "dayjs";
 import Calendar from "lucide-react-native/icons/calendar";
 import { DATE_FORMAT } from "@/constants/date-time";
-import AppIcon from "../../app-icon";
-import { rhfFieldStyles } from "../react-hook-form.styles";
-import RHFFieldLabel from "../rhf-field-label";
-import RHFFieldError from "../rhf-field-error";
 import RHFModalSheet from "../rhf-modal-sheet";
+import RHFPickerField from "../rhf-picker-field";
 import { IRHFDatePickerProps } from "./rhf-date-picker.interface";
-import { useRHFDatePicker } from "./use-rhf-date-picker";
+import useRHFDatePicker from "./use-rhf-date-picker";
 import {
   DEFAULT_MODAL_TITLE,
   DEFAULT_PLACEHOLDER,
@@ -31,8 +26,6 @@ export default function RHFDatePicker<T extends FieldValues>(
   } = props;
 
   const { control } = useFormContext<T>();
-  const { theme } = useUnistyles();
-  const fieldStyles = rhfFieldStyles;
 
   const {
     visible,
@@ -50,38 +43,22 @@ export default function RHFDatePicker<T extends FieldValues>(
       name={name}
       render={({ field: { value }, fieldState: { error } }) => (
         <>
-          <View style={[fieldStyles.fieldWrapper, containerStyle]}>
-            <RHFFieldLabel label={label} required={required} />
-
-            <Pressable
-              style={fieldStyles.trigger}
-              onPress={() => openPicker(value ?? "", dateFormat)}
-              accessibilityRole="button"
-              accessibilityLabel={required ? `${label}, required` : label}
-              accessibilityValue={{ text: value || placeholder }}
-            >
-              <Text
-                style={[
-                  fieldStyles.triggerText,
-                  !value && { color: theme.colors.textSecondary },
-                ]}
-              >
-                {value || placeholder}
-              </Text>
-              <AppIcon
-                icon={Calendar}
-                size={16}
-                color={theme.colors.textSecondary}
-              />
-            </Pressable>
-
-            {error && <RHFFieldError message={error.message} />}
-          </View>
+          <RHFPickerField
+            label={label}
+            required={required}
+            text={value ?? ""}
+            placeholder={placeholder}
+            icon={Calendar}
+            errorMessage={error?.message}
+            containerStyle={containerStyle}
+            onPress={() => openPicker(value ?? "", dateFormat)}
+          />
 
           <RHFModalSheet
             visible={visible}
             title={modalTitle}
             onClose={closePicker}
+            onConfirm={() => confirm(name, dateFormat)}
           >
             <DateTimePicker
               key={selectedDate.format("YYYY-MM-DD")}
@@ -92,13 +69,6 @@ export default function RHFDatePicker<T extends FieldValues>(
               }}
               styles={calendarStyles}
             />
-            <Pressable
-              style={fieldStyles.modalConfirmBtn}
-              accessibilityRole="button"
-              onPress={() => confirm(name, dateFormat)}
-            >
-              <Text style={fieldStyles.modalConfirmText}>Confirm</Text>
-            </Pressable>
           </RHFModalSheet>
         </>
       )}

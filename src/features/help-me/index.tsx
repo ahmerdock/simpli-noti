@@ -43,7 +43,7 @@ export default function HelpMe() {
             }
             onPress={() => purchase(tier.id)}
             trailing={
-              isPurchasing ? (
+              isPurchasing || (isProductsLoading && !displayPrice) ? (
                 <ActivityIndicator size="small" />
               ) : displayPrice ? (
                 <Text style={actionCardStyles.trailingText}>

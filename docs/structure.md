@@ -51,7 +51,7 @@ src/
 ├── layouts/        RootLayout (app shell), TabsLayout (tab pages) and StackLayout (pages outside the tabs)
 ├── components/     Reusable UI components, plus a barrel (index.ts)
 ├── assets/icon/    Our own SVG icon components (GitHub, LinkedIn)
-├── constants/      Route names, page titles, layout numbers, date/time formats, storage keys
+├── constants/      Route names, page titles, layout numbers and the tab bar style (`getTabBarStyle`), date/time formats, storage keys
 ├── services/       Non-UI logic that talks to the native module (notifications)
 ├── store/          Zustand stores (the persisted reminders)
 ├── utils/          Small pure helpers (date and time display text) and their types
@@ -67,7 +67,7 @@ app/
 ├── _layout.tsx                 Theme import, then renders layouts/root (RootLayout)
 ├── upsert-notifications.tsx    Add / edit screen -> features/upsert-notifications
 └── (tabs)/
-    ├── _layout.tsx             Tabs navigator using the custom tab bar
+    ├── _layout.tsx             `TabsNavigator`: tabs navigator using the custom tab bar
     ├── index.tsx               Home tab      -> features/home
     ├── help-me.tsx             Help Me tab   -> features/help-me
     └── settings.tsx            Settings tab  -> features/settings
@@ -89,8 +89,8 @@ A feature folder holds everything for one screen:
 Create only the files a feature needs. Examples:
 - `home/`: the reminder list, grouped into Active and Disabled. `use-home.ts` reads the store and handles navigation.
 - `upsert-notifications/`: the add and edit form. `use-upsert-notifications.ts` holds the form and the save flow, `upsert-notifications.utils.ts` the validation schema and form mapping, `upsert-notifications.data.ts` the repeat options, `upsert-notifications.interface.ts` the form types.
-- `settings/`: `use-settings.ts` (theme toggle and saving, opening links, the Android battery-settings shortcut), `settings.data.ts` (contact links), `settings.styles.ts`.
-- `help-me/`: `use-help-me.ts` (store connection and purchases), `help-me.utils.ts` (error helpers and the success and error toasts), `help-me.data.ts` (tip tiers), `help-me.interface.ts`, `help-me.styles.ts`.
+- `settings/`: `use-settings.ts` (theme toggle and saving, opening links, the Android battery-settings shortcut), `settings.interface.ts`, `settings.data.ts` (contact links), `settings.styles.ts`.
+- `help-me/`: `use-help-me.ts` (store connection and purchases), `help-me.utils.ts` (product-ID and purchase-error helpers, plus the success, pending and error toasts), `help-me.data.ts` (tip tiers), `help-me.interface.ts`, `help-me.styles.ts`.
 
 ### `components/` (reusable UI)
 
@@ -107,7 +107,7 @@ Add `use-<name>.ts` when the component has logic (state, animation, handlers) an
 - `custom-switch/`, `custom-tab-bar/`, `tab-item/`, `app-icon/`, `action-card/`, `card/`, `screen-title/`, `short-heading/`, `button/`: the building blocks shared with the other apps. `app-icon/` renders any Lucide-style icon at a given size, color and stroke width. `app-icon/`, `custom-switch/` and `tab-item/` keep their static constants in `<name>.data.ts`.
 - `notification-card/`, `error-and-no-data/`: the reminder row and the empty state.
 - `time-picker/`: the wheel time picker used by the form.
-- `react-hook-form/`: form fields wired to `react-hook-form` (`RHFForm`, `RHFTextField`, `RHFDatePicker`, `RHFTimePicker`, `RHFSelect`). `rhf-field-label/`, `rhf-field-error/` and `rhf-modal-sheet/` are the shared pieces those fields are built from.
+- `react-hook-form/`: form fields wired to `react-hook-form` (`RHFForm`, `RHFTextField`, `RHFDatePicker`, `RHFTimePicker`, `RHFSelect`). `rhf-field-label/`, `rhf-field-error/`, `rhf-picker-field/` (the label, tappable trigger and error shared by the date, time and select fields) and `rhf-modal-sheet/` (the bottom sheet, with an optional Confirm button) are the shared pieces those fields are built from. Their hooks use `export default function`, like every other hook.
 - Components never import from `features/`, and import each other with relative paths. Shared constants (such as date formats) come from `@/constants`.
 
 `components/index.ts` is the barrel. Every component is exported from it. Inside `components/`, import siblings by relative path (`../card`), not through the barrel. Screens import from `@/components`. Interface files import each other's types by path (for example `@/components/app-icon/app-icon.interface`), because the barrel exports components only. `assets/icon/` does the same for `IBrandIconProps`.

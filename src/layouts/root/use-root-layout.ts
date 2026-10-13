@@ -10,7 +10,8 @@ import { useEffect } from "react";
 import { AppState } from "react-native";
 import { useUnistyles } from "react-native-unistyles";
 
-SplashScreen.preventAutoHideAsync().catch(() => {});
+// A failed splash call must not become an unhandled rejection; the app still runs.
+SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
 export default function useRootLayout() {
   const { rt } = useUnistyles();
@@ -24,7 +25,7 @@ export default function useRootLayout() {
 
   useEffect(() => {
     if (loaded || error) {
-      SplashScreen.hideAsync().catch(() => {});
+      SplashScreen.hideAsync().catch(() => undefined);
     }
   }, [loaded, error]);
 
@@ -41,29 +42,28 @@ export default function useRootLayout() {
         useNotificationStore.getState();
       // A failed sync is retried on the next start or foreground.
       NotificationService.reconcile(notifications, expireNotification).catch(
-        () => {},
+        () => undefined,
       );
     };
 
-    const reconcileWhenHydrated = () => {
-      if (useNotificationStore.persist.hasHydrated()) {
-        reconcile();
-      } else {
-        unsub = useNotificationStore.persist.onFinishHydration(reconcile);
-      }
+    // Reconciling an unhydrated (empty) store would cancel every armed alarm,
+    // so a not-yet-hydrated store is left to the onFinishHydration path below.
+    const reconcileIfHydrated = () => {
+      if (useNotificationStore.persist.hasHydrated()) reconcile();
     };
 
-    reconcileWhenHydrated();
-    // Reconciling an unhydrated (empty) store would cancel every armed alarm,
-    // so a not-yet-hydrated store is left to the onFinishHydration path above.
+    if (useNotificationStore.persist.hasHydrated()) {
+      reconcile();
+    } else {
+      unsub = useNotificationStore.persist.onFinishHydration(reconcile);
+    }
+
     NotificationService.ensureReady().then(() => {
-      if (!cancelled && useNotificationStore.persist.hasHydrated()) reconcile();
+      if (!cancelled) reconcileIfHydrated();
     });
 
     const sub = AppState.addEventListener("change", (state) => {
-      if (state === "active" && useNotificationStore.persist.hasHydrated()) {
-        reconcile();
-      }
+      if (state === "active") reconcileIfHydrated();
     });
 
     return () => {

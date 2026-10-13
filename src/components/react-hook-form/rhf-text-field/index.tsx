@@ -25,30 +25,25 @@ export default function RHFTextField<T extends FieldValues>(
 
   const { control } = useFormContext<T>();
   const { theme } = useUnistyles();
-  const fieldStyles = rhfFieldStyles;
-  const inputStyles = rhfTextFieldStyles;
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <View style={[fieldStyles.fieldWrapper, containerStyle]}>
+        <View style={[rhfFieldStyles.fieldWrapper, containerStyle]}>
           <RHFFieldLabel label={label} required={required} />
 
           <TextInput
             style={[
-              inputStyles.textInput,
-              multiline && inputStyles.textInputMultiline,
+              rhfTextFieldStyles.textInput,
+              multiline && rhfTextFieldStyles.textInputMultiline,
             ]}
             placeholder={placeholder}
             placeholderTextColor={theme.colors.textSecondary}
             accessibilityLabel={required ? `${label}, required` : label}
             value={value ?? ""}
-            onChangeText={(text) => {
-              if (maxLength && text.length > maxLength) return;
-              onChange(text);
-            }}
+            onChangeText={onChange}
             multiline={multiline}
             numberOfLines={numberOfLines}
             maxLength={maxLength}
@@ -58,7 +53,7 @@ export default function RHFTextField<T extends FieldValues>(
           {error && <RHFFieldError message={error.message} />}
 
           {showCharCount && maxLength != null && (
-            <Text style={inputStyles.charCount}>
+            <Text style={rhfTextFieldStyles.charCount}>
               {(value ?? "").length} / {maxLength}
             </Text>
           )}

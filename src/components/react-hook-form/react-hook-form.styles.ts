@@ -37,6 +37,9 @@ export const rhfFieldStyles = StyleSheet.create((theme) => ({
     fontFamily: theme.typography.body.regular,
     color: theme.colors.text,
   },
+  triggerPlaceholder: {
+    color: theme.colors.textSecondary,
+  },
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",

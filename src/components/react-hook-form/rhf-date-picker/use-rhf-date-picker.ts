@@ -5,7 +5,7 @@ import { useUnistyles } from "react-native-unistyles";
 import { useDefaultStyles } from "react-native-ui-datepicker";
 import { getCalendarStyles, parseDateValue } from "./rhf-date-picker.utils";
 
-export const useRHFDatePicker = <T extends FieldValues>() => {
+export default function useRHFDatePicker<T extends FieldValues>() {
   const { setValue } = useFormContext<T>();
   const { theme } = useUnistyles();
   const defaultStyles = useDefaultStyles();
@@ -41,4 +41,4 @@ export const useRHFDatePicker = <T extends FieldValues>() => {
     confirm,
     calendarStyles,
   };
-};
+}

@@ -2,7 +2,7 @@ import Coffee from "lucide-react-native/icons/coffee";
 import Hamburger from "lucide-react-native/icons/hamburger";
 import Rocket from "lucide-react-native/icons/rocket";
 
-const HELP_ME_PRODUCT_IDS = {
+export const HELP_ME_PRODUCT_IDS = {
   COFFEE: "tip_coffee",
   LUNCH: "tip_lunch",
   FEATURE: "tip_feature",
@@ -31,6 +31,3 @@ export const HELP_ME_PRODUCTS = [
     successMessage: "Thank you for sponsoring a feature! 🚀",
   },
 ] as const;
-
-export const HELP_ME_SKUS = Object.values(HELP_ME_PRODUCT_IDS);
-export const HELP_ME_SKU_SET = new Set<string>(HELP_ME_SKUS);

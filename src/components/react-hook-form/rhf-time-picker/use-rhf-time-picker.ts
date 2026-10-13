@@ -5,7 +5,7 @@ import {
   parseTimeValue,
 } from "./rhf-time-picker.utils";
 
-export const useRHFTimePicker = () => {
+export default function useRHFTimePicker() {
   const [visible, setVisible] = useState(false);
   const [{ hour, minute, period }, setTime] = useState(DEFAULT_TIME);
 
@@ -34,4 +34,4 @@ export const useRHFTimePicker = () => {
     handleTimeChange,
     confirm,
   };
-};
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useRHFSelect = () => {
+export default function useRHFSelect() {
   const [visible, setVisible] = useState(false);
 
   const open = () => setVisible(true);
@@ -20,4 +20,4 @@ export const useRHFSelect = () => {
     close,
     selectOption,
   };
-};
+}

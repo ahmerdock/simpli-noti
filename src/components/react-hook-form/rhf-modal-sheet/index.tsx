@@ -3,7 +3,7 @@ import { rhfFieldStyles } from "../react-hook-form.styles";
 import { IRHFModalSheetProps } from "./rhf-modal-sheet.interface";
 
 export default function RHFModalSheet(props: IRHFModalSheetProps) {
-  const { visible, title, onClose, children } = props;
+  const { visible, title, onClose, onConfirm, children } = props;
 
   return (
     <Modal
@@ -23,6 +23,15 @@ export default function RHFModalSheet(props: IRHFModalSheetProps) {
           <View style={rhfFieldStyles.modalHandle} />
           <Text style={rhfFieldStyles.modalTitle}>{title}</Text>
           {children}
+          {onConfirm && (
+            <Pressable
+              style={rhfFieldStyles.modalConfirmBtn}
+              accessibilityRole="button"
+              onPress={onConfirm}
+            >
+              <Text style={rhfFieldStyles.modalConfirmText}>Confirm</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </Modal>

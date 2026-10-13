@@ -16,7 +16,6 @@ import type { IFormValues } from "./upsert-notifications.interface";
 import type { IRepeatType } from "@/store";
 
 export default function UpsertNotifications() {
-  const styles = upsertNotificationsStyles;
   const {
     form,
     handleSubmit,
@@ -37,7 +36,7 @@ export default function UpsertNotifications() {
       }}
     >
       <RHFForm form={form}>
-        <View style={styles.form}>
+        <View style={upsertNotificationsStyles.form}>
           <RHFTextField<IFormValues>
             name="title"
             label="Title"
@@ -45,19 +44,19 @@ export default function UpsertNotifications() {
             required
           />
 
-          <View style={styles.dateTimeRow}>
+          <View style={upsertNotificationsStyles.dateTimeRow}>
             <RHFDatePicker<IFormValues>
               name="date"
               label="Start Date"
               required
-              containerStyle={styles.dateTimeField}
+              containerStyle={upsertNotificationsStyles.dateTimeField}
             />
 
             <RHFTimePicker<IFormValues>
               name="time"
               label="Time"
               required
-              containerStyle={styles.dateTimeField}
+              containerStyle={upsertNotificationsStyles.dateTimeField}
             />
           </View>
 
@@ -77,32 +76,32 @@ export default function UpsertNotifications() {
             showCharCount
           />
 
-          <View style={styles.actions}>
+          <View style={upsertNotificationsStyles.actions}>
             <Button
               variant="cancel"
               label="Cancel"
-              style={styles.actionButton}
+              style={upsertNotificationsStyles.actionButton}
               onPress={handleCancel}
             />
             <Button
               variant="submit"
               label={isEditing ? "Update" : "Save"}
-              style={styles.actionButton}
+              style={upsertNotificationsStyles.actionButton}
               onPress={handleSubmit(onSubmit)}
             />
           </View>
           {isEditing && (
-            <View style={styles.actions}>
+            <View style={upsertNotificationsStyles.actions}>
               <Button
                 variant="disable"
                 label={isActive ? "Disable" : "Reactivate"}
-                style={styles.actionButton}
+                style={upsertNotificationsStyles.actionButton}
                 onPress={handleToggle}
               />
               <Button
                 variant="delete"
                 label="Delete"
-                style={styles.actionButton}
+                style={upsertNotificationsStyles.actionButton}
                 onPress={handleDelete}
               />
             </View>

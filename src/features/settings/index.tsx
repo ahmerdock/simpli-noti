@@ -56,6 +56,7 @@ export default function Settings() {
           label={link.label}
           description={link.description}
           icon={link.icon}
+          accessibilityRole="link"
           onPress={() => openLink(link.url)}
         />
       ))}

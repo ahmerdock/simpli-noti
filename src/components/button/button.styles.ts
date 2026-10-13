@@ -22,6 +22,9 @@ const labelColor: Record<
 };
 
 export const buttonStyles = StyleSheet.create((theme) => ({
+  disabled: {
+    opacity: 0.5,
+  },
   container: (variant: IButtonVariant) => ({
     paddingVertical: theme.gap(1.5),
     borderRadius: 12,

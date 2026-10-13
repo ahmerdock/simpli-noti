@@ -17,7 +17,7 @@ export default function Button({
       accessibilityState={{ disabled: !!disabled }}
       style={[
         buttonStyles.container(variant),
-        disabled && { opacity: 0.5 },
+        disabled && buttonStyles.disabled,
         style,
       ]}
       {...rest}

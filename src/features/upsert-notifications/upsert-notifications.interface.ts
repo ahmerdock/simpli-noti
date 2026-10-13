@@ -1,9 +1,9 @@
 import type { IRepeatType } from "@/store";
 
-export type IFormValues = {
+export interface IFormValues {
   title: string;
   date: string;
   time: string;
   repeat: IRepeatType;
   description?: string;
-};
+}
