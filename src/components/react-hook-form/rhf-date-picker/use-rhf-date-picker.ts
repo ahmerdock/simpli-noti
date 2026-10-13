@@ -3,50 +3,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
 import { useDefaultStyles } from "react-native-ui-datepicker";
-import { parseDateValue } from "./rhf-date-picker.utils";
-
-const getCalendarStyles = (
-  theme: ReturnType<typeof useUnistyles>["theme"],
-  defaultStyles: ReturnType<typeof useDefaultStyles>,
-) => ({
-  ...defaultStyles,
-  today: {
-    borderColor: theme.colors.primary,
-    borderWidth: 1,
-  },
-  selected: {
-    backgroundColor: theme.colors.primary,
-  },
-  selected_label: {
-    color: theme.colors.onPrimary,
-  },
-  day_label: {
-    color: theme.colors.text,
-  },
-  weekday_label: {
-    color: theme.colors.textSecondary,
-  },
-  header: {
-    backgroundColor: theme.colors.backgroundSecondary,
-  },
-  month_selector_label: {
-    color: theme.colors.text,
-    fontFamily: theme.typography.body.medium,
-  },
-  year_selector_label: {
-    color: theme.colors.text,
-    fontFamily: theme.typography.body.medium,
-  },
-  button_prev: {
-    tintColor: theme.colors.primary,
-  },
-  button_next: {
-    tintColor: theme.colors.primary,
-  },
-  today_label: {
-    color: theme.colors.text,
-  },
-});
+import { getCalendarStyles, parseDateValue } from "./rhf-date-picker.utils";
 
 export const useRHFDatePicker = <T extends FieldValues>() => {
   const { setValue } = useFormContext<T>();

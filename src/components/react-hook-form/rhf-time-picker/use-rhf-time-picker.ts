@@ -1,17 +1,9 @@
 import { useState } from "react";
 import {
   buildTimeValue,
+  DEFAULT_TIME,
   parseTimeValue,
-  DEFAULT_HOUR,
-  DEFAULT_MINUTE,
-  DEFAULT_PERIOD,
 } from "./rhf-time-picker.utils";
-
-const DEFAULT_TIME = {
-  hour: DEFAULT_HOUR,
-  minute: DEFAULT_MINUTE,
-  period: DEFAULT_PERIOD,
-};
 
 export const useRHFTimePicker = () => {
   const [visible, setVisible] = useState(false);

@@ -1,22 +1,22 @@
-export type RepeatType = "none" | "daily" | "weekly" | "monthly" | "yearly";
+export type IRepeatType = "none" | "daily" | "weekly" | "monthly" | "yearly";
 
 export interface INotification {
   id: string;
   title: string;
   date: string;
   time: string;
-  repeat: RepeatType;
+  repeat: IRepeatType;
   description?: string;
   isActive: boolean;
   createdAt: string;
 }
 
-type NotificationInput = Omit<INotification, "id" | "createdAt" | "isActive">;
+type INotificationInput = Omit<INotification, "id" | "createdAt" | "isActive">;
 
 export interface INotificationStore {
   notifications: INotification[];
-  addNotification: (n: NotificationInput) => void;
-  editNotification: (id: string, n: NotificationInput) => void;
+  addNotification: (n: INotificationInput) => void;
+  editNotification: (id: string, n: INotificationInput) => void;
   deleteNotification: (id: string) => void;
   toggleNotification: (id: string) => void;
   /** Marks a one-time reminder that has already fired as done. */

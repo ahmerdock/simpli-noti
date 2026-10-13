@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { z } from "zod";
 import { isInThePast } from "@/services";
 import { DESCRIPTION_MAX } from "./upsert-notifications.data";
-import type { FormValues } from "./upsert-notifications.interface";
+import type { IFormValues } from "./upsert-notifications.interface";
 
 /**
  * `original` is the reminder being edited. Leaving its date and time untouched
@@ -29,7 +29,7 @@ export const createUpsertNotificationsSchema = (
       { message: "Pick a date and time in the future", path: ["time"] },
     );
 
-export const getDefaultFormValues = (): FormValues => ({
+export const getDefaultFormValues = (): IFormValues => ({
   title: "",
   date: dayjs().format(DATE_FORMAT),
   // A few minutes ahead, so saving with the defaults is a valid reminder.
@@ -40,7 +40,7 @@ export const getDefaultFormValues = (): FormValues => ({
 
 export const notificationToFormValues = (
   notification: INotification,
-): FormValues => ({
+): IFormValues => ({
   title: notification.title,
   date: notification.date,
   time: notification.time,

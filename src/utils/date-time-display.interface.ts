@@ -1,7 +1,7 @@
-import type { RepeatType } from "@/store";
+import type { IRepeatType } from "@/store";
 
-export type FormatNotificationDateTimeParams = {
+export type IFormatNotificationDateTimeParams = {
   date: string;
   time: string;
-  repeat: RepeatType;
+  repeat: IRepeatType;
 };

@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native-unistyles";
-import { ButtonVariant } from "./button.interface";
+import { IButtonVariant } from "./button.interface";
 
 const containerBackground: Record<
-  ButtonVariant,
+  IButtonVariant,
   (theme: { colors: Record<string, string> }) => string
 > = {
   cancel: (theme) => theme.colors.backgroundSecondary,
@@ -12,7 +12,7 @@ const containerBackground: Record<
 };
 
 const labelColor: Record<
-  ButtonVariant,
+  IButtonVariant,
   (theme: { colors: Record<string, string> }) => string
 > = {
   cancel: (theme) => theme.colors.text,
@@ -22,14 +22,14 @@ const labelColor: Record<
 };
 
 export const buttonStyles = StyleSheet.create((theme) => ({
-  container: (variant: ButtonVariant) => ({
+  container: (variant: IButtonVariant) => ({
     paddingVertical: theme.gap(1.5),
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: containerBackground[variant](theme),
   }),
-  label: (variant: ButtonVariant) => ({
+  label: (variant: IButtonVariant) => ({
     fontSize: 16,
     fontFamily: theme.typography.body.medium,
     color: labelColor[variant](theme),

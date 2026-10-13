@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { Alert } from "react-native";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { FormValues } from "./upsert-notifications.interface";
+import type { IFormValues } from "./upsert-notifications.interface";
 import {
   getDefaultFormValues,
   notificationToFormValues,
@@ -27,7 +27,7 @@ export default function useUpsertNotifications() {
     (n) => n.id === notificationId,
   );
 
-  const form = useForm<FormValues>({
+  const form = useForm<IFormValues>({
     resolver: zodResolver(createUpsertNotificationsSchema(existingNotification)),
     defaultValues: getDefaultFormValues(),
   });
@@ -80,7 +80,7 @@ export default function useUpsertNotifications() {
     router.back();
   };
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: IFormValues) => {
     if (notificationId) {
       editNotification(notificationId, data);
     } else {

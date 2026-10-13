@@ -1,15 +1,15 @@
 import { requireOptionalNativeModule } from "expo";
 
 import type {
-  NativeScheduleInput,
-  PermissionStatus,
+  INativeScheduleInput,
+  IPermissionStatus,
 } from "./ExactNotifications.types";
 
-interface ExactNotificationsNativeModule {
+interface IExactNotificationsNativeModule {
   ensureChannel(): Promise<void>;
-  getPermissionStatus(): Promise<PermissionStatus>;
-  requestPermission(): Promise<PermissionStatus>;
-  schedule(input: NativeScheduleInput): Promise<void>;
+  getPermissionStatus(): Promise<IPermissionStatus>;
+  requestPermission(): Promise<IPermissionStatus>;
+  schedule(input: INativeScheduleInput): Promise<void>;
   cancel(id: string, clearDelivered?: boolean): Promise<void>;
   getScheduledIds(): Promise<string[]>;
   openBatteryOptimizationSettings(): Promise<void>;
@@ -17,6 +17,6 @@ interface ExactNotificationsNativeModule {
 
 // Registered natively under `Name("ExactNotifications")`. Returns `null` where
 // the native module is unavailable (e.g. web) so callers can no-op safely.
-export default requireOptionalNativeModule<ExactNotificationsNativeModule>(
+export default requireOptionalNativeModule<IExactNotificationsNativeModule>(
   "ExactNotifications",
 );

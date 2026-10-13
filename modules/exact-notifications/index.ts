@@ -1,7 +1,7 @@
 import ExactNotificationsModule from "./src/ExactNotificationsModule";
 import type {
-  NativeScheduleInput,
-  PermissionStatus,
+  INativeScheduleInput,
+  IPermissionStatus,
 } from "./src/ExactNotifications.types";
 
 export * from "./src/ExactNotifications.types";
@@ -15,13 +15,13 @@ export function ensureChannel(): Promise<void> {
 }
 
 /** Current POST_NOTIFICATIONS (Android) / UN authorization (iOS) status. */
-export function getPermissionStatus(): Promise<PermissionStatus> {
+export function getPermissionStatus(): Promise<IPermissionStatus> {
   return (
     ExactNotificationsModule?.getPermissionStatus() ?? Promise.resolve("denied")
   );
 }
 
-export function requestPermission(): Promise<PermissionStatus> {
+export function requestPermission(): Promise<IPermissionStatus> {
   return (
     ExactNotificationsModule?.requestPermission() ?? Promise.resolve("denied")
   );
@@ -31,7 +31,7 @@ export function requestPermission(): Promise<PermissionStatus> {
  * Arms an exact alarm (Android) / calendar trigger (iOS) for a single logical
  * notification. Re-scheduling an existing `id` replaces the previous one.
  */
-export function schedule(input: NativeScheduleInput): Promise<void> {
+export function schedule(input: INativeScheduleInput): Promise<void> {
   return ExactNotificationsModule?.schedule(input) ?? Promise.resolve();
 }
 

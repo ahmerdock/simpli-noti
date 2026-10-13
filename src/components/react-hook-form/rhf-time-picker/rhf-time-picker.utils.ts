@@ -7,6 +7,12 @@ export const DEFAULT_HOUR = "12";
 export const DEFAULT_MINUTE = "00";
 export const DEFAULT_PERIOD = "AM";
 
+export const DEFAULT_TIME = {
+  hour: DEFAULT_HOUR,
+  minute: DEFAULT_MINUTE,
+  period: DEFAULT_PERIOD,
+};
+
 export const buildTimeValue = (hour: string, minute: string, period: string) =>
   `${hour}:${minute} ${period}`;
 

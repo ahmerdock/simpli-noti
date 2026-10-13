@@ -12,8 +12,8 @@ import {
 } from "@/components";
 import useUpsertNotifications from "./use-upsert-notifications";
 import { DESCRIPTION_MAX, REPEAT_OPTIONS } from "./upsert-notifications.data";
-import type { FormValues } from "./upsert-notifications.interface";
-import type { RepeatType } from "@/store";
+import type { IFormValues } from "./upsert-notifications.interface";
+import type { IRepeatType } from "@/store";
 
 export default function UpsertNotifications() {
   const styles = upsertNotificationsStyles;
@@ -38,7 +38,7 @@ export default function UpsertNotifications() {
     >
       <RHFForm form={form}>
         <View style={styles.form}>
-          <RHFTextField<FormValues>
+          <RHFTextField<IFormValues>
             name="title"
             label="Title"
             placeholder="e.g. Team Meeting"
@@ -46,14 +46,14 @@ export default function UpsertNotifications() {
           />
 
           <View style={styles.dateTimeRow}>
-            <RHFDatePicker<FormValues>
+            <RHFDatePicker<IFormValues>
               name="date"
               label="Start Date"
               required
               containerStyle={styles.dateTimeField}
             />
 
-            <RHFTimePicker<FormValues>
+            <RHFTimePicker<IFormValues>
               name="time"
               label="Time"
               required
@@ -61,13 +61,13 @@ export default function UpsertNotifications() {
             />
           </View>
 
-          <RHFSelect<FormValues, RepeatType>
+          <RHFSelect<IFormValues, IRepeatType>
             name="repeat"
             label="Repeat"
             options={REPEAT_OPTIONS}
           />
 
-          <RHFTextField<FormValues>
+          <RHFTextField<IFormValues>
             name="description"
             label="Description"
             placeholder="Short note about this notification..."

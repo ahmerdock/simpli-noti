@@ -1,9 +1,9 @@
-import type { RepeatType } from "@/store";
+import type { IRepeatType } from "@/store";
 
-export type FormValues = {
+export type IFormValues = {
   title: string;
   date: string;
   time: string;
-  repeat: RepeatType;
+  repeat: IRepeatType;
   description?: string;
 };

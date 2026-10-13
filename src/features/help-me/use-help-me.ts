@@ -7,8 +7,8 @@ import {
 import type { Purchase } from "expo-iap";
 import { HELP_ME_SKUS } from "./help-me.data";
 import type {
-  HelpMeProductDetails,
-  UseHelpMeReturn,
+  IHelpMeProductDetails,
+  IUseHelpMeReturn,
 } from "./help-me.interface";
 import {
   getErrorMessage,
@@ -18,7 +18,7 @@ import {
   showSuccess,
 } from "./help-me.utils";
 
-export default function useHelpMe(): UseHelpMeReturn {
+export default function useHelpMe(): IUseHelpMeReturn {
   const isAvailable = Platform.OS === "android";
 
   const [isProductsLoading, setIsProductsLoading] = useState(false);
@@ -80,7 +80,7 @@ export default function useHelpMe(): UseHelpMeReturn {
       return {};
     }
 
-    return products.reduce<Record<string, HelpMeProductDetails>>(
+    return products.reduce<Record<string, IHelpMeProductDetails>>(
       (acc, product) => {
         if (!isHelpMeProductId(product.id)) {
           return acc;

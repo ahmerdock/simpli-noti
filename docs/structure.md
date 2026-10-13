@@ -104,13 +104,13 @@ components/card/
 ```
 
 Add `use-<name>.ts` when the component has logic (state, animation, handlers) and `<name>.utils.ts` or `<name>.data.ts` for helpers and static data. Current components:
-- `custom-switch/`, `custom-tab-bar/`, `tab-item/`, `app-icon/`, `action-card/`, `card/`, `screen-title/`, `short-heading/`, `button/`: the building blocks shared with the other apps. `app-icon/` renders any Lucide-style icon at a given size, color and stroke width.
+- `custom-switch/`, `custom-tab-bar/`, `tab-item/`, `app-icon/`, `action-card/`, `card/`, `screen-title/`, `short-heading/`, `button/`: the building blocks shared with the other apps. `app-icon/` renders any Lucide-style icon at a given size, color and stroke width. `app-icon/`, `custom-switch/` and `tab-item/` keep their static constants in `<name>.data.ts`.
 - `notification-card/`, `error-and-no-data/`: the reminder row and the empty state.
 - `time-picker/`: the wheel time picker used by the form.
 - `react-hook-form/`: form fields wired to `react-hook-form` (`RHFForm`, `RHFTextField`, `RHFDatePicker`, `RHFTimePicker`, `RHFSelect`). `rhf-field-label/`, `rhf-field-error/` and `rhf-modal-sheet/` are the shared pieces those fields are built from.
 - Components never import from `features/`, and import each other with relative paths. Shared constants (such as date formats) come from `@/constants`.
 
-`components/index.ts` is the barrel. Every component a screen or another folder imports is exported from it (`Card`, `TabItem` and `TimePicker` are only used inside `components/`, so they are imported by relative path and not exported). Screens import from `@/components`. Interface files import each other's types by path (for example `@/components/app-icon/app-icon.interface`), because the barrel exports components only. `assets/icon/` does the same for `IBrandIconProps`.
+`components/index.ts` is the barrel. Every component is exported from it. Inside `components/`, import siblings by relative path (`../card`), not through the barrel. Screens import from `@/components`. Interface files import each other's types by path (for example `@/components/app-icon/app-icon.interface`), because the barrel exports components only. `assets/icon/` does the same for `IBrandIconProps`.
 
 ### `layouts/`
 

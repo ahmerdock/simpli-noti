@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DATE_FORMAT } from "@/constants/date-time";
-import type { FormatNotificationDateTimeParams } from "./date-time-display.interface";
+import type { IFormatNotificationDateTimeParams } from "./date-time-display.interface";
 
 dayjs.extend(customParseFormat);
 
@@ -29,7 +29,7 @@ export const formatNotificationDateTime = ({
   date,
   time,
   repeat,
-}: FormatNotificationDateTimeParams): string => {
+}: IFormatNotificationDateTimeParams): string => {
   switch (repeat) {
     case "none":
       return `${date} • ${time}`;

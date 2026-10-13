@@ -1,7 +1,7 @@
-import { SelectOption } from "./rhf-select.interface";
+import { ISelectOption } from "./rhf-select.interface";
 
 export const getSelectedLabel = <V extends string>(
   value: unknown,
-  options: readonly SelectOption<V>[],
+  options: readonly ISelectOption<V>[],
   placeholder: string,
 ) => options.find((option) => option.value === value)?.label ?? placeholder;
