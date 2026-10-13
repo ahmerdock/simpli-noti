@@ -8,8 +8,14 @@ import { PAGE_TITLES } from "@/constants/routes";
 import { AppIcon, ErrorAndNoData, NotificationCard } from "@/components";
 
 export default function Home() {
-  const { theme, notifications, sections, navigateToAdd, navigateToEdit } =
-    useHome();
+  const {
+    theme,
+    isHydrated,
+    notifications,
+    sections,
+    navigateToAdd,
+    navigateToEdit,
+  } = useHome();
 
   return (
     <TabsLayout
@@ -28,7 +34,7 @@ export default function Home() {
         ),
       }}
     >
-      {notifications.length === 0 ? (
+      {!isHydrated ? null : notifications.length === 0 ? (
         <ErrorAndNoData
           message="No notifications yet"
           description="Tap + to add your first one"

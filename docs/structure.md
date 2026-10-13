@@ -135,7 +135,7 @@ Small pure helpers with no framework code. `date-time-display.ts` turns a remind
 
 ### Hard-coded colours (intentional)
 
-Theme colours come from the theme everywhere except three places: the switch thumb in `custom-switch.styles.ts` (always `#FDFDFD`, on both themes), the dimmed backdrop behind the pickers' modals (`rgba(0,0,0,0.5)`, the same on both themes), and the default `color` of the GitHub and LinkedIn icons (`#000000`, a fallback prop value).
+Theme colours come from the theme everywhere except two places: the dimmed backdrop behind the pickers' modals (`rgba(0,0,0,0.5)`, the same on both themes), and the default `color` of the GitHub and LinkedIn icons (`#000000`, a fallback prop value).
 
 ## Android manifest hardening
 

@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useSyncExternalStore } from "react";
 import { useUnistyles } from "react-native-unistyles";
 import { ROUTES } from "@/constants/routes";
 import { useNotificationStore } from "@/store";
@@ -6,6 +7,13 @@ import { useNotificationStore } from "@/store";
 export default function useHome() {
   const { theme } = useUnistyles();
   const notifications = useNotificationStore((s) => s.notifications);
+
+  // Saved reminders load asynchronously; until then the list is not known to be
+  // empty, so the "No notifications yet" state must not show.
+  const isHydrated = useSyncExternalStore(
+    useNotificationStore.persist.onFinishHydration,
+    useNotificationStore.persist.hasHydrated,
+  );
 
   const sections = [
     { label: "ACTIVE", items: notifications.filter((n) => n.isActive) },
@@ -19,6 +27,7 @@ export default function useHome() {
 
   return {
     theme,
+    isHydrated,
     notifications,
     sections,
     navigateToAdd,

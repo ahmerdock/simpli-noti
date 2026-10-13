@@ -1,7 +1,17 @@
+import { AccessibilityInfo } from "react-native";
 import Toast from "react-native-toast-message";
 import type { INotification } from "@/store";
 import * as ExactNotifications from "@/modules/exact-notifications";
 import { computeTriggerAt, parseNotificationDateTime } from "./schedule-time";
+
+function showToast(
+  type: "error" | "info",
+  text1: string,
+  text2: string,
+): void {
+  Toast.show({ type, text1, text2 });
+  AccessibilityInfo.announceForAccessibility(`${text1}. ${text2}`);
+}
 
 function bodyOf(n: INotification): string {
   return n.description?.trim() ?? "";
@@ -76,12 +86,11 @@ async function syncWithPermission(
   if (!initial) return;
 
   if (initial.isActive && !(await ensureReady())) {
-    Toast.show({
-      type: "error",
-      text1: "Notifications are blocked",
-      text2:
-        "Allow notifications for Simpli Noti in system settings to get reminders.",
-    });
+    showToast(
+      "error",
+      "Notifications are blocked",
+      "Allow notifications for Simpli Noti in system settings to get reminders.",
+    );
   }
 
   const current = getCurrent();
@@ -91,18 +100,18 @@ async function syncWithPermission(
     const result = await syncNotification(current);
     if (result === "expired") {
       onExpired?.();
-      Toast.show({
-        type: "info",
-        text1: "That time has already passed",
-        text2: "Edit the reminder and pick a future date and time.",
-      });
+      showToast(
+        "info",
+        "That time has already passed",
+        "Edit the reminder and pick a future date and time.",
+      );
     }
   } catch {
-    Toast.show({
-      type: "error",
-      text1: "Couldn't schedule the reminder",
-      text2: "Please try again.",
-    });
+    showToast(
+      "error",
+      "Couldn't schedule the reminder",
+      "Please try again.",
+    );
   }
 }
 
