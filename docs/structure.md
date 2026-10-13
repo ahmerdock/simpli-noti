@@ -51,7 +51,7 @@ src/
 ├── layouts/        RootLayout (app shell), TabsLayout (tab pages) and StackLayout (pages outside the tabs)
 ├── components/     Reusable UI components, plus a barrel (index.ts)
 ├── assets/icon/    Our own SVG icon components (GitHub, LinkedIn)
-├── constants/      (barrel: index.ts) Route names, page titles, layout numbers, date/time formats, storage keys
+├── constants/      Route names, page titles, layout numbers, date/time formats, storage keys
 ├── services/       Non-UI logic that talks to the native module (notifications)
 ├── store/          Zustand stores (the persisted reminders)
 ├── utils/          Small pure helpers (date and time display text) and their types
@@ -110,7 +110,7 @@ Add `use-<name>.ts` when the component has logic (state, animation, handlers) an
 - `react-hook-form/`: form fields wired to `react-hook-form` (`RHFForm`, `RHFTextField`, `RHFDatePicker`, `RHFTimePicker`, `RHFSelect`).
 - Components never import from `features/`, and import each other with relative paths. Shared constants (such as date formats) come from `@/constants`.
 
-`components/index.ts` is the barrel. Every component is exported from it, and screens import from `@/components`. Interface files import each other's types by path (for example `@/components/app-icon/app-icon.interface`), because the barrel exports components only. `assets/icon/` does the same for `IBrandIconProps`.
+`components/index.ts` is the barrel. Every component a screen or another folder imports is exported from it (`Card`, `TabItem` and `TimePicker` are only used inside `components/`, so they are imported by relative path and not exported). Screens import from `@/components`. Interface files import each other's types by path (for example `@/components/app-icon/app-icon.interface`), because the barrel exports components only. `assets/icon/` does the same for `IBrandIconProps`.
 
 ### `layouts/`
 
