@@ -137,6 +137,10 @@ Small pure helpers with no framework code. `date-time-display.ts` turns a remind
 
 Theme colours come from the theme everywhere except three places: the switch thumb in `custom-switch.styles.ts` (always `#FDFDFD`, on both themes), the dimmed backdrop behind the pickers' modals (`rgba(0,0,0,0.5)`, the same on both themes), and the default `color` of the GitHub and LinkedIn icons (`#000000`, a fallback prop value).
 
+## Android manifest hardening
+
+`app.json` sets `android.allowBackup` to `false`, so Google Drive auto-backup never copies the reminders or the saved theme. It also lists `blockedPermissions` for `READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE` and `SYSTEM_ALERT_WINDOW`, which the Expo template adds but this app never uses. `VIBRATE` is left in place because the reminder channel vibrates. The native module's manifest adds `POST_NOTIFICATIONS` and `RECEIVE_BOOT_COMPLETED`. Its delivery receiver is not exported; the boot receiver is exported for system broadcasts and ignores any other action. These take effect on the next native build.
+
 ## App icon and splash
 
 The icon is a red bell with a clock. The files are in `assets/`, and `app.json` points at them:
