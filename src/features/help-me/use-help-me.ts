@@ -202,9 +202,9 @@ export default function useHelpMe(): UseHelpMeReturn {
 
   return {
     isAvailable,
-    isProductsLoading: isAvailable ? isProductsLoading : false,
-    productsById: isAvailable ? productsById : {},
-    purchasingProductId: isAvailable ? purchasingProductId : null,
+    isProductsLoading,
+    productsById,
+    purchasingProductId,
     purchase,
   };
 }

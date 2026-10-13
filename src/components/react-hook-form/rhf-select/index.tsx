@@ -1,9 +1,12 @@
-import { View, Text, Pressable, Modal, FlatList } from "react-native";
+import { View, Text, Pressable, FlatList } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import ChevronDown from "lucide-react-native/icons/chevron-down";
 import { useUnistyles } from "react-native-unistyles";
 import AppIcon from "../../app-icon";
 import { rhfFieldStyles } from "../react-hook-form.styles";
+import RHFFieldLabel from "../rhf-field-label";
+import RHFFieldError from "../rhf-field-error";
+import RHFModalSheet from "../rhf-modal-sheet";
 import { rhfSelectStyles } from "./rhf-select.styles";
 import { IRHFSelectProps } from "./rhf-select.interface";
 import { useRHFSelect } from "./use-rhf-select";
@@ -43,18 +46,7 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
         return (
           <>
             <View style={[fieldStyles.fieldWrapper, containerStyle]}>
-              <View style={fieldStyles.labelRow}>
-                <Text style={fieldStyles.fieldLabel}>{label}</Text>
-                {required && (
-                  <Text
-                    style={fieldStyles.requiredMark}
-                    importantForAccessibility="no"
-                    accessibilityElementsHidden
-                  >
-                    *
-                  </Text>
-                )}
-              </View>
+              <RHFFieldLabel label={label} required={required} />
 
               <Pressable
                 style={fieldStyles.trigger}
@@ -71,67 +63,39 @@ export default function RHFSelect<T extends FieldValues, V extends string>(
                 />
               </Pressable>
 
-              {error && (
-                <Text
-                  style={fieldStyles.fieldError}
-                  accessibilityRole="alert"
-                  accessibilityLiveRegion="polite"
-                >
-                  {error.message}
-                </Text>
-              )}
+              {error && <RHFFieldError message={error.message} />}
             </View>
 
-            <Modal
-              visible={visible}
-              transparent
-              animationType="slide"
-              onRequestClose={close}
-            >
-              <View style={fieldStyles.modalOverlay}>
-                <Pressable
-                  style={fieldStyles.modalBackdrop}
-                  onPress={close}
-                  accessibilityRole="button"
-                  accessibilityLabel="Close"
-                />
-                <View style={fieldStyles.modalSheet}>
-                  <View style={fieldStyles.modalHandle} />
-                  <Text style={fieldStyles.modalTitle}>{modalTitle}</Text>
-                  <FlatList
-                    data={options}
-                    keyExtractor={(item) => item.value}
-                    scrollEnabled={false}
-                    ItemSeparatorComponent={() => (
-                      <View style={styles.optionDivider} />
-                    )}
-                    renderItem={({ item }) => {
-                      const isActive = value === item.value;
-                      return (
-                        <Pressable
-                          style={[
-                            styles.option,
-                            isActive && styles.optionActive,
-                          ]}
-                          onPress={() => selectOption(onChange, item.value)}
-                          accessibilityRole="button"
-                          accessibilityState={{ selected: isActive }}
-                        >
-                          <Text
-                            style={[
-                              styles.optionText,
-                              isActive && styles.optionTextActive,
-                            ]}
-                          >
-                            {item.label}
-                          </Text>
-                        </Pressable>
-                      );
-                    }}
-                  />
-                </View>
-              </View>
-            </Modal>
+            <RHFModalSheet visible={visible} title={modalTitle} onClose={close}>
+              <FlatList
+                data={options}
+                keyExtractor={(item) => item.value}
+                scrollEnabled={false}
+                ItemSeparatorComponent={() => (
+                  <View style={styles.optionDivider} />
+                )}
+                renderItem={({ item }) => {
+                  const isActive = value === item.value;
+                  return (
+                    <Pressable
+                      style={[styles.option, isActive && styles.optionActive]}
+                      onPress={() => selectOption(onChange, item.value)}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: isActive }}
+                    >
+                      <Text
+                        style={[
+                          styles.optionText,
+                          isActive && styles.optionTextActive,
+                        ]}
+                      >
+                        {item.label}
+                      </Text>
+                    </Pressable>
+                  );
+                }}
+              />
+            </RHFModalSheet>
           </>
         );
       }}

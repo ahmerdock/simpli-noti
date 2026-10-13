@@ -1,10 +1,13 @@
-import { View, Text, Pressable, Modal } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
 import Clock from "lucide-react-native/icons/clock";
 import AppIcon from "../../app-icon";
 import TimePicker from "../../time-picker";
 import { rhfFieldStyles } from "../react-hook-form.styles";
+import RHFFieldLabel from "../rhf-field-label";
+import RHFFieldError from "../rhf-field-error";
+import RHFModalSheet from "../rhf-modal-sheet";
 import { IRHFTimePickerProps } from "./rhf-time-picker.interface";
 import { useRHFTimePicker } from "./use-rhf-time-picker";
 import {
@@ -50,18 +53,7 @@ export default function RHFTimePicker<T extends FieldValues>(
         return (
           <>
             <View style={[fieldStyles.fieldWrapper, containerStyle]}>
-              <View style={fieldStyles.labelRow}>
-                <Text style={fieldStyles.fieldLabel}>{label}</Text>
-                {required && (
-                  <Text
-                    style={fieldStyles.requiredMark}
-                    importantForAccessibility="no"
-                    accessibilityElementsHidden
-                  >
-                    *
-                  </Text>
-                )}
-              </View>
+              <RHFFieldLabel label={label} required={required} />
 
               <Pressable
                 style={fieldStyles.trigger}
@@ -85,47 +77,28 @@ export default function RHFTimePicker<T extends FieldValues>(
                 />
               </Pressable>
 
-              {error && (
-                <Text
-                  style={fieldStyles.fieldError}
-                  accessibilityRole="alert"
-                  accessibilityLiveRegion="polite"
-                >
-                  {error.message}
-                </Text>
-              )}
+              {error && <RHFFieldError message={error.message} />}
             </View>
 
-            <Modal
+            <RHFModalSheet
               visible={visible}
-              transparent
-              animationType="slide"
-              onRequestClose={closePicker}
+              title={modalTitle}
+              onClose={closePicker}
             >
-              <View style={fieldStyles.modalOverlay}>
-                <Pressable
-                  style={fieldStyles.modalBackdrop}
-                  onPress={closePicker}
-                />
-                <View style={fieldStyles.modalSheet}>
-                  <View style={fieldStyles.modalHandle} />
-                  <Text style={fieldStyles.modalTitle}>{modalTitle}</Text>
-                  <TimePicker
-                    hour={hour}
-                    minute={minute}
-                    period={period}
-                    onChange={handleTimeChange}
-                  />
-                  <Pressable
-                    style={fieldStyles.modalConfirmBtn}
-                    accessibilityRole="button"
-                    onPress={() => confirm(onChange)}
-                  >
-                    <Text style={fieldStyles.modalConfirmText}>Confirm</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </Modal>
+              <TimePicker
+                hour={hour}
+                minute={minute}
+                period={period}
+                onChange={handleTimeChange}
+              />
+              <Pressable
+                style={fieldStyles.modalConfirmBtn}
+                accessibilityRole="button"
+                onPress={() => confirm(onChange)}
+              >
+                <Text style={fieldStyles.modalConfirmText}>Confirm</Text>
+              </Pressable>
+            </RHFModalSheet>
           </>
         );
       }}

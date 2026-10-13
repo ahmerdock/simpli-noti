@@ -7,8 +7,10 @@ export default function useHome() {
   const { theme } = useUnistyles();
   const notifications = useNotificationStore((s) => s.notifications);
 
-  const active = notifications.filter((n) => n.isActive);
-  const disabled = notifications.filter((n) => !n.isActive);
+  const sections = [
+    { label: "ACTIVE", items: notifications.filter((n) => n.isActive) },
+    { label: "DISABLED", items: notifications.filter((n) => !n.isActive) },
+  ];
 
   const navigateToAdd = () => router.push(ROUTES.UPSERT_NOTIFICATIONS);
 
@@ -18,8 +20,7 @@ export default function useHome() {
   return {
     theme,
     notifications,
-    active,
-    disabled,
+    sections,
     navigateToAdd,
     navigateToEdit,
   };

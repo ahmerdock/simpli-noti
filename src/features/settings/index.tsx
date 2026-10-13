@@ -34,7 +34,7 @@ export default function Settings() {
         <>
           <ShortHeading
             heading="RELIABILITY"
-            style={settingsStyles.contactMe}
+            style={settingsStyles.sectionHeading}
           />
           <ActionCard
             label="Allow background activity"
@@ -45,7 +45,10 @@ export default function Settings() {
         </>
       )}
 
-      <ShortHeading heading="CONTACT ME" style={settingsStyles.contactMe} />
+      <ShortHeading
+        heading="CONTACT ME"
+        style={settingsStyles.sectionHeading}
+      />
 
       {CONTACT_LINKS.map((link) => (
         <ActionCard

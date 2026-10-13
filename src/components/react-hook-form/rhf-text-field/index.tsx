@@ -2,6 +2,8 @@ import { View, Text, TextInput } from "react-native";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { useUnistyles } from "react-native-unistyles";
 import { rhfFieldStyles } from "../react-hook-form.styles";
+import RHFFieldLabel from "../rhf-field-label";
+import RHFFieldError from "../rhf-field-error";
 import { rhfTextFieldStyles } from "./rhf-text-field.styles";
 import { IRHFTextFieldProps } from "./rhf-text-field.interface";
 
@@ -32,18 +34,7 @@ export default function RHFTextField<T extends FieldValues>(
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <View style={[fieldStyles.fieldWrapper, containerStyle]}>
-          <View style={fieldStyles.labelRow}>
-            <Text style={fieldStyles.fieldLabel}>{label}</Text>
-            {required && (
-              <Text
-                style={fieldStyles.requiredMark}
-                importantForAccessibility="no"
-                accessibilityElementsHidden
-              >
-                *
-              </Text>
-            )}
-          </View>
+          <RHFFieldLabel label={label} required={required} />
 
           <TextInput
             style={[
@@ -64,15 +55,7 @@ export default function RHFTextField<T extends FieldValues>(
             {...textInputProps}
           />
 
-          {error && (
-            <Text
-              style={fieldStyles.fieldError}
-              accessibilityRole="alert"
-              accessibilityLiveRegion="polite"
-            >
-              {error.message}
-            </Text>
-          )}
+          {error && <RHFFieldError message={error.message} />}
 
           {showCharCount && maxLength != null && (
             <Text style={inputStyles.charCount}>

@@ -9,66 +9,65 @@ import type {
 
 export const useNotificationStore = create<INotificationStore>()(
   persist(
-    (set, get) => ({
-      notifications: [],
-
-      addNotification: (n) => {
-        const item: INotification = {
-          ...n,
-          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-          isActive: true,
-          createdAt: new Date().toISOString(),
-        };
-        set((state) => ({
-          notifications: [...state.notifications, item],
-        }));
-        void NotificationService.syncWithPermission(
-          () => get().notifications.find((x) => x.id === item.id),
-          () => get().expireNotification(item.id),
-        );
-      },
-
-      editNotification: (id, n) => {
-        set((state) => ({
-          notifications: state.notifications.map((item) =>
-            item.id === id ? { ...item, ...n } : item,
-          ),
-        }));
+    (set, get) => {
+      const syncById = (id: string) =>
         void NotificationService.syncWithPermission(
           () => get().notifications.find((item) => item.id === id),
           () => get().expireNotification(id),
         );
-      },
 
-      deleteNotification: (id) => {
-        set((state) => ({
-          notifications: state.notifications.filter((item) => item.id !== id),
-        }));
-        // If the native cancel fails, the next reconcile removes the orphan alarm.
-        NotificationService.cancelNotification(id).catch(() => {});
-      },
+      return {
+        notifications: [],
 
-      toggleNotification: (id) => {
-        set((state) => ({
-          notifications: state.notifications.map((item) =>
-            item.id === id ? { ...item, isActive: !item.isActive } : item,
-          ),
-        }));
-        void NotificationService.syncWithPermission(
-          () => get().notifications.find((item) => item.id === id),
-          () => get().expireNotification(id),
-        );
-      },
+        addNotification: (n) => {
+          const item: INotification = {
+            ...n,
+            id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            isActive: true,
+            createdAt: new Date().toISOString(),
+          };
+          set((state) => ({
+            notifications: [...state.notifications, item],
+          }));
+          syncById(item.id);
+        },
 
-      expireNotification: (id) =>
-        set((state) => ({
-          notifications: state.notifications.map((item) =>
-            item.id === id && item.isActive && item.repeat === "none"
-              ? { ...item, isActive: false }
-              : item,
-          ),
-        })),
-    }),
+        editNotification: (id, n) => {
+          set((state) => ({
+            notifications: state.notifications.map((item) =>
+              item.id === id ? { ...item, ...n } : item,
+            ),
+          }));
+          syncById(id);
+        },
+
+        deleteNotification: (id) => {
+          set((state) => ({
+            notifications: state.notifications.filter((item) => item.id !== id),
+          }));
+          // If the native cancel fails, the next reconcile removes the orphan alarm.
+          NotificationService.cancelNotification(id).catch(() => {});
+        },
+
+        toggleNotification: (id) => {
+          set((state) => ({
+            notifications: state.notifications.map((item) =>
+              item.id === id ? { ...item, isActive: !item.isActive } : item,
+            ),
+          }));
+          syncById(id);
+        },
+
+        expireNotification: (id) =>
+          set((state) => ({
+            notifications: state.notifications.map((item) =>
+              item.id === id && item.isActive && item.repeat === "none"
+                ? { ...item, isActive: false }
+                : item,
+            ),
+          })),
+      };
+    },
     {
       name: "notifications-storage",
       storage: createJSONStorage(() => AsyncStorage),

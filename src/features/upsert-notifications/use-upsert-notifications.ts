@@ -74,10 +74,10 @@ export default function useUpsertNotifications() {
   };
 
   const handleToggle = () => {
-    if (notificationId) {
-      toggleNotification(notificationId);
-      router.back();
-    }
+    if (!notificationId) return;
+
+    toggleNotification(notificationId);
+    router.back();
   };
 
   const onSubmit = (data: FormValues) => {

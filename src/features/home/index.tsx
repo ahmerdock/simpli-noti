@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Plus from "lucide-react-native/icons/plus";
 import { TabsLayout } from "@/layouts";
 import { TouchableOpacity, View, Text } from "react-native";
@@ -7,14 +8,8 @@ import { PAGE_TITLES } from "@/constants/routes";
 import { AppIcon, ErrorAndNoData, NotificationCard } from "@/components";
 
 export default function Home() {
-  const {
-    theme,
-    notifications,
-    active,
-    disabled,
-    navigateToAdd,
-    navigateToEdit,
-  } = useHome();
+  const { theme, notifications, sections, navigateToAdd, navigateToEdit } =
+    useHome();
 
   return (
     <TabsLayout
@@ -40,30 +35,20 @@ export default function Home() {
         />
       ) : (
         <View style={homeStyles.listContent}>
-          {active.length > 0 && (
-            <>
-              <Text style={homeStyles.sectionLabel}>ACTIVE</Text>
-              {active.map((item) => (
-                <NotificationCard
-                  key={item.id}
-                  item={item}
-                  onPress={() => navigateToEdit(item.id)}
-                />
-              ))}
-            </>
-          )}
-
-          {disabled.length > 0 && (
-            <>
-              <Text style={homeStyles.sectionLabel}>DISABLED</Text>
-              {disabled.map((item) => (
-                <NotificationCard
-                  key={item.id}
-                  item={item}
-                  onPress={() => navigateToEdit(item.id)}
-                />
-              ))}
-            </>
+          {sections.map(
+            ({ label, items }) =>
+              items.length > 0 && (
+                <Fragment key={label}>
+                  <Text style={homeStyles.sectionLabel}>{label}</Text>
+                  {items.map((item) => (
+                    <NotificationCard
+                      key={item.id}
+                      item={item}
+                      onPress={() => navigateToEdit(item.id)}
+                    />
+                  ))}
+                </Fragment>
+              ),
           )}
         </View>
       )}
