@@ -7,7 +7,7 @@ import type { FormValues } from "./upsert-notifications.interface";
 import {
   getDefaultFormValues,
   notificationToFormValues,
-  upsertNotificationsSchema,
+  createUpsertNotificationsSchema,
 } from "./upsert-notifications.utils";
 import { useNotificationStore } from "@/store";
 
@@ -23,16 +23,16 @@ export default function useUpsertNotifications() {
   const deleteNotification = useNotificationStore((s) => s.deleteNotification);
   const toggleNotification = useNotificationStore((s) => s.toggleNotification);
 
+  const existingNotification = notifications.find(
+    (n) => n.id === notificationId,
+  );
+
   const form = useForm<FormValues>({
-    resolver: zodResolver(upsertNotificationsSchema),
+    resolver: zodResolver(createUpsertNotificationsSchema(existingNotification)),
     defaultValues: getDefaultFormValues(),
   });
 
   const { handleSubmit } = form;
-
-  const existingNotification = notifications.find(
-    (n) => n.id === notificationId,
-  );
 
   // Fill the form once per screen target. Later store changes (such as this
   // very reminder being deleted) must not reset it or navigate back again.

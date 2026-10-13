@@ -101,10 +101,9 @@ export default function useHelpMe(): UseHelpMeReturn {
       return;
     }
 
-    hasConsumedPendingRef.current = true;
-
     try {
       const pendingPurchases = await getAvailablePurchasesDirect();
+      hasConsumedPendingRef.current = true;
 
       for (const purchase of pendingPurchases) {
         if (!isHelpMeProductId(purchase.productId)) {

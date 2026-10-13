@@ -1,4 +1,4 @@
-import { NotificationService } from "@/services";
+import { isInThePast, NotificationService } from "@/services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -34,9 +34,14 @@ export const useNotificationStore = create<INotificationStore>()(
 
         editNotification: (id, n) => {
           set((state) => ({
-            notifications: state.notifications.map((item) =>
-              item.id === id ? { ...item, ...n } : item,
-            ),
+            notifications: state.notifications.map((item) => {
+              if (item.id !== id) return item;
+              // An expired one-time reminder moved to a future time is live again.
+              const wasExpired =
+                !item.isActive && item.repeat === "none" && isInThePast(item);
+              const revive = wasExpired && !isInThePast(n);
+              return { ...item, ...n, isActive: revive ? true : item.isActive };
+            }),
           }));
           syncById(id);
         },

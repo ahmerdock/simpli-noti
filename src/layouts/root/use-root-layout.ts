@@ -54,8 +54,10 @@ export default function useRootLayout() {
     };
 
     reconcileWhenHydrated();
+    // Reconciling an unhydrated (empty) store would cancel every armed alarm,
+    // so a not-yet-hydrated store is left to the onFinishHydration path above.
     NotificationService.ensureReady().then(() => {
-      if (!cancelled) reconcile();
+      if (!cancelled && useNotificationStore.persist.hasHydrated()) reconcile();
     });
 
     const sub = AppState.addEventListener("change", (state) => {

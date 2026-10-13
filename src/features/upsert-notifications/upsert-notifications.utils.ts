@@ -6,18 +6,28 @@ import { isInThePast } from "@/services";
 import { DESCRIPTION_MAX } from "./upsert-notifications.data";
 import type { FormValues } from "./upsert-notifications.interface";
 
-export const upsertNotificationsSchema = z
-  .object({
-    title: z.string().trim().min(1, "Title is required"),
-    date: z.string().min(1, "Date is required"),
-    time: z.string().min(1, "Time is required"),
-    repeat: z.enum(["none", "daily", "weekly", "monthly", "yearly"]),
-    description: z.string().trim().max(DESCRIPTION_MAX).optional(),
-  })
-  .refine(
-    (v) => v.repeat !== "none" || !isInThePast({ date: v.date, time: v.time }),
-    { message: "Pick a date and time in the future", path: ["time"] },
-  );
+/**
+ * `original` is the reminder being edited. Leaving its date and time untouched
+ * is always allowed, so an expired one-time reminder can still be renamed.
+ */
+export const createUpsertNotificationsSchema = (
+  original?: Pick<INotification, "date" | "time">,
+) =>
+  z
+    .object({
+      title: z.string().trim().min(1, "Title is required"),
+      date: z.string().min(1, "Date is required"),
+      time: z.string().min(1, "Time is required"),
+      repeat: z.enum(["none", "daily", "weekly", "monthly", "yearly"]),
+      description: z.string().trim().max(DESCRIPTION_MAX).optional(),
+    })
+    .refine(
+      (v) =>
+        v.repeat !== "none" ||
+        !isInThePast({ date: v.date, time: v.time }) ||
+        (original?.date === v.date && original?.time === v.time),
+      { message: "Pick a date and time in the future", path: ["time"] },
+    );
 
 export const getDefaultFormValues = (): FormValues => ({
   title: "",
