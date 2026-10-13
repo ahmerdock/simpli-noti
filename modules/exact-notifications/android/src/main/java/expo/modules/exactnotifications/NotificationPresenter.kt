@@ -8,7 +8,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
-/** Builds and posts the actual heads-up notification for a fired schedule. */
 object NotificationPresenter {
   fun post(context: Context, item: ScheduledItem) {
     if (!canPost(context)) return
