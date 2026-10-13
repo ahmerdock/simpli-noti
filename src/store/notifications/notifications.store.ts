@@ -6,6 +6,7 @@ import type {
   INotification,
   INotificationStore,
 } from "./notifications.interface";
+import { parseStoredNotifications } from "./notifications.utils";
 
 export const useNotificationStore = create<INotificationStore>()(
   persist(
@@ -76,6 +77,10 @@ export const useNotificationStore = create<INotificationStore>()(
     {
       name: "notifications-storage",
       storage: createJSONStorage(() => AsyncStorage),
+      merge: (persisted, current) => ({
+        ...current,
+        notifications: parseStoredNotifications(persisted) ?? current.notifications,
+      }),
     },
   ),
 );

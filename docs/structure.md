@@ -64,7 +64,7 @@ Every file here is a route. Keep them thin: a route file only renders the matchi
 
 ```
 app/
-├── _layout.tsx                 Theme import, then renders layouts/root (RootLayout)
+├── _layout.tsx                 Theme import, then renders layouts/root (RootLayout); re-exports expo-router's `ErrorBoundary` so a render error shows a retry screen instead of crashing
 ├── upsert-notifications.tsx    Add / edit screen -> features/upsert-notifications
 └── (tabs)/
     ├── _layout.tsx             `TabsNavigator`: tabs navigator using the custom tab bar
@@ -127,7 +127,7 @@ Lucide 1.x no longer includes brand logos, so `github.tsx` and `linkedin.tsx` ar
 ### `services/` and `store/`
 
 - `services/notifications/` (`services/index.ts` is the barrel; the logic is in `notifications.service.ts`, and `schedule-time.ts` has the time maths) wraps `modules/exact-notifications`: permission handling, scheduling, cancelling and `reconcile` (re-syncs the native alarms with the saved reminders after reboots, permission changes, clock changes and app upgrades).
-- `store/notifications/` is the persisted Zustand store of reminders (`notifications.store.ts`, with its types in `notifications.interface.ts`, re-exported from `index.ts`). Reminder data is saved in AsyncStorage, so changing that storage would need a migration for existing users.
+- `store/notifications/` is the persisted Zustand store of reminders (`notifications.store.ts`, with its types in `notifications.interface.ts`, `notifications.data.ts` for the repeat values, and `notifications.utils.ts`, which checks stored records on load and drops invalid ones; re-exported from `index.ts`). Reminder data is saved in AsyncStorage, so changing that storage would need a migration for existing users.
 
 ### `utils/`
 
